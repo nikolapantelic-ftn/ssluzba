@@ -1,7 +1,9 @@
 package ssluzba.app.views;
 
+import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
@@ -10,7 +12,11 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = -7911276033183096362L;
 
 	public MainFrame() throws HeadlessException {
-		// TODO Auto-generated constructor stub
+		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize((int)(screenDimension.width*0.75), (int)(screenDimension.height*0.75));
+		setLocationRelativeTo(null);
+		setVisible(true);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	public MainFrame(GraphicsConfiguration gc) {
