@@ -1,5 +1,6 @@
 package ssluzba.app.views;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
@@ -15,6 +16,9 @@ public class MainFrame extends JFrame {
 		Dimension screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int)(screenDimension.width*0.75), (int)(screenDimension.height*0.75));
 		setLocationRelativeTo(null);
+		this.setJMenuBar(new MenuBar());
+		this.add(new StatusBar(), BorderLayout.SOUTH);
+		
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
