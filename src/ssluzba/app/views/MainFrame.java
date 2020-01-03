@@ -46,10 +46,12 @@ public class MainFrame extends JFrame {
 		this.add(new StatusBar(), BorderLayout.SOUTH);
 		
 		JTable tabelaPredmeta=PredmetJTable.getInstance();
-		toolbar.setTabela(tabelaPredmeta);
+		toolbar.setTabelaPredmeta(tabelaPredmeta);
+		JTable tabelaProfesora=ProfesorJTable.getInstance();
+		toolbar.setTabelaProfesora(tabelaProfesora);
 		
 		
-		TabbedPane tabbedpane=new TabbedPane(tabelaPredmeta);
+		JTabbedPane tabbedpane=new TabbedPane(tabelaProfesora, tabelaPredmeta);
 		add(tabbedpane,BorderLayout.CENTER);
 		tabbedpane.addChangeListener(new ChangeListener() {
 		

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import ssluzba.app.controllers.PredmetiController;
+
 
 public class BazaPredmeta {
 	private static BazaPredmeta instance=null;
@@ -48,25 +48,7 @@ public class BazaPredmeta {
 		return this.predmeti.get(row);
 	}
 	
-/*	public String getPredmetVal(int row,int col) {
-		Predmet predmet=this.predmeti(row);
-		switch(col) {
-		case 0:
-			return predmet.getSifra();
-		case 1:
-			return predmet.getNaziv();
-		case 2:
-			return predmet.getSemestar();
-		case 3:
-			return Integer.toString(predmet.getGodinaPredmeta());
-		case 4:
-			return Profes(predmet.getProfesor());
-		case 5:
-			return predmet.getStudenti();
-			
-		}
-	}
-*/
+
 	public void dodajPredmet(String sif,String naz,String sem,int god) {
 		this.predmeti.add(new Predmet(sif,naz,sem,god,null,null));
 	}
@@ -76,6 +58,7 @@ public class BazaPredmeta {
 	}
 	
 	public void dodajProfesoraNaPredmet(Profesor pr) {
+		
 		
 	}
 
@@ -93,6 +76,10 @@ public class BazaPredmeta {
 			return predmet.getSemestar();
 		case 3:
 			return Integer.toString(predmet.getGodinaPredmeta());
+		case 4:
+			if(predmet.getProfesor()!=null)
+			return predmet.getProfesor().getIme();
+			else return null;
 		default:
 			return null;
 		}

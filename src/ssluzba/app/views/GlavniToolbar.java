@@ -24,7 +24,9 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import ssluzba.app.BazaPredmeta;
+import ssluzba.app.BazaProfesora;
 import ssluzba.app.Predmet;
+import ssluzba.app.Profesor;
 import ssluzba.app.controllers.PredmetiController;
 
 
@@ -50,6 +52,7 @@ public class GlavniToolbar extends JToolBar {
 	private JButton findP;
 	private JButton findPr;
 	private JTable tabelaPredmeta;
+	private JTable tabelaProfesora;
 	
 	private static GlavniToolbar instance=null;
 	
@@ -58,6 +61,12 @@ public class GlavniToolbar extends JToolBar {
 		if(instance==null)
 			instance=new GlavniToolbar();
 		return instance;
+	}
+	public void setTabelaPredmeta(JTable tabela) {
+		this.tabelaPredmeta=tabela;
+	}
+	public void setTabelaProfesora(JTable tabela) {
+		this.tabelaProfesora=tabela;
 	}
 	
 	public JButton getAddStud() {
@@ -161,10 +170,11 @@ public class GlavniToolbar extends JToolBar {
 		addStudentListener();
 		editPr=new JButton();
 		delPr=new JButton();
-		
+		addPP=new JButton();
 		tabelaPredmeta=new PredmetJTable();
 		editPredmetListener();
 		delPredmetListener();
+		addProfNaPredmetListener();
 	}
 
 	public void setButton(JButton button) {
@@ -172,9 +182,7 @@ public class GlavniToolbar extends JToolBar {
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
 	}
-	public void setTabela(JTable tabela) {
-		this.tabelaPredmeta=tabela;
-	}
+	
 	
 	public void makeToolbar(int tab) {
 		removeAll();
@@ -236,7 +244,7 @@ public class GlavniToolbar extends JToolBar {
 			setButton(addSP);
 			add(addSP);
 			addSeparator();
-			addPP=new JButton();
+			
 			addPP.setToolTipText("Dodaj profesora na predmet");
 			addPP.setIcon(new ImageIcon("images/addPr.png"));
 			addPP.setMnemonic(KeyEvent.VK_P);
@@ -305,6 +313,30 @@ public class GlavniToolbar extends JToolBar {
 					return;
 				JDialog jp=new PredmetEditDialog(BazaPredmeta.getInstance().getRow(tabelaPredmeta.getSelectedRow()));
 				jp.setVisible(true);
+				
+			}
+		});
+	}
+	
+	public void addProfNaPredmetListener() {
+		addPP.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tabelaPredmeta.getSelectedRow()==-1)
+					return;
+				String brLicne=JOptionPane.showInputDialog("Broj licne karte profesora");
+				for(Profesor p: BazaProfesora.getInstance().getProfesori()) {
+					if(brLicne.contentEquals(p.getBrojLicne())) {
+						Predmet pr=BazaPredmeta.getInstance().getRow(tabelaPredmeta.getSelectedRow());
+						pr.setProfesor(p);
+						PredmetJTable.getInstance().azurirajPrikaz();
+					}
+					else {
+						System.out.println("nema");
+					}
+				}
+				
 				
 			}
 		});

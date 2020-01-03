@@ -3,29 +3,30 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Profesor {
-	private String ime,prezime,adresa,kontaktTelefon,eMail,adresaKancelarije,titula,zvanje;
-	private Date datumRodjenja;
+	private String ime,prezime,brojLicne,adresa,kontaktTelefon,eMail,adresaKancelarije,titula,zvanje;
+	private String datumRodjenja;
 	private ArrayList<Predmet> predmeti;
-	private int[] brojLicne;
+	
 	
 	
 
 
 	public Profesor(String ime, String prezime, String adresa, String kontaktTelefon, String eMail,
-			String adresaKancelarije, String titula, String zvanje, Date datumRodjenja,
-			int[] brojLicne) {
+			String adresaKancelarije, String titula, String zvanje, String string,
+			String brojLicne) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
+		this.brojLicne = brojLicne;
 		this.adresa = adresa;
 		this.kontaktTelefon = kontaktTelefon;
 		this.eMail = eMail;
 		this.adresaKancelarije = adresaKancelarije;
 		this.titula = titula;
 		this.zvanje = zvanje;
-		this.datumRodjenja = datumRodjenja;
+		this.datumRodjenja = string;
 		this.predmeti = new ArrayList<Predmet>();
-		this.brojLicne = brojLicne;
+		
 	}
 
 	public String getIme() {
@@ -92,11 +93,11 @@ public class Profesor {
 		this.zvanje = zvanje;
 	}
 
-	public Date getDatumRodjenja() {
+	public String getDatumRodjenja() {
 		return datumRodjenja;
 	}
 
-	public void setDatumRodjenja(Date datumRodjenja) {
+	public void setDatumRodjenja(String datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 
@@ -110,11 +111,11 @@ public class Profesor {
 
 	
 
-	public int[] getBrojLicne() {
+	public String getBrojLicne() {
 		return brojLicne;
 	}
 
-	public void setBrojLicne(int[] brojLicne) {
+	public void setBrojLicne(String brojLicne) {
 		this.brojLicne = brojLicne;
 	}
 

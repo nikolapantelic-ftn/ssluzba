@@ -9,7 +9,7 @@ import ssluzba.app.Student;
 import ssluzba.app.views.MainFrame;
 import ssluzba.app.views.PredmetJTable;
 
-public class PredmetiController implements Controller {
+public class PredmetiController {
 
 	private static PredmetiController instance=null;
 	
@@ -28,7 +28,7 @@ public class PredmetiController implements Controller {
 		PredmetJTable.getInstance().azurirajPrikaz();
 	}
 
-	@Override
+	
 	public void izbrisi(int row) {
 		if(row<0)
 			return;
@@ -49,15 +49,9 @@ public class PredmetiController implements Controller {
 
 	}
 
-	@Override
-	public void dodaj() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void izmeni() {
-		// TODO Auto-generated method stub
-		
+
+	public void dodajProfesora(Profesor p) {
+		BazaPredmeta.getInstance().dodajProfesoraNaPredmet(p);
 	}
 
 }
