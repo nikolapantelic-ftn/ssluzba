@@ -7,27 +7,17 @@ package ssluzba.app.views;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
-import ssluzba.app.BazaPredmeta;
-import ssluzba.app.Predmet;
-import ssluzba.app.controllers.PredmetiController;
-
-
+import com.sun.glass.events.KeyEvent;
 
 public class GlavniToolbar extends JToolBar {
 
@@ -49,7 +39,6 @@ public class GlavniToolbar extends JToolBar {
 	private JTextField pretragaPR;
 	private JButton findP;
 	private JButton findPr;
-	private JTable tabelaPredmeta;
 	
 	private static GlavniToolbar instance=null;
 	
@@ -60,26 +49,6 @@ public class GlavniToolbar extends JToolBar {
 		return instance;
 	}
 	
-	public JButton getAddStud() {
-		return addStud;
-	}
-
-	public JButton getAddPr() {
-		return addPr;
-	}
-
-	public JButton getAddProf() {
-		return addProf;
-	}
-
-	public JButton getAddSP() {
-		return addSP;
-	}
-
-	public JButton getAddPP() {
-		return addPP;
-	}
-
 	public GlavniToolbar() {
 		
 		super(SwingConstants.HORIZONTAL);
@@ -107,7 +76,7 @@ public class GlavniToolbar extends JToolBar {
 		editS.setContentAreaFilled(false);
 		editS.setBorderPainted(false);
 		add(editS);
- 
+
 		addSeparator();
 
 		delS = new JButton();
@@ -136,44 +105,15 @@ public class GlavniToolbar extends JToolBar {
 		findB.setBorderPainted(false);
 		add(findB);
 		
-		addProf=new JButton();
-		addProf.setToolTipText("Dodaj profesora");
-		addProf.setIcon(new ImageIcon("images/add.png"));
-		addProf.setMnemonic(KeyEvent.VK_N);
+
 	
-		editP=new JButton();
-		editP.setToolTipText("Izmeni profesora");
-		editP.setIcon(new ImageIcon("images/pencil-icon.png"));
-		editP.setMnemonic(KeyEvent.VK_E);
-		delP=new JButton();
-		delP.setToolTipText("Izmeni profesora");
-		delP.setIcon(new ImageIcon("images/delete.png"));
-		delP.setMnemonic(KeyEvent.VK_D);
-		findP=new JButton();
-		findP.setToolTipText("Pronadji profesora");
-		findP.setIcon(new ImageIcon("images/find.png"));
-		findP.setMnemonic(KeyEvent.VK_F);
-		addPr=new JButton();
-		addPr.setToolTipText("Dodaj predmet");
-		addPr.setIcon(new ImageIcon("images/add.png"));
-		addPr.setMnemonic(KeyEvent.VK_N);
-		addPredmetListener();
-		addStudentListener();
-		editPr=new JButton();
-		delPr=new JButton();
-		
-		tabelaPredmeta=new PredmetJTable();
-		editPredmetListener();
-		delPredmetListener();
+
 	}
 
 	public void setButton(JButton button) {
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
-	}
-	public void setTabela(JTable tabela) {
-		this.tabelaPredmeta=tabela;
 	}
 	
 	public void makeToolbar(int tab) {
@@ -191,38 +131,53 @@ public class GlavniToolbar extends JToolBar {
 			add(pretraga);
 			add(findB);
 		}else if(tab==1) {
-			
+			addProf=new JButton();
+			addProf.setToolTipText("Dodaj profesora");
+			addProf.setIcon(new ImageIcon("images/add.png"));
+			addProf.setMnemonic(KeyEvent.VK_N);
 			setButton(addProf);
 			add(addProf);
 			addSeparator();
-			
+			editP=new JButton();
+			editP.setToolTipText("Izmeni profesora");
+			editP.setIcon(new ImageIcon("images/pencil-icon.png"));
+			editP.setMnemonic(KeyEvent.VK_E);
 			setButton(editP);
 			add(editP);
 			addSeparator();
-		
+			delP=new JButton();
+			delP.setToolTipText("Izmeni profesora");
+			delP.setIcon(new ImageIcon("images/delete.png"));
+			delP.setMnemonic(KeyEvent.VK_D);
 			setButton(delP);
 			add(delP);
 			addSeparator();
 			add(Box.createHorizontalStrut(550));
 			pretragaP=new JTextField();
 			add(pretragaP);
-			
+			findP=new JButton();
+			findP.setToolTipText("Pronadji profesora");
+			findP.setIcon(new ImageIcon("images/find.png"));
+			findP.setMnemonic(KeyEvent.VK_F);
 			setButton(findP);
 			add(findP);
 			}else {
 			
-			
+			addPr=new JButton();
+			addPr.setToolTipText("Dodaj predmet");
+			addPr.setIcon(new ImageIcon("images/add.png"));
+			addPr.setMnemonic(KeyEvent.VK_N);
 			setButton(addPr);
 			add(addPr);
 			addSeparator();
-			
+			editPr=new JButton();
 			editPr.setToolTipText("Izmeni predmet");
 			editPr.setIcon(new ImageIcon("images/pencil-icon.png"));
 			editPr.setMnemonic(KeyEvent.VK_E);
 			setButton(editPr);
 			add(editPr);
 			addSeparator();
-			
+			delPr=new JButton();
 			delPr.setToolTipText("Izmeni predmet");
 			delPr.setIcon(new ImageIcon("images/delete.png"));
 			delPr.setMnemonic(KeyEvent.VK_D);
@@ -254,61 +209,13 @@ public class GlavniToolbar extends JToolBar {
 			add(findPr);
 			}
 		
-			}
-	public void addStudentListener() {
-		addStud.addActionListener(new ActionListener() {
 			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JDialog jp=new StudentDialog();
-				jp.setVisible(true);
-				
-			}
-		});
-	}
-	public void addPredmetListener() {
-		addPr.addActionListener(new ActionListener() {
 			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JDialog jp=new PredmetDialog();
-				jp.setVisible(true);
-				
-			}
-		});
-	}
-	public void delPredmetListener() {
-		delPr.addActionListener(new ActionListener() {
 			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int choice=JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete predmet?");
-				if (choice == JOptionPane.YES_OPTION) {
-					PredmetiController.getInstance().izbrisi(tabelaPredmeta.getSelectedRow());
-					JOptionPane.showMessageDialog(null, "Predmet obrisan!");
-				} else {
-					JOptionPane.showMessageDialog(null, "Otkazano");
-				}
-				
-				
-			}
-		});
-	}
-	
-	public void editPredmetListener() {
-		
-		editPr.addActionListener(new ActionListener() {
 			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(tabelaPredmeta.getSelectedRow()==-1)
-					return;
-				JDialog jp=new PredmetEditDialog(BazaPredmeta.getInstance().getRow(tabelaPredmeta.getSelectedRow()));
-				jp.setVisible(true);
-				
-			}
-		});
-	}
+			
+			
+		}
 	}
 
 

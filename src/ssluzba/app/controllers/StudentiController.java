@@ -12,17 +12,16 @@ public class StudentiController implements Controller {
 
 	}
 
-	
 	@Override
-	public void izmeni() {
+	public void izbrisi() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void izbrisi(int row) {
+	public void izmeni() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

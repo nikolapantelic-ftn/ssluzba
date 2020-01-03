@@ -7,7 +7,7 @@ public class Predmet {
 	private int godinaPredmeta;
 	private Profesor profesor;
 	private ArrayList<Student> studenti;
-
+	
 	public Predmet(String sifra, String naziv, String semestar, int godinaPredmeta, Profesor profesor) {
 		super();
 		this.sifra = sifra;
@@ -17,18 +17,6 @@ public class Predmet {
 		this.profesor = profesor;
 		this.studenti=new ArrayList<Student>();
 		
-	}
-
-	public Predmet(String sif, String naz, String sem, int god,Profesor p,ArrayList<Predmet> predmeti) {
-		this.sifra=sif;
-		this.naziv=naz;
-		this.semestar=sem;
-		this.godinaPredmeta=god;
-	}
-	
-
-	public Predmet() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getSifra() {

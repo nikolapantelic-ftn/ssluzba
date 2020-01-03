@@ -13,7 +13,7 @@ public class ProfesoriController implements Controller {
 	}
 
 	@Override
-	public void izbrisi(int row) {
+	public void izbrisi() {
 		// TODO Auto-generated method stub
 
 	}
