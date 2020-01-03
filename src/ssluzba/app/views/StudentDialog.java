@@ -101,5 +101,8 @@ public class StudentDialog extends JDialog {
 		
 		this.add(panel);
 	}
+	
+	public void newStudentListener() {
 
+}
 }

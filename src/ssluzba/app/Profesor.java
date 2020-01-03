@@ -6,14 +6,14 @@ public class Profesor {
 	private String ime,prezime,adresa,kontaktTelefon,eMail,adresaKancelarije,titula,zvanje;
 	private Date datumRodjenja;
 	private ArrayList<Predmet> predmeti;
-	private int[] brojLicne;
+	private String brojLicne;
 	
 	
 
 
 	public Profesor(String ime, String prezime, String adresa, String kontaktTelefon, String eMail,
 			String adresaKancelarije, String titula, String zvanje, Date datumRodjenja,
-			int[] brojLicne) {
+			String brojLicne) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
@@ -110,11 +110,11 @@ public class Profesor {
 
 	
 
-	public int[] getBrojLicne() {
+	public String getBrojLicne() {
 		return brojLicne;
 	}
 
-	public void setBrojLicne(int[] brojLicne) {
+	public void setBrojLicne(String brojLicne) {
 		this.brojLicne = brojLicne;
 	}
 

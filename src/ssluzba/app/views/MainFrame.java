@@ -6,11 +6,15 @@ import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
+
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 public class MainFrame extends JFrame {
 
@@ -25,6 +29,7 @@ public class MainFrame extends JFrame {
 		return instance;
 	}
 	
+	
 	public MainFrame() throws HeadlessException {
 		
 		setTitle("Studentska sluzba");
@@ -36,10 +41,15 @@ public class MainFrame extends JFrame {
 		GlavniToolbar toolbar=new GlavniToolbar();
 		add(toolbar,BorderLayout.NORTH);
 		
+		
 		this.setJMenuBar(new MenuBar());
 		this.add(new StatusBar(), BorderLayout.SOUTH);
 		
-		TabbedPane tabbedpane=new TabbedPane();
+		JTable tabelaPredmeta=PredmetJTable.getInstance();
+		toolbar.setTabela(tabelaPredmeta);
+		
+		
+		TabbedPane tabbedpane=new TabbedPane(tabelaPredmeta);
 		add(tabbedpane,BorderLayout.CENTER);
 		tabbedpane.addChangeListener(new ChangeListener() {
 		
@@ -53,11 +63,10 @@ public class MainFrame extends JFrame {
 		
 		this.setVisible(true);
 		
-	}
-	public void setToolbar(TabbedPane pane) {
-		//int a;
 		
 	}
+	
+	
 
 	public MainFrame(GraphicsConfiguration gc) {
 		super(gc);
@@ -73,6 +82,8 @@ public class MainFrame extends JFrame {
 		super(title, gc);
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 }
 
