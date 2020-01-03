@@ -12,16 +12,18 @@ public class ProfesoriController implements Controller {
 
 	}
 
-	@Override
-	public void izbrisi() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	@Override
 	public void izmeni() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void izbrisi(int row) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

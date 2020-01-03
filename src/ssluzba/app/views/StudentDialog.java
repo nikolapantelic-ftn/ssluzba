@@ -105,8 +105,8 @@ public class StudentDialog extends JDialog {
 				String datumRodjenja = StudentDialog.this.getDatumRodjenjaText();
 				boolean samofinansiranje = StudentDialog.this.getSamofinansiranjeText();
 				boolean budzet = StudentDialog.this.getBudzetText();
-				StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-						datumRodjenja, samofinansiranje, budzet);
+				//StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
+				//		datumRodjenja, samofinansiranje, budzet);
 			}
 		});
 		JButton odustanakButton = new JButton("Odustanak");

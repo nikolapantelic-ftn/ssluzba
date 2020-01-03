@@ -8,7 +8,7 @@ public class Predmet {
 	private Profesor profesor;
 	private ArrayList<Student> studenti;
 	
-	public Predmet(String sifra, String naziv, String semestar, int godinaPredmeta, Profesor profesor) {
+	public Predmet(String sifra, String naziv, String semestar, int godinaPredmeta, Profesor profesor,ArrayList<Predmet> p) {
 		super();
 		this.sifra = sifra;
 		this.naziv = naziv;

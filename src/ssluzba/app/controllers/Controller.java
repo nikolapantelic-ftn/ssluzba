@@ -4,8 +4,10 @@ public interface Controller {
 	
 	public void dodaj();
 	
-	public void izbrisi();
+	
 	
 	public void izmeni();
+
+	public void izbrisi(int row);
 
 }
