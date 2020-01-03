@@ -1,11 +1,12 @@
 package ssluzba.app;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Student {
 	private String ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa;
-	private Date datumRodjenja, datumUpisa;
+	private LocalDate datumRodjenja, datumUpisa;
+	private int godinaStudija;
 	private double prosecnaOcena;
 	private Status status;
 	private ArrayList<Predmet> predmeti;
@@ -13,7 +14,7 @@ public class Student {
 	public Student() {}
 
 	public Student(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, Date datumRodjenja, Status status) {
+			String brIndeksa, LocalDate datumRodjenja, int godinaStudija, Status status) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
@@ -23,7 +24,8 @@ public class Student {
 		this.brIndeksa = brIndeksa;
 		this.datumRodjenja = datumRodjenja;
 		this.status = status;
-		this.datumUpisa = new Date();
+		this.datumUpisa = LocalDate.now();
+		this.godinaStudija = godinaStudija;
 		this.predmeti = new ArrayList<Predmet>();
 		this.prosecnaOcena = 0;
 	}
@@ -76,19 +78,19 @@ public class Student {
 		this.brIndeksa = brIndeksa;
 	}
 
-	public Date getDatumRodjenja() {
+	public LocalDate getDatumRodjenja() {
 		return datumRodjenja;
 	}
 
-	public void setDatumRodjenja(Date datumRodjenja) {
+	public void setDatumRodjenja(LocalDate datumRodjenja) {
 		this.datumRodjenja = datumRodjenja;
 	}
 
-	public Date getDatumUpisa() {
+	public LocalDate getDatumUpisa() {
 		return datumUpisa;
 	}
 
-	public void setDatumUpisa(Date datumUpisa) {
+	public void setDatumUpisa(LocalDate datumUpisa) {
 		this.datumUpisa = datumUpisa;
 	}
 
@@ -114,6 +116,14 @@ public class Student {
 
 	public void setPredmeti(ArrayList<Predmet> predmeti) {
 		this.predmeti = predmeti;
+	}
+
+	public int getGodinaStudija() {
+		return godinaStudija;
+	}
+
+	public void setGodinaStudija(int godinaStudija) {
+		this.godinaStudija = godinaStudija;
 	}
 	
 	

@@ -23,6 +23,7 @@ public class StudentDialog extends JDialog {
 	private static final long serialVersionUID = -1851059461360849827L;
 	private JRadioButton samofinansiranjeButton, budzetButton;
 	private JTextField imeText, prezimeText, datumRodjenjaText, adresaStanovanjaText, brojTelefonaText, brojIndeksaText, emailText;
+	JComboBox<String> godinaStudijaCombo;
 
 	public StudentDialog() {
 		this.setTitle("Dodavanje Studenta");
@@ -77,7 +78,7 @@ public class StudentDialog extends JDialog {
 		JPanel godinaStudijaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		godinaStudijaPane.add(new JLabel("Trenutna Godina Studija "));
 		String[] godinaStudijaStrings = { "I (prva)", "II (druga)", "III (treca)", "IV (cetvrta)" };
-		JComboBox<String> godinaStudijaCombo = new JComboBox<String>(godinaStudijaStrings);
+		godinaStudijaCombo = new JComboBox<String>(godinaStudijaStrings);
 		godinaStudijaPane.add(godinaStudijaCombo);
 
 		ButtonGroup finansiranjeGroup = new ButtonGroup();
@@ -103,10 +104,12 @@ public class StudentDialog extends JDialog {
 				String email = StudentDialog.this.getEmailText();
 				String brIndeksa = StudentDialog.this.getBrojIndeksaText();
 				String datumRodjenja = StudentDialog.this.getDatumRodjenjaText();
+				int godinaStudija = StudentDialog.this.getGodinaStudijaText();
 				boolean samofinansiranje = StudentDialog.this.getSamofinansiranjeText();
 				boolean budzet = StudentDialog.this.getBudzetText();
-				//StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-				//		datumRodjenja, samofinansiranje, budzet);
+				StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
+						datumRodjenja, godinaStudija, samofinansiranje, budzet);
+				StudentDialog.super.dispose();
 			}
 		});
 		JButton odustanakButton = new JButton("Odustanak");
@@ -132,6 +135,10 @@ public class StudentDialog extends JDialog {
 		this.add(panel);
 	}
 	
+	protected int getGodinaStudijaText() {
+		return godinaStudijaCombo.getSelectedIndex() + 1;
+	}
+
 	protected String getImeText() {
 		return imeText.getText();
 	}

@@ -29,6 +29,7 @@ public class MainFrame extends JFrame {
 		return instance;
 	}
 	
+	public TabbedPane tabbedpane;
 	
 	public MainFrame() throws HeadlessException {
 		
@@ -49,9 +50,10 @@ public class MainFrame extends JFrame {
 		toolbar.setTabelaPredmeta(tabelaPredmeta);
 		JTable tabelaProfesora=ProfesorJTable.getInstance();
 		toolbar.setTabelaProfesora(tabelaProfesora);
+		JTable tabelaStudenata = StudentJTable.getInstance();
 		
 		
-		JTabbedPane tabbedpane=new TabbedPane(tabelaProfesora, tabelaPredmeta);
+		tabbedpane=new TabbedPane(tabelaStudenata, tabelaProfesora, tabelaPredmeta);
 		add(tabbedpane,BorderLayout.CENTER);
 		tabbedpane.addChangeListener(new ChangeListener() {
 		

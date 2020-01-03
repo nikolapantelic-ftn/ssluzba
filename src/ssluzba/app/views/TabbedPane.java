@@ -20,11 +20,11 @@ public class TabbedPane extends JTabbedPane {
 
 	
 
-	public TabbedPane(JTable tabelaProfesora,JTable tabelaPredmeta) {
+	public TabbedPane(JTable tabelaStudenata, JTable tabelaProfesora,JTable tabelaPredmeta) {
 		//super();
-		JLabel lab=new JLabel("bb");
+		JScrollPane studentiPane = new JScrollPane(tabelaStudenata);
 		JScrollPane scP = new JScrollPane(tabelaProfesora);
-		this.addTab("Studenti", lab);
+		this.addTab("Studenti", studentiPane);
 
 		this.addTab("Profesori", scP);
 

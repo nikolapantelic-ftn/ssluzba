@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -30,7 +31,25 @@ public class MenuBar extends JMenuBar implements ActionListener {
 		menuHelp.setMnemonic(KeyEvent.VK_H);
 		JMenuItem menuItemNew = new JMenuItem("New");
 		menuItemNew.setIcon(createImageIcon("new.png", ""));
-		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));	
+		menuItemNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
+		menuItemNew.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				switch(MainFrame.getInstance().tabbedpane.getSelectedIndex()) {
+				case 0:
+					StudentDialog studentDialog = new StudentDialog();
+					studentDialog.setVisible(true);
+					break;
+				case 1:
+					//Profesor dialog
+					break;
+				case 2:
+					PredmetDialog predmetDialog = new PredmetDialog();
+					predmetDialog.setVisible(true);
+					break;
+				}
+			}
+		});
 		JMenuItem menuItemClose = new JMenuItem("Close");
 		menuItemClose.setIcon(createImageIcon("close.png", ""));
 		menuItemClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
