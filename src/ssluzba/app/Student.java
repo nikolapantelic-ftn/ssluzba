@@ -3,13 +3,11 @@ package ssluzba.app;
 import java.util.ArrayList;
 import java.util.Date;
 
-enum Status { B, S }
-
 public class Student {
 	private String ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa;
 	private Date datumRodjenja, datumUpisa;
 	private double prosecnaOcena;
-	Status status;
+	private Status status;
 	private ArrayList<Predmet> predmeti;
 	
 	public Student() {}
