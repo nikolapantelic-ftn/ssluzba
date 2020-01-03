@@ -21,9 +21,15 @@ import ssluzba.app.controllers.StudentiController;
 public class StudentDialog extends JDialog {
 
 	private static final long serialVersionUID = -1851059461360849827L;
-	private JRadioButton samofinansiranjeButton, budzetButton;
-	private JTextField imeText, prezimeText, datumRodjenjaText, adresaStanovanjaText, brojTelefonaText, brojIndeksaText, emailText;
-	JComboBox<String> godinaStudijaCombo;
+	protected JRadioButton samofinansiranjeButton, budzetButton;
+	protected JTextField imeText;
+	protected JTextField prezimeText;
+	protected JTextField datumRodjenjaText;
+	protected JTextField adresaStanovanjaText;
+	protected JTextField brojTelefonaText;
+	protected JTextField brojIndeksaText;
+	protected JTextField emailText;
+	protected JComboBox<String> godinaStudijaCombo;
 
 	public StudentDialog() {
 		this.setTitle("Dodavanje Studenta");
@@ -95,23 +101,7 @@ public class StudentDialog extends JDialog {
 
 		JPanel buttonPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		JButton potvrdaButton = new JButton("Potvrda");
-		potvrdaButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String ime = StudentDialog.this.getImeText();
-				String prezime = StudentDialog.this.getPrezimeText();
-				String adresaStanovanja = StudentDialog.this.getAdresaStanovanjaText();
-				String kontaktTelefon = StudentDialog.this.getBrojTelefonaText();
-				String email = StudentDialog.this.getEmailText();
-				String brIndeksa = StudentDialog.this.getBrojIndeksaText();
-				String datumRodjenja = StudentDialog.this.getDatumRodjenjaText();
-				int godinaStudija = StudentDialog.this.getGodinaStudijaText();
-				boolean samofinansiranje = StudentDialog.this.getSamofinansiranjeText();
-				boolean budzet = StudentDialog.this.getBudzetText();
-				StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-						datumRodjenja, godinaStudija, samofinansiranje, budzet);
-				StudentDialog.super.dispose();
-			}
-		});
+		potvrdaListener(potvrdaButton);
 		JButton odustanakButton = new JButton("Odustanak");
 		odustanakButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -173,6 +163,26 @@ public class StudentDialog extends JDialog {
 	
 	protected boolean getBudzetText() {
 		return budzetButton.isSelected();
+	}
+	
+	protected void potvrdaListener(JButton potvrdaButton) {
+		potvrdaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ime = StudentDialog.this.getImeText();
+				String prezime = StudentDialog.this.getPrezimeText();
+				String adresaStanovanja = StudentDialog.this.getAdresaStanovanjaText();
+				String kontaktTelefon = StudentDialog.this.getBrojTelefonaText();
+				String email = StudentDialog.this.getEmailText();
+				String brIndeksa = StudentDialog.this.getBrojIndeksaText();
+				String datumRodjenja = StudentDialog.this.getDatumRodjenjaText();
+				int godinaStudija = StudentDialog.this.getGodinaStudijaText();
+				boolean samofinansiranje = StudentDialog.this.getSamofinansiranjeText();
+				boolean budzet = StudentDialog.this.getBudzetText();
+				StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
+						datumRodjenja, godinaStudija, samofinansiranje, budzet);
+				StudentDialog.super.dispose();
+			}
+		});
 	}
 
 }

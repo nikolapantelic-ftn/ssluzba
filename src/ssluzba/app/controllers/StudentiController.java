@@ -19,9 +19,7 @@ public class StudentiController  {
 		return instance;
 	}
 
-	private StudentiController() {
-		// TODO Auto-generated constructor stub
-	}
+	private StudentiController() {}
 
 	public void dodaj(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
 			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) {
@@ -29,6 +27,34 @@ public class StudentiController  {
 		LocalDate datumRodj = LocalDate.parse(datumRodjenja);
 		BazaStudenata.getInstance().dodajStudenta(new Student(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodj, godinaStudija, status));
 		StudentJTable.getInstance().azurirajPrikaz();
+	}
+
+	public void izbrisi(int row) {
+		if(row<0)
+			return;
+		BazaStudenata.getInstance().deleteStudent(row);
+		StudentJTable.getInstance().azurirajPrikaz();
+		
+	}
+
+	public void izmeni(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
+			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) {
+		for(Student s:BazaStudenata.getInstance().getStudenti()) {
+			if(s.getBrIndeksa().equals(brIndeksa)) {
+				s.setIme(ime);
+				s.setPrezime(prezime);
+				s.setAdresaStanovanja(adresaStanovanja);
+				s.setKontaktTelefon(kontaktTelefon);
+				s.setEmail(email);
+				s.setBrIndeksa(brIndeksa);
+				s.setDatumRodjenja(LocalDate.parse(datumRodjenja));
+				s.setGodinaStudija(godinaStudija);
+				Status status = samofinansiranje ? Status.S : Status.B;
+				s.setStatus(status);
+			}
+		}
+		StudentJTable.getInstance().azurirajPrikaz();
+		
 	}
 	
 	
