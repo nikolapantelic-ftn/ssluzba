@@ -2,13 +2,13 @@ package ssluzba.app.views;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.nio.channels.SelectionKey;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 
-import javafx.scene.control.SelectionModel;
 import ssluzba.app.BazaPredmeta;
 
 public class PredmetJTable extends JTable {
@@ -33,9 +33,13 @@ public class PredmetJTable extends JTable {
 		this.setColumnSelectionAllowed(true);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setModel(new AbstractTableModellPredmeti());
-		
+		addCellClickListener(this);
 	}
 	
+	
+
+
+
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 		Component c = super.prepareRenderer(renderer, row, column);
 		// selektovani red ce imati drugaciju boju od ostalih
@@ -51,5 +55,22 @@ public class PredmetJTable extends JTable {
 		AbstractTableModellPredmeti model = (AbstractTableModellPredmeti) this.getModel();
 		model.fireTableDataChanged();
 		validate();
+	}
+	
+	private void addCellClickListener(JTable table) {
+		table.addMouseListener(new MouseListener() {
+			public void mouseReleased(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseClicked(MouseEvent e) {
+				int row = PredmetJTable.this.rowAtPoint(e.getPoint());
+				int column = PredmetJTable.this.columnAtPoint(e.getPoint());
+				if(column == 5) {
+					StudentiNaPredmetuDialog dialog = new StudentiNaPredmetuDialog(BazaPredmeta.getInstance().getRow(row));
+					dialog.setVisible(true);
+				}
+			}
+		});
 	}
 }
