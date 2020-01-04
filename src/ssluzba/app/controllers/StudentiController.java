@@ -4,6 +4,7 @@ package ssluzba.app.controllers;
 import java.time.LocalDate;
 
 import ssluzba.app.BazaStudenata;
+import ssluzba.app.Predmet;
 import ssluzba.app.Status;
 import ssluzba.app.Student;
 import ssluzba.app.views.StudentJTable;
@@ -55,6 +56,22 @@ public class StudentiController  {
 		}
 		StudentJTable.getInstance().azurirajPrikaz();
 		
+	}
+	
+	public Student nadji(String brojIndeksa) {
+		for(Student s : BazaStudenata.getInstance().getStudenti()) {
+			if(s.getBrIndeksa().equals(brojIndeksa))
+				return s;
+		}
+		return null;
+	}
+
+	public void dodajStudentaNaPredmet(String brojIndeksa, Predmet predmet) {
+		for(Student s : BazaStudenata.getInstance().getStudenti()) {
+			if(s.getBrIndeksa().equals(brojIndeksa)) {
+				predmet.getStudenti().add(s);
+			}	
+		}
 	}
 	
 	

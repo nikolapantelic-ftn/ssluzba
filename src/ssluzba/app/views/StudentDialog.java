@@ -32,7 +32,7 @@ public class StudentDialog extends JDialog {
 	protected JComboBox<String> godinaStudijaCombo;
 
 	public StudentDialog() {
-		this.setTitle("Dodavanje Studenta");
+		this.setTitle("Dodavanje studenta");
 		this.setLayout(new FlowLayout());
 		this.setModal(true);
 		this.setSize(400, 450);
