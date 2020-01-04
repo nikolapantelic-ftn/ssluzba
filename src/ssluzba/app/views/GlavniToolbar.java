@@ -28,6 +28,7 @@ import ssluzba.app.BazaProfesora;
 import ssluzba.app.Predmet;
 import ssluzba.app.Profesor;
 import ssluzba.app.controllers.PredmetiController;
+import ssluzba.app.controllers.ProfesoriController;
 
 
 
@@ -171,10 +172,12 @@ public class GlavniToolbar extends JToolBar {
 		editPr=new JButton();
 		delPr=new JButton();
 		addPP=new JButton();
+		addSP=new JButton();
 		tabelaPredmeta=new PredmetJTable();
 		editPredmetListener();
 		delPredmetListener();
 		addProfNaPredmetListener();
+		delProfesorListener();
 	}
 
 	public void setButton(JButton button) {
@@ -237,7 +240,7 @@ public class GlavniToolbar extends JToolBar {
 			setButton(delPr);
 			add(delPr);
 			addSeparator();
-			addSP=new JButton();
+			
 			addSP.setToolTipText("Dodaj studenta na predmet");
 			addSP.setIcon(new ImageIcon("images/addS.png"));
 			addSP.setMnemonic(KeyEvent.VK_S);
@@ -290,6 +293,8 @@ public class GlavniToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(tabelaPredmeta.getSelectedRow()==-1)
+					return;
 				int choice=JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete predmet?");
 				if (choice == JOptionPane.YES_OPTION) {
 					PredmetiController.getInstance().izbrisi(tabelaPredmeta.getSelectedRow());
@@ -333,8 +338,28 @@ public class GlavniToolbar extends JToolBar {
 						PredmetJTable.getInstance().azurirajPrikaz();
 					}
 					else {
-						System.out.println("nema");
+						JOptionPane.showMessageDialog(null, "Uneti profesor ne postoji!", "Greska", JOptionPane.ERROR_MESSAGE);
 					}
+				}
+				
+				
+			}
+		});
+	}
+	
+	public void delProfesorListener() {
+		delP.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(tabelaProfesora.getSelectedRow()==-1)
+					return;
+				int choice=JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete profesora?");
+				if (choice == JOptionPane.YES_OPTION) {
+					ProfesoriController.getInstance().deleteProfesor(tabelaProfesora.getSelectedRow());
+					JOptionPane.showMessageDialog(null, "Profesor obrisan!");
+				} else {
+					JOptionPane.showMessageDialog(null, "Otkazano");
 				}
 				
 				
