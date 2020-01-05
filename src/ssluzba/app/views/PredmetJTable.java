@@ -5,10 +5,14 @@ import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
+import javafx.scene.control.TableRow;
 import ssluzba.app.BazaPredmeta;
 
 public class PredmetJTable extends JTable {
@@ -34,6 +38,10 @@ public class PredmetJTable extends JTable {
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setModel(new AbstractTableModellPredmeti());
 		addCellClickListener(this);
+		TableRowSorter<TableModel> sort=new TableRowSorter<>(this.getModel());
+		sort.setSortable(4, false);
+		sort.setSortable(5, false);
+		this.setRowSorter(sort);
 	}
 	
 	
@@ -69,6 +77,10 @@ public class PredmetJTable extends JTable {
 				if(column == 5) {
 					StudentiNaPredmetuDialog dialog = new StudentiNaPredmetuDialog(BazaPredmeta.getInstance().getRow(row));
 					dialog.setVisible(true);
+				}
+				if(column==4) {
+					JDialog jd=new ProfesorNaPredmetuDialog();
+					jd.setVisible(true);
 				}
 			}
 		});

@@ -110,6 +110,10 @@ public class PredmetDialog extends JDialog {
 				
 				String semestar=(String) semestarPrCombo.getSelectedItem();
 				int godina=godinaPrCombo.getSelectedIndex()+1;
+				if(PredmetiController.getInstance().postojiSifra(sifra)) {
+					JOptionPane.showMessageDialog(null, "Vec postoji predmet sa datom sifrom");
+					return;
+				}
 				PredmetiController.getInstance().dodaj(sifra, naziv, semestar, godina);
 				PredmetDialog.super.dispose();
 				JOptionPane.showMessageDialog(null, "Predmet dodat");

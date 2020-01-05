@@ -54,6 +54,7 @@ public class GlavniToolbar extends JToolBar {
 	private JButton findPr;
 	private JTable tabelaPredmeta;
 	private JTable tabelaProfesora;
+	private boolean aktivirajPretraguPredmeta;
 	
 	private static GlavniToolbar instance=null;
 	
@@ -91,6 +92,7 @@ public class GlavniToolbar extends JToolBar {
 	}
 
 	public GlavniToolbar() {
+		
 		
 		super(SwingConstants.HORIZONTAL);
 		setFloatable(false);
@@ -173,11 +175,19 @@ public class GlavniToolbar extends JToolBar {
 		delPr=new JButton();
 		addPP=new JButton();
 		addSP=new JButton();
+		findPr=new JButton();
+		pretragaPR=new JTextField();
 		tabelaPredmeta=new PredmetJTable();
+		
 		editPredmetListener();
 		delPredmetListener();
 		addProfNaPredmetListener();
 		delProfesorListener();
+		addStudentNaPredmetListener();
+		findListener();
+	}
+	public boolean getAktivirajPretraguPredmeta() {
+		return aktivirajPretraguPredmeta;
 	}
 
 	public void setButton(JButton button) {
@@ -202,7 +212,7 @@ public class GlavniToolbar extends JToolBar {
 			add(pretraga);
 			add(findB);
 		}else if(tab==1) {
-			
+			removeAll();
 			setButton(addProf);
 			add(addProf);
 			addSeparator();
@@ -222,7 +232,7 @@ public class GlavniToolbar extends JToolBar {
 			add(findP);
 			}else {
 			
-			
+			removeAll();
 			setButton(addPr);
 			add(addPr);
 			addSeparator();
@@ -254,10 +264,10 @@ public class GlavniToolbar extends JToolBar {
 			setButton(addPP);
 			add(addPP);
 			addSeparator();
-			add(Box.createHorizontalStrut(400));
-			pretragaPR=new JTextField();
+			add(Box.createHorizontalStrut(500));
+			
 			add(pretragaPR);
-			findPr=new JButton();
+			
 			findPr.setToolTipText("Pronadji predmet");
 			findPr.setIcon(new ImageIcon("images/find.png"));
 			findPr.setMnemonic(KeyEvent.VK_F);
@@ -366,6 +376,45 @@ public class GlavniToolbar extends JToolBar {
 			}
 		});
 	}
+	
+	public void findListener() {
+		findPr.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String string=pretragaPR.getText();
+				PredmetiController.getInstance().ocistiPretragu();
+				if(string.isEmpty()) {
+					return;
+				}
+				else {
+					
+					String[] vrednosti=PredmetiController.getInstance().parseString(string);
+					PredmetiController.getInstance().pretraziPredmete(vrednosti[0],vrednosti[1], vrednosti[2], vrednosti[3]);
+					
+					if(PredmetiController.getInstance().getPronadjeno()==false) {
+						JOptionPane.showMessageDialog(null, "Nije pronadjeno nista za zadati kriterijum");
+					}
+				}
+				
+				
+				
+			}
+		});
+		
+	}
+	public void addStudentNaPredmetListener() {
+		addSP.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(tabelaPredmeta.getSelectedRow()==-1)
+					return;
+				JDialog jp=new DodajStudentaNaPredmetDialog(BazaPredmeta.getInstance().getRow(tabelaPredmeta.getSelectedRow()));
+				jp.setVisible(true);
+				
+			}
+		});
 	}
 
-
+}

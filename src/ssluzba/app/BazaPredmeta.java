@@ -3,6 +3,8 @@ package ssluzba.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import ssluzba.app.views.GlavniToolbar;
+
 
 
 
@@ -17,10 +19,12 @@ public class BazaPredmeta {
 	}
 	
 	private List<Predmet> predmeti;
+	private List<Predmet> pretraga;
 	private List<String> kolone;
 	
 	private BazaPredmeta() {
 		initPredmete();
+		this.pretraga = new ArrayList<Predmet>();
 		this.kolone=new ArrayList<String>();
 		this.kolone.add("Sifra");
 		this.kolone.add("Naziv");
@@ -33,11 +37,16 @@ public class BazaPredmeta {
 		this.predmeti = new ArrayList<Predmet>();
 		predmeti.add(new Predmet("sdadsa", "Mika", "Letnji", 2,null,null));
 		predmeti.add(new Predmet("sdadsa", "3llll", "Zimski", 2,null,null));
-		predmeti.add(new Predmet("analiza", "3llll", "Zimski", 2,null,null));
+		predmeti.add(new Predmet("a1", "b2", "Zimski", 2,null,null));
+		predmeti.add(new Predmet("a2", "b2", "Zimski", 2,null,null));
+		predmeti.add(new Predmet("a3", "b2", "Letnji", 2,null,null));
 	}
 	
 	public List<Predmet> getPredmeti(){
 		return predmeti;
+	}
+	public List<Predmet> getPretraga(){
+		return pretraga;
 	}
 	
 	public void setPredmeti(ArrayList<Predmet> pred) {
@@ -45,6 +54,8 @@ public class BazaPredmeta {
 	}
 	
 	public Predmet getRow(int row) {
+		if(!BazaPredmeta.getInstance().getPretraga().isEmpty())
+			return this.pretraga.get(row);
 		return this.predmeti.get(row);
 	}
 	
@@ -66,7 +77,13 @@ public class BazaPredmeta {
 		return kolone.size();
 	}
 	public String getValueAt(int row ,int column) {
-		Predmet predmet=this.predmeti.get(row);
+		Predmet predmet;
+		if(BazaPredmeta.getInstance().getPretraga().isEmpty()) {
+			
+			 predmet=this.predmeti.get(row);
+		}else {
+			predmet=this.pretraga.get(row);
+		}
 		switch(column) {
 		case 0:
 				return predmet.getSifra();
@@ -78,7 +95,7 @@ public class BazaPredmeta {
 			return Integer.toString(predmet.getGodinaPredmeta());
 		case 4:
 			if(predmet.getProfesor()!=null)
-			return predmet.getProfesor().getIme();
+			return predmet.getProfesor().getBrojLicne();
 			else return null;
 		default:
 			return null;

@@ -99,7 +99,7 @@ public class PredmetEditDialog extends JDialog {
 	}
 	
 	public void savePredmetListener() {
-		sifraText.setEditable(false);
+		
 		potvrdaButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -109,6 +109,10 @@ public class PredmetEditDialog extends JDialog {
 				String naziv=nazivText.getText();
 				String semestar=(String) semestarPrCombo.getSelectedItem();
 				int godina=godinaPrCombo.getSelectedIndex()+1;
+				if(PredmetiController.getInstance().postojiSifra(sifra)) {
+					JOptionPane.showMessageDialog(null, "Vec postoji predmet sa datom sifrom");
+					return;
+				}
 				PredmetiController.getInstance().izmeni(sifra,naziv,semestar,godina);
 				PredmetEditDialog.super.dispose();
 				JOptionPane.showMessageDialog(null, "Predmet izmenjen");

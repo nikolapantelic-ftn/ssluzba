@@ -30,7 +30,14 @@ public class AbstractTableModellPredmeti extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
+	
+		if(!BazaPredmeta.getInstance().getPretraga().isEmpty()) {
+		
+			return BazaPredmeta.getInstance().getPretraga().size();
+			
+		}else{
 		return BazaPredmeta.getInstance().getPredmeti().size();
+		}
 	}
 	public String getColumnName(int column) {
 	
