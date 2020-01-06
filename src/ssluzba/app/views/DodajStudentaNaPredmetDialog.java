@@ -9,6 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -63,9 +64,23 @@ public class DodajStudentaNaPredmetDialog extends JDialog {
 		potvrdaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String brojIndeksa = DodajStudentaNaPredmetDialog.this.getBrojIndeksaText();
-				StudentiController.getInstance().dodajStudentaNaPredmet(brojIndeksa,
+				int errorCode = StudentiController.getInstance().dodajStudentaNaPredmet(brojIndeksa,
 						DodajStudentaNaPredmetDialog.this.getPredmet());
-				DodajStudentaNaPredmetDialog.super.dispose();
+				switch(errorCode) {
+				case 0:
+					JOptionPane.showMessageDialog(null, "Student uspesno dodat.");
+					DodajStudentaNaPredmetDialog.super.dispose();
+					break;
+				case 1:
+					JOptionPane.showMessageDialog(null, "Student je vec upisan na ovom predmetu");
+					break;
+				case 2:
+					JOptionPane.showMessageDialog(null, "Student nije na odgovarajucoj godini");
+					break;
+				case 3:
+					JOptionPane.showMessageDialog(null, "Nepostojeci student");
+					break;
+				}		
 			}
 		});
 

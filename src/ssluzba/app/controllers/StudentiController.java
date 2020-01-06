@@ -67,12 +67,21 @@ public class StudentiController  {
 		return null;
 	}
 
-	public void dodajStudentaNaPredmet(String brojIndeksa, Predmet predmet) {
+	public int dodajStudentaNaPredmet(String brojIndeksa, Predmet predmet) {
+		int errorCode = 3;
 		for(Student s : BazaStudenata.getInstance().getStudenti()) {
 			if(s.getBrIndeksa().equals(brojIndeksa)) {
-				predmet.getStudenti().add(s);
-			}	
+				if(predmet.getStudenti().contains(s))
+					errorCode = 1;
+				else if(predmet.getGodinaPredmeta() != s.getGodinaStudija())
+					errorCode = 2;
+				else {
+					predmet.getStudenti().add(s);
+					errorCode = 0;
+				}
+			}
 		}
+		return errorCode;
 	}
 
 	public String[] getIndeksi(ArrayList<Student> studenti) {
