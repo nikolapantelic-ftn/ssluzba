@@ -66,8 +66,11 @@ public class Predmet {
 	public void setStudenti(ArrayList<Student> studenti) {
 		this.studenti = studenti;
 	}
+	
 
-
+	public void removeProfesor() {
+		this.profesor=null;
+	}
 	
 	
 	

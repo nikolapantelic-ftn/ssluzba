@@ -12,8 +12,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import javafx.scene.control.TableRow;
+
 import ssluzba.app.BazaPredmeta;
+
 
 public class PredmetJTable extends JTable {
 
@@ -78,8 +79,8 @@ public class PredmetJTable extends JTable {
 					StudentiNaPredmetuDialog dialog = new StudentiNaPredmetuDialog(BazaPredmeta.getInstance().getRow(row));
 					dialog.setVisible(true);
 				}
-				if(column==4) {
-					JDialog jd=new ProfesorNaPredmetuDialog();
+				if(column==4 && BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow()).getProfesor()!=null) {
+					JDialog jd=new ProfesorNaPredmetuDialog(BazaPredmeta.getInstance().getRow(getSelectedRow()).getProfesor());
 					jd.setVisible(true);
 				}
 			}

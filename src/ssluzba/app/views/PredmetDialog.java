@@ -100,7 +100,8 @@ public class PredmetDialog extends JDialog {
 	}
 	public void addListener() {
 		
-		
+		String sifra1=sifraText.getText();
+		System.out.println(sifra1);
 		potvrdaButton.addActionListener(new ActionListener() {
 			
 			@Override

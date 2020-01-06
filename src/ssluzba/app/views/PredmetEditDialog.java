@@ -19,6 +19,10 @@ import ssluzba.app.controllers.PredmetiController;
 
 public class PredmetEditDialog extends JDialog {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2819973983224806900L;
 	private JTextField sifraText;
 	private JTextField nazivText;
 	private JComboBox<String> semestarPrCombo ;
@@ -99,6 +103,7 @@ public class PredmetEditDialog extends JDialog {
 	}
 	
 	public void savePredmetListener() {
+		String sifraPre=sifraText.getText();
 		
 		potvrdaButton.addActionListener(new ActionListener() {
 			
@@ -109,7 +114,9 @@ public class PredmetEditDialog extends JDialog {
 				String naziv=nazivText.getText();
 				String semestar=(String) semestarPrCombo.getSelectedItem();
 				int godina=godinaPrCombo.getSelectedIndex()+1;
-				if(PredmetiController.getInstance().postojiSifra(sifra)) {
+				if(sifraPre.equals(sifra)) {
+					
+				}else if(PredmetiController.getInstance().postojiSifra(sifra)) {
 					JOptionPane.showMessageDialog(null, "Vec postoji predmet sa datom sifrom");
 					return;
 				}

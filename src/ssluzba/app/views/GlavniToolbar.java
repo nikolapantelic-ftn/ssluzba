@@ -378,6 +378,7 @@ public class GlavniToolbar extends JToolBar {
 	}
 	
 	public void findListener() {
+		
 		findPr.addActionListener(new ActionListener() {
 			
 			@Override
