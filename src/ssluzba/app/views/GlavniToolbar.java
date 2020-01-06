@@ -5,8 +5,6 @@ package ssluzba.app.views;
 
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,19 +14,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import ssluzba.app.BazaPredmeta;
-import ssluzba.app.BazaProfesora;
-import ssluzba.app.Predmet;
-import ssluzba.app.Profesor;
 import ssluzba.app.controllers.PredmetiController;
 import ssluzba.app.controllers.ProfesoriController;
+import ssluzba.app.controllers.StudentiController;
 
 
 
@@ -55,6 +49,7 @@ public class GlavniToolbar extends JToolBar {
 	private JTable tabelaPredmeta;
 	private JTable tabelaProfesora;
 	private boolean aktivirajPretraguPredmeta;
+	private boolean pretragaStudenata;
 	
 	private static GlavniToolbar instance=null;
 	
@@ -187,6 +182,7 @@ public class GlavniToolbar extends JToolBar {
 		addStudentNaPredmetListener();
 		findPredmetListener();
 		findProfesorListener();
+		findStudentListener();
 	}
 	public boolean getAktivirajPretraguPredmeta() {
 		return aktivirajPretraguPredmeta;
@@ -376,6 +372,25 @@ public class GlavniToolbar extends JToolBar {
 			}
 		});
 	}
+	public void findStudentListener() {
+		findB.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String pretragaString = pretraga.getText();
+				if(pretragaString.isEmpty()) return;
+				int errorCode = StudentiController.getInstance().pretraziStudente(pretragaString);
+				if(errorCode == 1) {
+					JOptionPane.showMessageDialog(null, "Pogresno unet kriterijum");
+				}else if(errorCode == 2) {
+					JOptionPane.showMessageDialog(null, "Nepostojeca kolona");
+				}else {
+					GlavniToolbar.getInstance().setPretragaStudenata(true);
+					StudentJTable.getInstance().azurirajPrikaz();
+				}
+			}
+		});
+	}
 	
 	public void findPredmetListener() {
 		
@@ -445,6 +460,12 @@ public class GlavniToolbar extends JToolBar {
 				
 			}
 		});
+	}
+	public boolean isPretragaStudenata() {
+		return pretragaStudenata;
+	}
+	public void setPretragaStudenata(boolean pretragaStudenata) {
+		this.pretragaStudenata = pretragaStudenata;
 	}
 
 }

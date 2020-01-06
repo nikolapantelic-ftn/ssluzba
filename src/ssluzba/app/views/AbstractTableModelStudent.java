@@ -18,18 +18,21 @@ public class AbstractTableModelStudent extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return BazaStudenata.getInstance().getStudenti().size();
+		if (GlavniToolbar.getInstance().isPretragaStudenata())
+			return BazaStudenata.getInstance().getPretraga().size();
+		else
+			return BazaStudenata.getInstance().getStudenti().size();
 	}
-	
+
 	@Override
 	public String getColumnName(int column) {
-		
+
 		return BazaStudenata.getInstance().getColumnName(column);
 	}
 
 	@Override
 	public Object getValueAt(int arg0, int arg1) {
-		
+
 		return BazaStudenata.getInstance().getValueAt(arg0, arg1);
 	}
 
