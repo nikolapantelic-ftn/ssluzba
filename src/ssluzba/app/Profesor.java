@@ -11,9 +11,8 @@ public class Profesor {
 	
 
 
-	public Profesor(String ime, String prezime, String adresa, String kontaktTelefon, String eMail,
-			String adresaKancelarije, String titula, String zvanje, String string,
-			String brojLicne) {
+	public Profesor(String ime, String prezime, String brojLicne,String adresa, String kontaktTelefon, String eMail,
+			String adresaKancelarije, String titula, String zvanje, String string) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;

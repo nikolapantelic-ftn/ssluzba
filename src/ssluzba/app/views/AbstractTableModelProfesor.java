@@ -2,8 +2,7 @@ package ssluzba.app.views;
 
 import javax.swing.table.AbstractTableModel;
 
-
-
+import ssluzba.app.BazaPredmeta;
 import ssluzba.app.BazaProfesora;
 
 
@@ -33,7 +32,9 @@ public class AbstractTableModelProfesor extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
+		if(BazaProfesora.getInstance().getPretraga().isEmpty())
 		return BazaProfesora.getInstance().getProfesori().size();
+		return BazaProfesora.getInstance().getPretraga().size();
 	}
 	public String getColumnName(int column) {
 	

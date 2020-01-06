@@ -93,7 +93,7 @@ public class PredmetiController {
 	public void pretraziPredmete(String sifra,String naziv,String semestar,String godina) {
 		
 		for(Predmet p:BazaPredmeta.getInstance().getPredmeti()) {
-			if(pretraziSifru(sifra, p) && pretraziNaziv(naziv, p) && pretraziSemestar(semestar, p)) {
+			if(pretraziSifru(sifra, p) && pretraziNaziv(naziv, p) && pretraziSemestar(semestar, p)&& pretraziGodinu(godina, p)) {
 				pronadjeno=true;
 				BazaPredmeta.getInstance().getPretraga().add(p);
 				
@@ -134,6 +134,17 @@ public class PredmetiController {
 			if(p.getSemestar().equals(string)) {
 				return true;
 			}
+		
+		return false;
+		
+	}
+	public boolean pretraziGodinu(String string,Predmet p) {
+		if(string.isEmpty())
+			return true;
+			int godina=Integer.parseInt(string);
+			if (p.getGodinaPredmeta()==godina)
+				return true;
+			
 		
 		return false;
 		

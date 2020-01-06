@@ -13,9 +13,12 @@ public class BazaProfesora {
 	}
 	private List<Profesor> profesori;
 	private List<String> kolone;
+	private List<Profesor> pretragaProfesori;
 	
 	private BazaProfesora() {
 		initProf();
+		this.pretragaProfesori=new ArrayList<Profesor>();
+		
 		this.kolone=new ArrayList<String>();
 		this.kolone.add("Ime");
 		this.kolone.add("Prezime");
@@ -34,10 +37,14 @@ public class BazaProfesora {
 	private void initProf() {
 		this.profesori=new ArrayList<Profesor>();
 		profesori.add(new Profesor("aaa", "aaa", "aaa", "aaa", "aaa", "aaa", "aaa", "aaa", "11-11-1339", "aaa11"));
-		
+		profesori.add(new Profesor("Nikola", "Bobi", "11234a" ,"zeleznicka","0637172345", "nikola@uns.rs", "gogoljeva 13", "Dr", "asistent", "11-11-1339"));
+		profesori.add(new Profesor("Milan", "Bobi", "1111AB" ,"zeleznicka","0637172345", "milana@uns.rs", "gogoljeva 13", "Dr", "asistent", "11-11-1339"));
 	}
 	public List<Profesor> getProfesori(){
 		return profesori;
+	}
+	public List<Profesor> getPretraga(){
+		return pretragaProfesori;
 	}
 	
 	public void setProfesori(ArrayList<Profesor> prof) {
@@ -45,7 +52,9 @@ public class BazaProfesora {
 	}
 	
 	public Profesor getRow(int row) {
+		if(pretragaProfesori.isEmpty())
 		return this.profesori.get(row);
+		return this.pretragaProfesori.get(row);
 	}
 	public int getColumnCount() {
 		return kolone.size();
@@ -63,7 +72,12 @@ public class BazaProfesora {
 	}
 	
 	public String getValueAt(int row ,int column) {
-		Profesor profesor=this.profesori.get(row);
+		Profesor profesor;
+		if(BazaProfesora.getInstance().getPretraga().isEmpty()) {
+		profesor=this.profesori.get(row);
+		}else {
+		profesor=this.pretragaProfesori.get(row);
+		}
 		switch(column) {
 		case 0:
 				return profesor.getIme();
@@ -73,6 +87,18 @@ public class BazaProfesora {
 			return profesor.getBrojLicne();
 		case 3:
 			return profesor.getAdresa();
+		case 4:
+			return profesor.getKontaktTelefon();
+		case 5:
+			return profesor.geteMail();
+		case 6:
+			return profesor.getAdresaKancelarije();
+		case 7:
+			return profesor.getTitula();
+		case 8:
+			return profesor.getZvanje();
+		case 9:
+			return profesor.getDatumRodjenja();
 		default:
 			return null;
 		}
