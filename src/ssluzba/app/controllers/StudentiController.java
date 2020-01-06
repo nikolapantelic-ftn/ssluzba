@@ -2,6 +2,7 @@ package ssluzba.app.controllers;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import ssluzba.app.BazaStudenata;
 import ssluzba.app.Predmet;
@@ -71,6 +72,24 @@ public class StudentiController  {
 			if(s.getBrIndeksa().equals(brojIndeksa)) {
 				predmet.getStudenti().add(s);
 			}	
+		}
+	}
+
+	public String[] getIndeksi(ArrayList<Student> studenti) {
+		ArrayList<String> indeksi = new ArrayList<String>();
+		for(Student s: studenti) {
+			indeksi.add(s.getBrIndeksa());
+		}
+		String[] indeksiArray = indeksi.toArray(new String[indeksi.size()]);
+		return indeksiArray;
+	}
+
+	public void izbrisiStudenta(Predmet p, String brIndeksa) {
+		for(Student s: p.getStudenti()) {
+			if(brIndeksa.equals(s.getBrIndeksa())) {
+				p.getStudenti().remove(s);
+				return;
+			}
 		}
 	}
 	
