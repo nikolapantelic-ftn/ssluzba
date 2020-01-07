@@ -1,5 +1,9 @@
 package ssluzba.app.controllers;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import ssluzba.app.BazaPredmeta;
 import ssluzba.app.BazaProfesora;
 import ssluzba.app.Predmet;
@@ -19,8 +23,42 @@ public class ProfesoriController {
 
 	private boolean pronadjeno;
 
-	public ProfesoriController() {
-		// TODO Auto-generated constructor stub
+	private ProfesoriController() {
+	}
+
+	public void dodaj(String ime, String prezime, String brojLicne, String adresa, String kontaktTelefon, String eMail,
+			String adresaKancelarije, String titula, String zvanje, String datumRodjenja) throws Exception {
+		if (ime.isEmpty())
+			throw new Exception("Ime ne sme biti prazno!");
+		if (prezime.isEmpty())
+			throw new Exception("Prezime ne sme biti prazno!");
+		if (brojLicne.isEmpty())
+			throw new Exception("Broj licne karte ne sme biti prazan!");
+		if (datumRodjenja.isEmpty())
+			throw new Exception("Datum rodjenja ne sme biti prazan!");
+		try {
+			DateTimeFormatter formatter = BazaProfesora.getInstance().getDateFormatter();
+			LocalDate.parse(datumRodjenja, formatter);
+		} catch (DateTimeParseException pe) {
+			throw new Exception("Datum mora biti u formatu dd.mm.yyyy.");
+		}
+		if (kontaktTelefon.isEmpty())
+			throw new Exception("Broj telefona ne sme biti prazan!");
+		if (eMail.isEmpty())
+			throw new Exception("Broj telefona ne sme biti prazan!");
+		if (adresa.isEmpty())
+			throw new Exception("Adresa stanovanja ne sme biti prazana!");
+		if (zvanje.isEmpty())
+			throw new Exception("Zvanje ne sme biti prazno!");
+
+		for (Profesor p : BazaProfesora.getInstance().getProfesori()) {
+			if (p.getBrojLicne().equals(brojLicne))
+				throw new Exception("Profesor vec postoji!");
+		}
+		Profesor profesor = new Profesor(ime, prezime, brojLicne, adresa, kontaktTelefon, eMail, adresaKancelarije,
+				titula, zvanje, datumRodjenja);
+		BazaProfesora.getInstance().dodajProfesora(profesor);
+		ProfesorJTable.getInstance().azurirajPrikaz();
 	}
 
 	public void deleteProfesor(int row) {
@@ -205,8 +243,9 @@ public class ProfesoriController {
 		}
 		return null;
 	}
+
 	public void setProfesorNaTrenutniPredmet(Profesor p) {
-		Predmet pr=BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow());
+		Predmet pr = BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow());
 		pr.setProfesor(p);
 	}
 }

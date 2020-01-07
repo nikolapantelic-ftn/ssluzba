@@ -177,6 +177,7 @@ public class GlavniToolbar extends JToolBar {
 		
 		editPredmetListener();
 		delPredmetListener();
+		dodajProfesoraListener();
 		addProfNaPredmetListener();
 		delProfesorListener();
 		addStudentNaPredmetListener();
@@ -350,6 +351,17 @@ public class GlavniToolbar extends JToolBar {
 				
 				
 			
+		});
+	}
+	
+	public void dodajProfesoraListener() {
+		addProf.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = new ProfesorDialog();
+				dialog.setVisible(true);
+			}
 		});
 	}
 	
