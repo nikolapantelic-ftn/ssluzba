@@ -1,8 +1,15 @@
 package ssluzba.app;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.thoughtworks.xstream.XStream;
 
 public class BazaProfesora {
 
@@ -40,11 +47,11 @@ public class BazaProfesora {
 
 	private void initProf() {
 		this.profesori = new ArrayList<Profesor>();
-		profesori.add(new Profesor("aaa", "aaa", "aaa", "aaa", "aaa", "aaa", "aaa", "aaa", "11-11-1339", "aaa11"));
-		profesori.add(new Profesor("Nikola", "Bobi", "11234a", "zeleznicka", "0637172345", "nikola@uns.rs",
-				"gogoljeva 13", "Dr", "asistent", "11-11-1339"));
-		profesori.add(new Profesor("Milan", "Bobi", "1111AB", "zeleznicka", "0637172345", "milana@uns.rs",
-				"gogoljeva 13", "Dr", "asistent", "11-11-1339"));
+		try {
+			deserialize();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<Profesor> getProfesori() {
@@ -118,5 +125,31 @@ public class BazaProfesora {
 
 	public DateTimeFormatter getDateFormatter() {
 		return this.dateFormatter;
+	}
+	
+	public void serialize() throws IOException {
+		File f = new File("database/bazaProfesora.xml");
+		OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
+		try {
+			XStream xs = new XStream();
+			xs.alias("profesor", Profesor.class);
+			xs.toXML(profesori, os);
+		} finally {
+			os.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deserialize() throws Exception {
+		File f = new File("database/bazaProfesora.xml");
+		try {
+			XStream xs = new XStream();
+			XStream.setupDefaultSecurity(xs);
+			xs.allowTypes(new Class[] {Profesor.class});
+			xs.alias("profesor", Profesor.class);
+			this.profesori = (List<Profesor>) xs.fromXML(f);
+		} catch (Exception e) {
+			System.out.println("Baza profesora ne postoji. Bice napravljena nova baza po zatvaranju aplikacije");
+		}
 	}
 }

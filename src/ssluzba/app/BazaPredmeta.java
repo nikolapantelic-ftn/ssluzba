@@ -1,7 +1,14 @@
 package ssluzba.app;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.thoughtworks.xstream.XStream;
 
 
 public class BazaPredmeta {
@@ -31,11 +38,11 @@ public class BazaPredmeta {
 	}
 	private void initPredmete() {
 		this.predmeti = new ArrayList<Predmet>();
-		predmeti.add(new Predmet("sdadsa", "Mika", "Letnji", 2,null,null));
-		predmeti.add(new Predmet("sdadsa", "3llll", "Zimski", 2,null,null));
-		predmeti.add(new Predmet("a1", "b2", "Zimski", 2,null,null));
-		predmeti.add(new Predmet("a2", "b2", "Zimski", 2,null,null));
-		predmeti.add(new Predmet("a3", "b2", "Letnji", 2,null,null));
+		try {
+			deserialize();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public List<Predmet> getPredmeti(){
@@ -112,5 +119,32 @@ public class BazaPredmeta {
 	public  void deletePredmet(int row) {
 		this.predmeti.remove(row);
 		
+	}
+	
+	public void serialize() throws IOException {
+		File f = new File("database/bazaPredmeta.xml");
+		OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
+		try {
+			XStream xs = new XStream();
+			xs.alias("predmet", Predmet.class);
+			xs.toXML(predmeti, os);
+		} finally {
+			os.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deserialize() throws Exception {
+		File f = new File("database/bazaPredmeta.xml");
+		try {
+			XStream xs = new XStream();
+			XStream.setupDefaultSecurity(xs);
+			xs.allowTypes(new Class[] {Predmet.class, Student.class});
+			xs.alias("predmet", Predmet.class);
+			this.predmeti = (List<Predmet>) xs.fromXML(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Baza predmeta ne postoji. Bice napravljena nova baza po zatvaranju aplikacije");
+		}
 	}
 }

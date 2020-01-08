@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +46,7 @@ public class BazaStudenata {
 		studenti = new ArrayList<Student>();
 		try {
 			deserialize();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -141,7 +139,7 @@ public class BazaStudenata {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void deserialize() throws IOException {
+	public void deserialize() throws Exception {
 		File f = new File("database/bazaStudenata.xml");
 		try {
 			XStream xs = new XStream();
@@ -150,7 +148,7 @@ public class BazaStudenata {
 			xs.alias("student", Student.class);
 			this.studenti = (List<Student>) xs.fromXML(f);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Baza studenata ne postoji. Bice napravljena nova baza po zatvaranju aplikacije");
 		}
 	}
 
