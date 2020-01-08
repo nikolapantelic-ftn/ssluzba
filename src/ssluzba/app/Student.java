@@ -1,7 +1,6 @@
 package ssluzba.app;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Student {
 	private String ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa;
@@ -9,7 +8,6 @@ public class Student {
 	private int godinaStudija;
 	private double prosecnaOcena;
 	private Status status;
-	private ArrayList<Predmet> predmeti;
 	
 	public Student() {}
 
@@ -26,7 +24,6 @@ public class Student {
 		this.status = status;
 		this.datumUpisa = LocalDate.now();
 		this.godinaStudija = godinaStudija;
-		this.predmeti = new ArrayList<Predmet>();
 		this.prosecnaOcena = 0;
 	}
 
@@ -108,14 +105,6 @@ public class Student {
 
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	public ArrayList<Predmet> getPredmeti() {
-		return predmeti;
-	}
-
-	public void setPredmeti(ArrayList<Predmet> predmeti) {
-		this.predmeti = predmeti;
 	}
 
 	public int getGodinaStudija() {

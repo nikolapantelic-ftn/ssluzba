@@ -1,9 +1,16 @@
 package ssluzba.app;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.thoughtworks.xstream.XStream;
 
 import ssluzba.app.views.GlavniToolbar;
 
@@ -38,14 +45,12 @@ public class BazaStudenata {
 	private void initStudente() {
 		pretraga = new ArrayList<Student>();
 		studenti = new ArrayList<Student>();
-		studenti.add(new Student("Nikola", "Pantelic", "Backi Jarak", "0615558295", "nikolapantelic@gmail.com",
-				"ra-234-2017", LocalDate.parse("15.12.1998.", dateFormatter), 3, Status.B));
-		studenti.add(new Student("Ognjen", "Peric", "Lacarak", "0618888888", "ognjenp434@gmail.com", "ra-123-2016",
-				LocalDate.parse("1996-12-15"), 2, Status.B));
-		studenti.add(new Student("Marko", "Markovic", "Novi Sad", "0635848295", "markomarkovic@gmail.com",
-				"ra-244-2016", LocalDate.parse("1998-10-15"), 2, Status.S));
-		studenti.add(new Student("Petar", "Petrovic", "Beograd", "0625848295", "petarpetrovic@gmail.com", "ra-5-2017",
-				LocalDate.parse("1996-12-15"), 4, Status.S));
+		try {
+			deserialize();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -121,6 +126,32 @@ public class BazaStudenata {
 	
 	public DateTimeFormatter getDateFormatter() {
 		return this.dateFormatter;
+	}
+	
+	public void serialize() throws IOException {
+		File f = new File("database/bazaStudenata.xml");
+		OutputStream os = new BufferedOutputStream(new FileOutputStream(f));
+		try {
+			XStream xs = new XStream();
+			xs.alias("student", Student.class);
+			xs.toXML(studenti, os);
+		} finally {
+			os.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deserialize() throws IOException {
+		File f = new File("database/bazaStudenata.xml");
+		try {
+			XStream xs = new XStream();
+			XStream.setupDefaultSecurity(xs);
+			xs.allowTypes(new Class[] {Student.class});
+			xs.alias("student", Student.class);
+			this.studenti = (List<Student>) xs.fromXML(f);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

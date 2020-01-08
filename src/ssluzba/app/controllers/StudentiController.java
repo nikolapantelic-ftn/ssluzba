@@ -108,7 +108,6 @@ public class StudentiController {
 			throw new Exception("Datum rodjenja ne sme biti prazan!");
 		try {
 			DateTimeFormatter formatter = BazaStudenata.getInstance().getDateFormatter();
-			System.out.println(datumRodjenja);
 			LocalDate.parse(datumRodjenja, formatter);
 		} catch (DateTimeParseException pe) {
 			throw new Exception("Datum mora biti u formatu dd.mm.yyyy.");
