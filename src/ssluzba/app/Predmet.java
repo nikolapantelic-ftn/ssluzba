@@ -6,7 +6,7 @@ public class Predmet {
 	private String sifra,naziv,semestar;
 	private int godinaPredmeta;
 	private Profesor profesor;
-	private ArrayList<Student> studenti;
+	private ArrayList<String> studenti;
 	
 	public Predmet(String sifra, String naziv, String semestar, int godinaPredmeta, Profesor profesor,ArrayList<Predmet> p) {
 		super();
@@ -15,7 +15,7 @@ public class Predmet {
 		this.semestar = semestar;
 		this.godinaPredmeta = godinaPredmeta;
 		this.profesor = profesor;
-		this.studenti=new ArrayList<Student>();
+		this.studenti=new ArrayList<String>();
 		
 	}
 
@@ -59,11 +59,11 @@ public class Predmet {
 		this.profesor = profesor;
 	}
 
-	public ArrayList<Student> getStudenti() {
+	public ArrayList<String> getStudenti() {
 		return studenti;
 	}
 
-	public void setStudenti(ArrayList<Student> studenti) {
+	public void setStudenti(ArrayList<String> studenti) {
 		this.studenti = studenti;
 	}
 	

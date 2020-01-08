@@ -33,7 +33,7 @@ public class StudentiNaPredmetuDialog extends JDialog {
 		this.setSize(200, 350);
 		this.setLocationRelativeTo(MainFrame.getInstance());
 		predmet = p;
-		indeksiArray = StudentiController.getInstance().getIndeksi(p.getStudenti());
+		indeksiArray = p.getStudenti().toArray(new String[p.getStudenti().size()]);
 		initComponents();
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}

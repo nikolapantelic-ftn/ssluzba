@@ -140,12 +140,12 @@ public class StudentiController {
 		int errorCode = 3;
 		for (Student s : BazaStudenata.getInstance().getStudenti()) {
 			if (s.getBrIndeksa().equals(brojIndeksa)) {
-				if (predmet.getStudenti().contains(s))
+				if (predmet.getStudenti().contains(brojIndeksa))
 					errorCode = 1;
 				else if (predmet.getGodinaPredmeta() != s.getGodinaStudija())
 					errorCode = 2;
 				else {
-					predmet.getStudenti().add(s);
+					predmet.getStudenti().add(brojIndeksa);
 					s.getPredmeti().add(predmet.getSifra());
 					errorCode = 0;
 				}
@@ -154,21 +154,19 @@ public class StudentiController {
 		return errorCode;
 	}
 
-	public String[] getIndeksi(ArrayList<Student> studenti) {
+	public String[] getIndeksi(ArrayList<String> arrayList) {
 		ArrayList<String> indeksi = new ArrayList<String>();
-		for (Student s : studenti) {
-			indeksi.add(s.getBrIndeksa());
+		for (String s : arrayList) {
+			indeksi.add(s);
 		}
 		String[] indeksiArray = indeksi.toArray(new String[indeksi.size()]);
 		return indeksiArray;
 	}
 
 	public void izbrisiStudenta(Predmet p, String brIndeksa) {
-		for (Student s : p.getStudenti()) {
-			if (brIndeksa.equals(s.getBrIndeksa())) {
-				if(p.getStudenti().remove(s)) System.out.println("obrisan student");
-					break;
-			}
+
+		if (p.getStudenti().contains(brIndeksa)) {
+			if(p.getStudenti().remove(brIndeksa)) System.out.println("obrisan student");
 		}
 		for (Student s : BazaStudenata.getInstance().getStudenti()) {
 			if (brIndeksa.equals(s.getBrIndeksa())) {
