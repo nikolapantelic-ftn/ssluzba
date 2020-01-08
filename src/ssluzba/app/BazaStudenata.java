@@ -143,6 +143,7 @@ public class BazaStudenata {
 		File f = new File("database/bazaStudenata.xml");
 		try {
 			XStream xs = new XStream();
+			xs.setMode(XStream.XPATH_ABSOLUTE_REFERENCES);
 			XStream.setupDefaultSecurity(xs);
 			xs.allowTypes(new Class[] {Student.class});
 			xs.alias("student", Student.class);

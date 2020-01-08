@@ -138,8 +138,9 @@ public class BazaPredmeta {
 		File f = new File("database/bazaPredmeta.xml");
 		try {
 			XStream xs = new XStream();
+			xs.setMode(XStream.XPATH_ABSOLUTE_REFERENCES);
 			XStream.setupDefaultSecurity(xs);
-			xs.allowTypes(new Class[] {Predmet.class, Student.class});
+			xs.allowTypes(new Class[] {Predmet.class, Student.class, Profesor.class});
 			xs.alias("predmet", Predmet.class);
 			this.predmeti = (List<Predmet>) xs.fromXML(f);
 		} catch (Exception e) {

@@ -146,6 +146,7 @@ public class StudentiController {
 					errorCode = 2;
 				else {
 					predmet.getStudenti().add(s);
+					s.getPredmeti().add(predmet.getSifra());
 					errorCode = 0;
 				}
 			}
@@ -165,8 +166,14 @@ public class StudentiController {
 	public void izbrisiStudenta(Predmet p, String brIndeksa) {
 		for (Student s : p.getStudenti()) {
 			if (brIndeksa.equals(s.getBrIndeksa())) {
-				p.getStudenti().remove(s);
-				return;
+				if(p.getStudenti().remove(s)) System.out.println("obrisan student");
+					break;
+			}
+		}
+		for (Student s : BazaStudenata.getInstance().getStudenti()) {
+			if (brIndeksa.equals(s.getBrIndeksa())) {
+				s.getPredmeti().remove(p.getSifra());
+				break;
 			}
 		}
 	}
