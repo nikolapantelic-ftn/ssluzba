@@ -1,12 +1,16 @@
 package ssluzba.app.controllers;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import ssluzba.app.BazaStudenata;
 import ssluzba.app.Predmet;
 import ssluzba.app.Status;
 import ssluzba.app.Student;
+import ssluzba.app.views.GlavniToolbar;
 import ssluzba.app.views.StudentJTable;
 
 public class StudentiController {
@@ -24,40 +28,105 @@ public class StudentiController {
 	}
 
 	public void dodaj(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) {
+			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+		try {
+			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, godinaStudija, samofinansiranje, budzet);
+		} catch (Exception e) {
+			throw e;
+		}
+		for(Student s: BazaStudenata.getInstance().getStudenti()) {
+			if(s.getBrIndeksa().equals(brIndeksa)) throw new Exception("Student vec postoji");
+		}
 		Status status = samofinansiranje ? Status.S : Status.B;
-		LocalDate datumRodj = LocalDate.parse(datumRodjenja);
-		BazaStudenata.getInstance().dodajStudenta(new Student(ime, prezime, adresaStanovanja, kontaktTelefon, email,
-				brIndeksa, datumRodj, godinaStudija, status));
+		LocalDate datumRodj = LocalDate.parse(datumRodjenja, BazaStudenata.getInstance().getDateFormatter());
+		Student student = new Student(ime, prezime, adresaStanovanja, kontaktTelefon, email,
+				brIndeksa, datumRodj, godinaStudija, status);
+		
+		BazaStudenata.getInstance().dodajStudenta(student);
 		StudentJTable.getInstance().azurirajPrikaz();
 	}
 
 	public void izbrisi(int row) {
 		if (row < 0)
 			return;
-		BazaStudenata.getInstance().deleteStudent(row);
+		String brIndeksa = (String) StudentJTable.getInstance().getValueAt(row, 0);
+		List<Student> studenti = BazaStudenata.getInstance().getStudenti();
+		for (Student s: studenti) {
+			if (s.getBrIndeksa().equals(brIndeksa)) {
+				studenti.remove(s);
+				break;
+			}
+		}
+		if (GlavniToolbar.getInstance().isPretragaStudenata()) {
+			List<Student> pretraga = BazaStudenata.getInstance().getPretraga();
+			for(Student s: pretraga) {
+				if (s.getBrIndeksa().equals(brIndeksa)) {
+					pretraga.remove(s);
+					break;
+				}
+			}
+		}
 		StudentJTable.getInstance().azurirajPrikaz();
 
 	}
 
 	public void izmeni(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) {
-		for (Student s : BazaStudenata.getInstance().getStudenti()) {
-			if (s.getBrIndeksa().equals(brIndeksa)) {
-				s.setIme(ime);
-				s.setPrezime(prezime);
-				s.setAdresaStanovanja(adresaStanovanja);
-				s.setKontaktTelefon(kontaktTelefon);
-				s.setEmail(email);
-				s.setBrIndeksa(brIndeksa);
-				s.setDatumRodjenja(LocalDate.parse(datumRodjenja));
-				s.setGodinaStudija(godinaStudija);
-				Status status = samofinansiranje ? Status.S : Status.B;
-				s.setStatus(status);
+			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+		try {
+			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, godinaStudija, samofinansiranje, budzet);
+		} catch (Exception e) {
+			throw e;
+		}
+		Student student = BazaStudenata.getInstance().getRow(StudentJTable.getInstance().getSelectedRow());
+		if(!student.getBrIndeksa().equals(brIndeksa)) {
+			for(Student s: BazaStudenata.getInstance().getStudenti()) {
+				if(s.getBrIndeksa().equals(brIndeksa))
+					throw new Exception("Student vec postoji");
 			}
 		}
+		student.setIme(ime);
+		student.setPrezime(prezime);
+		student.setAdresaStanovanja(adresaStanovanja);
+		student.setKontaktTelefon(kontaktTelefon);
+		student.setEmail(email);
+		student.setBrIndeksa(brIndeksa);
+		student.setDatumRodjenja(LocalDate.parse(datumRodjenja, BazaStudenata.getInstance().getDateFormatter()));
+		student.setGodinaStudija(godinaStudija);
+		Status status = samofinansiranje ? Status.S : Status.B;
+		student.setStatus(status);
 		StudentJTable.getInstance().azurirajPrikaz();
 
+	}
+	
+	public void proveraUnosa(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
+			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+		if (ime.isEmpty())
+			throw new Exception("Ime ne sme biti prazno!");
+		if (prezime.isEmpty())
+			throw new Exception("Prezime ne sme biti prazno!");
+		if (datumRodjenja.isEmpty())
+			throw new Exception("Datum rodjenja ne sme biti prazan!");
+		try {
+			DateTimeFormatter formatter = BazaStudenata.getInstance().getDateFormatter();
+			System.out.println(datumRodjenja);
+			LocalDate.parse(datumRodjenja, formatter);
+		} catch (DateTimeParseException pe) {
+			throw new Exception("Datum mora biti u formatu dd.mm.yyyy.");
+		}
+		if (kontaktTelefon.isEmpty())
+			throw new Exception("Broj telefona ne sme biti prazan!");
+		if (email.isEmpty())
+			throw new Exception("E-mail ne sme biti prazan!");
+		if (adresaStanovanja.isEmpty())
+			throw new Exception("Adresa stanovanja ne sme biti prazana!");
+		if(brIndeksa.isEmpty())
+			throw new Exception("Broj Indeksa ne sme biti prazan!");
+		if(!brIndeksa.matches("[a-z0-9]{2,3}-[0-9]{1,3}-[0-9]{4}"))
+			throw new Exception("Broj indeksa mora biti u formatu 'xx-zz-yyyy' gde je 'xx' oznaka smera, 'zz' broj upisa i 'yyyy' godina upisa");
+		if(!(samofinansiranje || budzet))
+			throw new Exception("Izaberite nacin finansiranja!");
+		
+		
 	}
 
 	public Student nadji(String brojIndeksa) {

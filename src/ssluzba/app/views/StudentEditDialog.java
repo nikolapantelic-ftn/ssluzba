@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
+import ssluzba.app.BazaStudenata;
 import ssluzba.app.Status;
 import ssluzba.app.Student;
 import ssluzba.app.controllers.StudentiController;
@@ -13,11 +15,12 @@ public class StudentEditDialog extends StudentDialog{
 
 	private static final long serialVersionUID = -3612974111767161969L;
 
-	public StudentEditDialog(Student student) {
+	public StudentEditDialog() {
 		super();
+		Student student = BazaStudenata.getInstance().getRow(StudentJTable.getInstance().getSelectedRow());
 		imeText.setText(student.getIme());
 		prezimeText.setText(student.getPrezime());
-		datumRodjenjaText.setText(student.getDatumRodjenja().toString());
+		datumRodjenjaText.setText(student.getDatumRodjenja().format(BazaStudenata.getInstance().getDateFormatter()).toString());
 		adresaStanovanjaText.setText(student.getAdresaStanovanja());
 		brojTelefonaText.setText(student.getKontaktTelefon());
 		brojIndeksaText.setText(student.getBrIndeksa());
@@ -38,12 +41,16 @@ public class StudentEditDialog extends StudentDialog{
 				String email = StudentEditDialog.this.getEmailText();
 				String brIndeksa = StudentEditDialog.this.getBrojIndeksaText();
 				String datumRodjenja = StudentEditDialog.this.getDatumRodjenjaText();
-				int godinaStudija = StudentEditDialog.this.getGodinaStudijaText();
+				int godinaStudija = StudentEditDialog.this.getGodinaStudija();
 				boolean samofinansiranje = StudentEditDialog.this.getSamofinansiranjeText();
 				boolean budzet = StudentEditDialog.this.getBudzetText();
-				
-				StudentiController.getInstance().izmeni(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-						datumRodjenja, godinaStudija, samofinansiranje, budzet);
+				try {
+					StudentiController.getInstance().izmeni(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
+							datumRodjenja, godinaStudija, samofinansiranje, budzet);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+					return;
+				}
 				StudentEditDialog.super.dispose();
 			}
 		});

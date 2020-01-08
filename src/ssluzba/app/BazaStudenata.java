@@ -1,6 +1,7 @@
 package ssluzba.app;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class BazaStudenata {
 	private List<Student> studenti;
 	private List<String> kolone;
 	private List<Student> pretraga;
+	private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
 
 	private BazaStudenata() {
 		initStudente();
@@ -37,7 +39,7 @@ public class BazaStudenata {
 		pretraga = new ArrayList<Student>();
 		studenti = new ArrayList<Student>();
 		studenti.add(new Student("Nikola", "Pantelic", "Backi Jarak", "0615558295", "nikolapantelic@gmail.com",
-				"ra-234-2017", LocalDate.parse("1998-12-15"), 3, Status.B));
+				"ra-234-2017", LocalDate.parse("15.12.1998.", dateFormatter), 3, Status.B));
 		studenti.add(new Student("Ognjen", "Peric", "Lacarak", "0618888888", "ognjenp434@gmail.com", "ra-123-2016",
 				LocalDate.parse("1996-12-15"), 2, Status.B));
 		studenti.add(new Student("Marko", "Markovic", "Novi Sad", "0635848295", "markomarkovic@gmail.com",
@@ -88,9 +90,9 @@ public class BazaStudenata {
 		case 2:
 			return student.getPrezime();
 		case 3:
-			return student.getDatumRodjenja().toString();
+			return student.getDatumRodjenja().format(dateFormatter).toString();
 		case 4:
-			return student.getDatumUpisa().toString();
+			return student.getDatumUpisa().format(dateFormatter).toString();
 		case 5:
 			return Integer.toString(student.getGodinaStudija());
 		case 6:
@@ -109,16 +111,16 @@ public class BazaStudenata {
 		return this.kolone.get(index);
 	}
 
-	public void deleteStudent(int row) {
-		this.studenti.remove(row);
-	}
-
 	public List<Student> getPretraga() {
 		return pretraga;
 	}
 
 	public void setPretraga(List<Student> pretraga) {
 		this.pretraga = pretraga;
+	}
+	
+	public DateTimeFormatter getDateFormatter() {
+		return this.dateFormatter;
 	}
 
 }

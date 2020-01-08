@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import ssluzba.app.BazaPredmeta;
-import ssluzba.app.BazaStudenata;
 import ssluzba.app.controllers.PredmetiController;
 import ssluzba.app.controllers.ProfesoriController;
 import ssluzba.app.controllers.StudentiController;
@@ -44,7 +43,7 @@ public class MenuBar extends JMenuBar {
 					dialog = new StudentDialog();
 					break;
 				case 1:
-					// dialog = new ProfesorDialog();
+					dialog = new ProfesorDialog();
 					break;
 				case 2:
 					dialog = new PredmetDialog();
@@ -69,7 +68,7 @@ public class MenuBar extends JMenuBar {
 						JOptionPane.showMessageDialog(null, "Niste izabrali studenta.");
 						break;
 					}
-					dialog = new StudentEditDialog(BazaStudenata.getInstance().getRow(row));
+					dialog = new StudentEditDialog();
 					dialog.setVisible(true);
 					break;
 				case 1:
@@ -78,7 +77,8 @@ public class MenuBar extends JMenuBar {
 						JOptionPane.showMessageDialog(null, "Niste izabrali profesora.");
 						break;
 					}
-					// Edit profesor dialog
+					dialog = new ProfesorEditDialog();
+					dialog.setVisible(true);
 					break;
 				case 2:
 					row = PredmetJTable.getInstance().getSelectedRow();

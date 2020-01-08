@@ -175,9 +175,12 @@ public class GlavniToolbar extends JToolBar {
 		tabelaPredmeta=new PredmetJTable();
 		pretragaP=new JTextField();
 		
+		editStudentListener();
+		delStudentListener();
 		editPredmetListener();
 		delPredmetListener();
 		dodajProfesoraListener();
+		editProfesorListener();
 		addProfNaPredmetListener();
 		delProfesorListener();
 		addStudentNaPredmetListener();
@@ -185,6 +188,7 @@ public class GlavniToolbar extends JToolBar {
 		findProfesorListener();
 		findStudentListener();
 	}
+	
 	public boolean getAktivirajPretraguPredmeta() {
 		return aktivirajPretraguPredmeta;
 	}
@@ -275,6 +279,64 @@ public class GlavniToolbar extends JToolBar {
 			}
 		
 			}
+	
+	private void editProfesorListener() {
+		editP.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = ProfesorJTable.getInstance().getSelectedRow();
+				if (row < 0) {
+					JOptionPane.showMessageDialog(null, "Niste izabrali profesora.");
+					return;
+				}
+				JDialog dialog = new ProfesorEditDialog();
+				dialog.setVisible(true);
+				
+			}
+		});
+		
+	}
+	private void delStudentListener() {
+		delS.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = StudentJTable.getInstance().getSelectedRow();
+				if (row < 0) {
+					JOptionPane.showMessageDialog(null, "Niste izabrali studenta.");
+					return;
+				}
+				int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete studenta?");
+				if (choice == JOptionPane.YES_OPTION) {
+					StudentiController.getInstance().izbrisi(row);
+					JOptionPane.showMessageDialog(null, "Student obrisan!");
+				} else {
+					JOptionPane.showMessageDialog(null, "Otkazano");
+				}
+			}
+			
+		});
+		
+	}
+	private void editStudentListener() {
+		editS.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = StudentJTable.getInstance().getSelectedRow();
+				if (row < 0) {
+					JOptionPane.showMessageDialog(null, "Niste izabrali studenta.");
+					return;
+				}
+				JDialog dialog = new StudentEditDialog();
+				dialog.setVisible(true);
+				
+			}
+		});
+		
+	}
+	
 	public void addStudentListener() {
 		addStud.addActionListener(new ActionListener() {
 			

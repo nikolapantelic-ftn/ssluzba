@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -12,10 +14,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import ssluzba.app.BazaStudenata;
 import ssluzba.app.controllers.StudentiController;
 
 public class StudentDialog extends JDialog {
@@ -60,17 +64,17 @@ public class StudentDialog extends JDialog {
 		datumRodjenjaPane.add(new JLabel("Datum Rodjenja "));
 		datumRodjenjaText = new JTextField(20);
 		datumRodjenjaPane.add(datumRodjenjaText);
-		
+
 		JPanel adresaStanovanjaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		adresaStanovanjaPane.add(new JLabel("Adresa Stanovanja"));
 		adresaStanovanjaText = new JTextField(20);
-		adresaStanovanjaPane.add(adresaStanovanjaText);	
+		adresaStanovanjaPane.add(adresaStanovanjaText);
 
 		JPanel brojTelefonaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		brojTelefonaPane.add(new JLabel("Broj Telefona "));
 		brojTelefonaText = new JTextField(20);
 		brojTelefonaPane.add(brojTelefonaText);
-		
+
 		JPanel emailPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		emailPane.add(new JLabel("E-mail "));
 		emailText = new JTextField(20);
@@ -124,8 +128,8 @@ public class StudentDialog extends JDialog {
 
 		this.add(panel);
 	}
-	
-	protected int getGodinaStudijaText() {
+
+	protected int getGodinaStudija() {
 		return godinaStudijaCombo.getSelectedIndex() + 1;
 	}
 
@@ -136,35 +140,35 @@ public class StudentDialog extends JDialog {
 	protected String getPrezimeText() {
 		return prezimeText.getText();
 	}
-	
+
 	protected String getDatumRodjenjaText() {
 		return datumRodjenjaText.getText();
 	}
-	
+
 	protected String getAdresaStanovanjaText() {
 		return adresaStanovanjaText.getText();
 	}
-	
+
 	protected String getBrojTelefonaText() {
 		return brojTelefonaText.getText();
 	}
-	
+
 	protected String getEmailText() {
 		return emailText.getText();
 	}
-	
+
 	protected String getBrojIndeksaText() {
 		return brojIndeksaText.getText();
 	}
-	
+
 	protected boolean getSamofinansiranjeText() {
 		return samofinansiranjeButton.isSelected();
 	}
-	
+
 	protected boolean getBudzetText() {
 		return budzetButton.isSelected();
 	}
-	
+
 	protected void potvrdaListener(JButton potvrdaButton) {
 		potvrdaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,12 +178,28 @@ public class StudentDialog extends JDialog {
 				String kontaktTelefon = StudentDialog.this.getBrojTelefonaText();
 				String email = StudentDialog.this.getEmailText();
 				String brIndeksa = StudentDialog.this.getBrojIndeksaText();
+				if (!brIndeksa.matches("[a-z0-9]{2,3}-[0-9]{1,3}-[0-9]{4}")) {
+					JOptionPane.showMessageDialog(null,
+							"Broj indeksa mora biti u formatu 'xx-zz-yyyy' gde je 'xx' oznaka smera, 'zz' broj upisa i yyyy godina upisa");
+					return;
+				}
 				String datumRodjenja = StudentDialog.this.getDatumRodjenjaText();
-				int godinaStudija = StudentDialog.this.getGodinaStudijaText();
+				try {
+					LocalDate.parse(datumRodjenja, BazaStudenata.getInstance().getDateFormatter());
+				} catch (DateTimeParseException pe) {
+					JOptionPane.showMessageDialog(null, "Datumi moraju biti u formatu 'dd.mm.yyyy.'");
+					return;
+				}
+				int godinaStudija = StudentDialog.this.getGodinaStudija();
 				boolean samofinansiranje = StudentDialog.this.getSamofinansiranjeText();
 				boolean budzet = StudentDialog.this.getBudzetText();
-				StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-						datumRodjenja, godinaStudija, samofinansiranje, budzet);
+				try {
+					StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
+							datumRodjenja, godinaStudija, samofinansiranje, budzet);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+					return;
+				}
 				StudentDialog.super.dispose();
 			}
 		});

@@ -3,10 +3,6 @@ package ssluzba.app;
 import java.util.ArrayList;
 import java.util.List;
 
-import ssluzba.app.views.GlavniToolbar;
-
-
-
 
 public class BazaPredmeta {
 	private static BazaPredmeta instance=null;
@@ -98,7 +94,9 @@ public class BazaPredmeta {
 			return predmet.getProfesor().getBrojLicne();
 			else return null;
 		default:
-			return null;
+			if(!predmet.getStudenti().isEmpty())
+				return "Prikazi studente";
+			else return null;
 		}
 		
 	}

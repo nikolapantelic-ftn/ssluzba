@@ -69,6 +69,7 @@ public class DodajStudentaNaPredmetDialog extends JDialog {
 				switch(errorCode) {
 				case 0:
 					JOptionPane.showMessageDialog(null, "Student uspesno dodat.");
+					PredmetJTable.getInstance().azurirajPrikaz();
 					DodajStudentaNaPredmetDialog.super.dispose();
 					break;
 				case 1:

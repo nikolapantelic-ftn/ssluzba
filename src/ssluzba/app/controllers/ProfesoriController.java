@@ -28,6 +28,51 @@ public class ProfesoriController {
 
 	public void dodaj(String ime, String prezime, String brojLicne, String adresa, String kontaktTelefon, String eMail,
 			String adresaKancelarije, String titula, String zvanje, String datumRodjenja) throws Exception {
+		try {
+			proveraUnosa(ime, prezime, brojLicne, adresa, kontaktTelefon, eMail, adresaKancelarije, titula, zvanje, datumRodjenja);
+		} catch (Exception e) {
+			throw e;
+		}
+
+		for (Profesor p : BazaProfesora.getInstance().getProfesori()) {
+			if (p.getBrojLicne().equals(brojLicne))
+				throw new Exception("Profesor vec postoji!");
+		}
+		Profesor profesor = new Profesor(ime, prezime, brojLicne, adresa, kontaktTelefon, eMail, adresaKancelarije,
+				titula, zvanje, datumRodjenja);
+		BazaProfesora.getInstance().dodajProfesora(profesor);
+		ProfesorJTable.getInstance().azurirajPrikaz();
+	}
+	
+	public void izmeni(String ime, String prezime, String brojLicne, String adresa, String kontaktTelefon,
+			String eMail, String adresaKancelarije, String titula, String zvanje, String datumRodjenja) throws Exception {
+		try {
+			proveraUnosa(ime, prezime, brojLicne, adresa, kontaktTelefon, eMail, adresaKancelarije, titula, zvanje, datumRodjenja);
+		} catch (Exception e) {
+			throw e;
+		}
+		Profesor profesor = BazaProfesora.getInstance().getRow(ProfesorJTable.getInstance().getSelectedRow());
+		if(!profesor.getBrojLicne().equals(brojLicne)) {
+			for (Profesor p : BazaProfesora.getInstance().getProfesori()) {
+				if (p.getBrojLicne().equals(brojLicne))
+					throw new Exception("Profesor vec postoji!");
+			}
+		}
+		profesor.setIme(ime);
+		profesor.setPrezime(prezime);
+		profesor.setBrojLicne(brojLicne);
+		profesor.setAdresa(adresa);
+		profesor.setKontaktTelefon(kontaktTelefon);
+		profesor.seteMail(eMail);
+		profesor.setAdresaKancelarije(adresaKancelarije);
+		profesor.setTitula(titula);
+		profesor.setZvanje(zvanje);
+		profesor.setDatumRodjenja(datumRodjenja);
+		ProfesorJTable.getInstance().azurirajPrikaz();
+	}
+	
+	public void proveraUnosa(String ime, String prezime, String brojLicne, String adresa, String kontaktTelefon,
+			String eMail, String adresaKancelarije, String titula, String zvanje, String datumRodjenja) throws Exception {
 		if (ime.isEmpty())
 			throw new Exception("Ime ne sme biti prazno!");
 		if (prezime.isEmpty())
@@ -45,20 +90,11 @@ public class ProfesoriController {
 		if (kontaktTelefon.isEmpty())
 			throw new Exception("Broj telefona ne sme biti prazan!");
 		if (eMail.isEmpty())
-			throw new Exception("Broj telefona ne sme biti prazan!");
+			throw new Exception("E-mail ne sme biti prazan!");
 		if (adresa.isEmpty())
 			throw new Exception("Adresa stanovanja ne sme biti prazana!");
 		if (zvanje.isEmpty())
 			throw new Exception("Zvanje ne sme biti prazno!");
-
-		for (Profesor p : BazaProfesora.getInstance().getProfesori()) {
-			if (p.getBrojLicne().equals(brojLicne))
-				throw new Exception("Profesor vec postoji!");
-		}
-		Profesor profesor = new Profesor(ime, prezime, brojLicne, adresa, kontaktTelefon, eMail, adresaKancelarije,
-				titula, zvanje, datumRodjenja);
-		BazaProfesora.getInstance().dodajProfesora(profesor);
-		ProfesorJTable.getInstance().azurirajPrikaz();
 	}
 
 	public void deleteProfesor(int row) {
@@ -248,4 +284,6 @@ public class ProfesoriController {
 		Predmet pr = BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow());
 		pr.setProfesor(p);
 	}
+
+	
 }

@@ -8,13 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import ssluzba.app.BazaProfesora;
 import ssluzba.app.controllers.ProfesoriController;
 
 public class ProfesorDialog extends JDialog {
@@ -24,7 +22,7 @@ public class ProfesorDialog extends JDialog {
 	protected JTextField imeText;
 	protected JTextField prezimeText;
 	protected JTextField brojLicneText;
-	protected JFormattedTextField datumRodjenjaText;
+	protected JTextField datumRodjenjaText;
 	protected JTextField adresaStanovanjaText;
 	protected JTextField adresaKancelarijeText;
 	protected JTextField brojTelefonaText;
@@ -64,9 +62,7 @@ public class ProfesorDialog extends JDialog {
 
 		JPanel datumRodjenjaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		datumRodjenjaPane.add(new JLabel("Datum Rodjenja "));
-		datumRodjenjaText = new JFormattedTextField(BazaProfesora.getInstance().getDateFormatter());
-		datumRodjenjaText.setValue("");
-		datumRodjenjaText.setColumns(20);
+		datumRodjenjaText = new JTextField(20);
 		datumRodjenjaPane.add(datumRodjenjaText);
 
 		JPanel adresaStanovanjaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
