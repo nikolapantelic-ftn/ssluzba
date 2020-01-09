@@ -1,6 +1,6 @@
 package ssluzba.app;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class Profesor {
 	private String ime,prezime,brojLicne,adresa,kontaktTelefon,eMail,adresaKancelarije,titula,zvanje;

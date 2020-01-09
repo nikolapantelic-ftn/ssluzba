@@ -1,1 +1,28 @@
-<list/>
+<list>
+  <profesor>
+    <ime>dasasd</ime>
+    <prezime>dasads</prezime>
+    <brojLicne>dasasd</brojLicne>
+    <adresa>dasads</adresa>
+    <kontaktTelefon>asdasddas</kontaktTelefon>
+    <eMail>dsaasd</eMail>
+    <adresaKancelarije>dsaaasd</adresaKancelarije>
+    <titula>sadasd</titula>
+    <zvanje>dsaasd</zvanje>
+    <datumRodjenja>11.11.1223.</datumRodjenja>
+    <predmeti/>
+  </profesor>
+  <profesor>
+    <ime>aa</ime>
+    <prezime>dsadas</prezime>
+    <brojLicne>adsasd</brojLicne>
+    <adresa>qqdas</adresa>
+    <kontaktTelefon>adsasd</kontaktTelefon>
+    <eMail>dsaasds</eMail>
+    <adresaKancelarije>asdas</adresaKancelarije>
+    <titula>qssad</titula>
+    <zvanje>qadssa</zvanje>
+    <datumRodjenja>11.12.1698.</datumRodjenja>
+    <predmeti/>
+  </profesor>
+</list>

@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import ssluzba.app.BazaPredmeta;
 import ssluzba.app.controllers.PredmetiController;
 import ssluzba.app.controllers.ProfesoriController;
+import ssluzba.app.controllers.StringController;
 import ssluzba.app.controllers.StudentiController;
 
 
@@ -175,20 +176,16 @@ public class GlavniToolbar extends JToolBar {
 		tabelaPredmeta=new PredmetJTable();
 		pretragaP=new JTextField();
 		
-		editStudentListener();
-		delStudentListener();
 		editPredmetListener();
 		delPredmetListener();
-		dodajProfesoraListener();
-		editProfesorListener();
 		addProfNaPredmetListener();
 		delProfesorListener();
 		addStudentNaPredmetListener();
 		findPredmetListener();
 		findProfesorListener();
 		findStudentListener();
+		dodajProfesoraListener();
 	}
-	
 	public boolean getAktivirajPretraguPredmeta() {
 		return aktivirajPretraguPredmeta;
 	}
@@ -201,10 +198,13 @@ public class GlavniToolbar extends JToolBar {
 	
 	
 	public void makeToolbar(int tab) {
-		removeAll();
+		this.removeAll();
+		this.revalidate();
+		this.repaint();
+	//	pretragaP.setText();
 		if(tab==0) {
 		
-			removeAll();
+			
 			add(addStud);
 			addSeparator();
 			add(editS);
@@ -215,7 +215,7 @@ public class GlavniToolbar extends JToolBar {
 			add(pretraga);
 			add(findB);
 		}else if(tab==1) {
-			removeAll();
+			
 			setButton(addProf);
 			add(addProf);
 			addSeparator();
@@ -235,7 +235,7 @@ public class GlavniToolbar extends JToolBar {
 			add(findP);
 			}else {
 			
-			removeAll();
+			
 			setButton(addPr);
 			add(addPr);
 			addSeparator();
@@ -267,7 +267,7 @@ public class GlavniToolbar extends JToolBar {
 			setButton(addPP);
 			add(addPP);
 			addSeparator();
-			add(Box.createHorizontalStrut(500));
+			add(Box.createHorizontalStrut(405));
 			
 			add(pretragaPR);
 			
@@ -279,64 +279,6 @@ public class GlavniToolbar extends JToolBar {
 			}
 		
 			}
-	
-	private void editProfesorListener() {
-		editP.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int row = ProfesorJTable.getInstance().getSelectedRow();
-				if (row < 0) {
-					JOptionPane.showMessageDialog(null, "Niste izabrali profesora.");
-					return;
-				}
-				JDialog dialog = new ProfesorEditDialog();
-				dialog.setVisible(true);
-				
-			}
-		});
-		
-	}
-	private void delStudentListener() {
-		delS.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int row = StudentJTable.getInstance().getSelectedRow();
-				if (row < 0) {
-					JOptionPane.showMessageDialog(null, "Niste izabrali studenta.");
-					return;
-				}
-				int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete studenta?");
-				if (choice == JOptionPane.YES_OPTION) {
-					StudentiController.getInstance().izbrisi(row);
-					JOptionPane.showMessageDialog(null, "Student obrisan!");
-				} else {
-					JOptionPane.showMessageDialog(null, "Otkazano");
-				}
-			}
-			
-		});
-		
-	}
-	private void editStudentListener() {
-		editS.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int row = StudentJTable.getInstance().getSelectedRow();
-				if (row < 0) {
-					JOptionPane.showMessageDialog(null, "Niste izabrali studenta.");
-					return;
-				}
-				JDialog dialog = new StudentEditDialog();
-				dialog.setVisible(true);
-				
-			}
-		});
-		
-	}
-	
 	public void addStudentListener() {
 		addStud.addActionListener(new ActionListener() {
 			
@@ -368,7 +310,7 @@ public class GlavniToolbar extends JToolBar {
 					return;
 				int choice=JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete predmet?");
 				if (choice == JOptionPane.YES_OPTION) {
-					PredmetiController.getInstance().izbrisi(tabelaPredmeta.getSelectedRow());
+					PredmetiController.getInstance().izbrisi(PredmetiController.getInstance().getPredmet(tabelaPredmeta.getSelectedRow()).getSifra());
 					JOptionPane.showMessageDialog(null, "Predmet obrisan!");
 				} else {
 					JOptionPane.showMessageDialog(null, "Otkazano");
@@ -402,6 +344,8 @@ public class GlavniToolbar extends JToolBar {
 				if(tabelaPredmeta.getSelectedRow()==-1)
 					return;
 				String brLicne=JOptionPane.showInputDialog("Broj licne karte profesora");
+					if(brLicne==null)
+						return;
 					if(ProfesoriController.getInstance().pretraziPoLicnoj(brLicne)!=null) {
 						ProfesoriController.getInstance().setProfesorNaTrenutniPredmet(ProfesoriController.getInstance().pretraziPoLicnoj(brLicne));
 						PredmetJTable.getInstance().azurirajPrikaz();
@@ -410,15 +354,11 @@ public class GlavniToolbar extends JToolBar {
 						JOptionPane.showMessageDialog(null, "Uneti profesor ne postoji!", "Greska", JOptionPane.ERROR_MESSAGE);
 					}
 				}
-				
-				
-			
-		});
+				});
 	}
-	
 	public void dodajProfesoraListener() {
 		addProf.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JDialog dialog = new ProfesorDialog();
@@ -436,7 +376,8 @@ public class GlavniToolbar extends JToolBar {
 					return;
 				int choice=JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete profesora?");
 				if (choice == JOptionPane.YES_OPTION) {
-					ProfesoriController.getInstance().deleteProfesor(tabelaProfesora.getSelectedRow());
+					System.out.println(tabelaPredmeta.getSelectedRow());
+					ProfesoriController.getInstance().deleteProfesor(ProfesoriController.getInstance().getProfesor(tabelaProfesora.getSelectedRow()).getBrojLicne());
 					JOptionPane.showMessageDialog(null, "Profesor obrisan!");
 				} else {
 					JOptionPane.showMessageDialog(null, "Otkazano");
@@ -478,8 +419,17 @@ public class GlavniToolbar extends JToolBar {
 					return;
 				}
 				else {
+					if(!StringController.proveriString(string)) {
+						JOptionPane.showMessageDialog(null, "Neispravan oblik unosa!");
+						return;
+					}
+					
 					
 					String[] vrednosti=PredmetiController.getInstance().parseString(string);
+					if(vrednosti[4].equals("nema")) {
+						JOptionPane.showMessageDialog(null, "Polje ne postoji!");
+						return;
+					}
 					PredmetiController.getInstance().pretraziPredmete(vrednosti[0],vrednosti[1], vrednosti[2], vrednosti[3]);
 					
 					if(PredmetiController.getInstance().getPronadjeno()==false) {
@@ -506,9 +456,17 @@ public class GlavniToolbar extends JToolBar {
 					return;
 				}
 				else {
+					if(!StringController.proveriString(string)) {
+						JOptionPane.showMessageDialog(null, "Neispravan oblik unosa!");
+						return;
+					}
 					
 					String[] vrednosti=ProfesoriController.getInstance().parseString(string);
-					
+					if(vrednosti[9].equals("nema")) {
+						JOptionPane.showMessageDialog(null, "Polje ne postoji!");
+						return;
+					}
+						
 					ProfesoriController.getInstance().pretraziProfesore(vrednosti[0], vrednosti[1], vrednosti[2],vrednosti[3], vrednosti[4], vrednosti[5], vrednosti[6], vrednosti[7], vrednosti[8]);
 					
 					if(ProfesoriController.getInstance().getPronadjeno()==false) {

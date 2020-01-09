@@ -17,8 +17,7 @@ import javax.swing.JPanel;
 
 import javax.swing.JTextField;
 
-import ssluzba.app.BazaPredmeta;
-import ssluzba.app.Predmet;
+
 import ssluzba.app.controllers.PredmetiController;
 
 public class PredmetDialog extends JDialog {
@@ -45,7 +44,6 @@ public class PredmetDialog extends JDialog {
 		addListener();
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void addComponents() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -100,8 +98,8 @@ public class PredmetDialog extends JDialog {
 	}
 	public void addListener() {
 		
-		String sifra1=sifraText.getText();
-		System.out.println(sifra1);
+	
+		
 		potvrdaButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -111,10 +109,15 @@ public class PredmetDialog extends JDialog {
 				
 				String semestar=(String) semestarPrCombo.getSelectedItem();
 				int godina=godinaPrCombo.getSelectedIndex()+1;
+				if(sifra.isEmpty() || naziv.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Polja ne smeju biti prazna!");
+					return;
+				}
 				if(PredmetiController.getInstance().postojiSifra(sifra)) {
 					JOptionPane.showMessageDialog(null, "Vec postoji predmet sa datom sifrom");
 					return;
 				}
+				
 				PredmetiController.getInstance().dodaj(sifra, naziv, semestar, godina);
 				PredmetDialog.super.dispose();
 				JOptionPane.showMessageDialog(null, "Predmet dodat");

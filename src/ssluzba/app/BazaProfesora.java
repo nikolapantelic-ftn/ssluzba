@@ -84,9 +84,28 @@ public class BazaProfesora {
 		return this.kolone.get(index);
 	}
 
-	public void deleteProfesor(int row) {
-		this.profesori.remove(row);
-
+	public void deleteProfesorPretraga(String licna) {
+		if(!pretragaProfesori.isEmpty()) {
+			for(Profesor p:pretragaProfesori) {
+				if(p.getBrojLicne().equals(licna)) {
+					pretragaProfesori.remove(p);
+				break;
+			}
+			}
+		}
+	}
+	
+	public void deleteProfesor(String licna) {	
+			
+			for(Profesor p:profesori) {
+				System.out.println("a");
+				if(p.getBrojLicne().equals(licna)) {
+					System.out.println("bam");
+					profesori.remove(p);
+				break;
+				}
+			}
+		
 	}
 
 	public String getValueAt(int row, int column) {

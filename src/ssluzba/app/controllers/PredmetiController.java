@@ -1,12 +1,10 @@
 package ssluzba.app.controllers;
 
-import java.util.ArrayList;
+
 
 import ssluzba.app.BazaPredmeta;
 import ssluzba.app.Predmet;
 import ssluzba.app.Profesor;
-import ssluzba.app.Student;
-import ssluzba.app.views.MainFrame;
 import ssluzba.app.views.PredmetJTable;
 
 public class PredmetiController {
@@ -35,10 +33,12 @@ public class PredmetiController {
 	}
 
 	
-	public void izbrisi(int row) {
+	public void izbrisi(String sifra) {
+		int row=PredmetJTable.getInstance().getSelectedRow();
 		if(row<0)
 			return;
-		BazaPredmeta.getInstance().deletePredmet(row);
+		BazaPredmeta.getInstance().deletePredmet(sifra);
+		BazaPredmeta.getInstance().deletePredmetPretraga(sifra);
 		PredmetJTable.getInstance().azurirajPrikaz();
 	}
 
@@ -66,27 +66,33 @@ public class PredmetiController {
 		}
 		return false;
 	}
+	public Predmet getPredmet(int row) {
+		return BazaPredmeta.getInstance().getRow(row);
+	}
 	
 	public String[] parseString (String str) {
-		String[] string = new String[4];
+		String[] string = new String[5];
 		 string[0]= "";
 		 string[1]="";
 		 string[2]="";
 		 string[3]="";
+		 string[4]="";
 		String[] parametri=str.split(";");
 		for(int i=0;i<parametri.length;i++) {
 			String [] vrednosti=parametri[i].split(":");
-			if(vrednosti[0].equals("sifra")) {
-				string[0]=vrednosti[1];
-			}else if(vrednosti[0].equals("naziv")) {
-				string[1]=vrednosti[1];
-			}else if(vrednosti[0].equals("semestar")) {
-				string[2]=vrednosti[1];
-			}else if(vrednosti[0].equals("godina")) {
-				string[3]=vrednosti[1];
-				
-			}
+			if(vrednosti[0].toLowerCase().equals("sifra")) {
+				string[0]=vrednosti[1].toLowerCase();
+			}else if(vrednosti[0].toLowerCase().equals("naziv")) {
+				string[1]=vrednosti[1].toLowerCase();
+			}else if(vrednosti[0].toLowerCase().equals("semestar")) {
+				string[2]=vrednosti[1].toLowerCase();
+			}else if(vrednosti[0].toLowerCase().equals("godina")) {
+				string[3]=vrednosti[1].toLowerCase();
+			
+			}else
+				string[4]="nema";
 		}
+		
 	
 		return string;
 	}
@@ -108,7 +114,7 @@ public class PredmetiController {
 		if(string.isEmpty())
 			return true;
 	
-			if(p.getSifra().equals(string)) {
+			if(p.getSifra().toLowerCase().equals(string)) {
 				return true;
 			
 		}
@@ -120,7 +126,7 @@ public class PredmetiController {
 		if(string.isEmpty())
 			return true;
 	
-			if(p.getNaziv().equals(string)) {
+			if(p.getNaziv().toLowerCase().equals(string)) {
 				return true;
 			
 		}
@@ -131,7 +137,7 @@ public class PredmetiController {
 		if(string.isEmpty())
 			return true;
 		
-			if(p.getSemestar().equals(string)) {
+			if(p.getSemestar().toLowerCase().equals(string)) {
 				return true;
 			}
 		

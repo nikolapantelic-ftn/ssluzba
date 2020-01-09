@@ -2,7 +2,7 @@ package ssluzba.app.views;
 
 import javax.swing.table.AbstractTableModel;
 
-import ssluzba.app.BazaPredmeta;
+
 import ssluzba.app.BazaProfesora;
 
 

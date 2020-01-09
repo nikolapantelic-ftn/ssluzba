@@ -124,7 +124,7 @@ public class MenuBar extends JMenuBar {
 					}
 					choice = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete profesora?");
 					if (choice == JOptionPane.YES_OPTION) {
-						ProfesoriController.getInstance().deleteProfesor(ProfesorJTable.getInstance().getSelectedRow());
+						ProfesoriController.getInstance().deleteProfesor(ProfesoriController.getInstance().getProfesor(ProfesorJTable.getInstance().getSelectedRow()).getBrojLicne());
 						JOptionPane.showMessageDialog(null, "Profesor obrisan!");
 					} else {
 						JOptionPane.showMessageDialog(null, "Otkazano");
@@ -138,7 +138,7 @@ public class MenuBar extends JMenuBar {
 					}
 					choice = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete predmet?");
 					if (choice == JOptionPane.YES_OPTION) {
-						PredmetiController.getInstance().izbrisi(row);
+						PredmetiController.getInstance().izbrisi(PredmetiController.getInstance().getPredmet(PredmetJTable.getInstance().getSelectedRow()).getSifra());
 						JOptionPane.showMessageDialog(null, "Predmet obrisan!");
 					} else {
 						JOptionPane.showMessageDialog(null, "Otkazano");

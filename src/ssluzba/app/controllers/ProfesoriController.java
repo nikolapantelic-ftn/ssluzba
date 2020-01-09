@@ -23,9 +23,12 @@ public class ProfesoriController {
 
 	private boolean pronadjeno;
 
-	private ProfesoriController() {
+	public ProfesoriController() {
+		// TODO Auto-generated constructor stub
 	}
-
+	public Profesor getProfesor(int row) {
+		return BazaProfesora.getInstance().getRow(row);
+	}
 	public void dodaj(String ime, String prezime, String brojLicne, String adresa, String kontaktTelefon, String eMail,
 			String adresaKancelarije, String titula, String zvanje, String datumRodjenja) throws Exception {
 		try {
@@ -97,18 +100,20 @@ public class ProfesoriController {
 			throw new Exception("Zvanje ne sme biti prazno!");
 	}
 
-	public void deleteProfesor(int row) {
-		BazaProfesora.getInstance().deleteProfesor(row);
+	public void deleteProfesor(String licna) {
+		BazaProfesora.getInstance().deleteProfesor(licna);
+		BazaProfesora.getInstance().deleteProfesorPretraga(licna);
 		ProfesorJTable.getInstance().azurirajPrikaz();
 	}
 
 	public void ocistiPretragu() {
 		BazaProfesora.getInstance().getPretraga().clear();
+		ProfesorJTable.getInstance().azurirajPrikaz();
 
 	}
 
 	public String[] parseString(String str) {
-		String[] string = new String[9];
+		String[] string = new String[10];
 		string[0] = "";
 		string[1] = "";
 		string[2] = "";
@@ -118,6 +123,7 @@ public class ProfesoriController {
 		string[6] = "";
 		string[7] = "";
 		string[8] = "";
+		string[9]="";
 
 		String[] parametri = str.split(";");
 		for (int i = 0; i < parametri.length; i++) {
@@ -141,7 +147,8 @@ public class ProfesoriController {
 				string[7] = vrednosti[1].toLowerCase();
 			} else if (vrednosti[0].toLowerCase().equals("zvanje")) {
 				string[8] = vrednosti[1].toLowerCase();
-			}
+			}else 
+				string[9]="nema";
 
 		}
 		return string;
@@ -161,7 +168,6 @@ public class ProfesoriController {
 					&& pretraziTelefon(telefon, p)) {
 				pronadjeno = true;
 				BazaProfesora.getInstance().getPretraga().add(p);
-				System.out.println("dodato");
 
 			} else if (BazaProfesora.getInstance().getPretraga().isEmpty()) {
 				pronadjeno = false;
@@ -279,11 +285,9 @@ public class ProfesoriController {
 		}
 		return null;
 	}
-
 	public void setProfesorNaTrenutniPredmet(Profesor p) {
-		Predmet pr = BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow());
+		Predmet pr=BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow());
 		pr.setProfesor(p);
 	}
-
 	
 }

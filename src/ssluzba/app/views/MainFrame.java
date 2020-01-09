@@ -5,16 +5,15 @@ import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
 
-import javax.swing.JDialog;
+
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
+
 
 public class MainFrame extends JFrame {
 

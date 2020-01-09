@@ -116,9 +116,25 @@ public class BazaPredmeta {
 		}
 		
 	}
-	public  void deletePredmet(int row) {
-		this.predmeti.remove(row);
-		
+	public  void deletePredmetPretraga(String sifra) {
+		if(!this.pretraga.isEmpty()) {
+			for(Predmet p:pretraga) {
+				if(p.getSifra().equals(sifra)) {
+					pretraga.remove(p);
+					break;
+				}
+			}
+		}
+	}
+	public void deletePredmet(String sifra) {	
+		if(!this.predmeti.isEmpty()) {
+			for(Predmet p:predmeti) {
+				if(p.getSifra().equals(sifra)) {
+					predmeti.remove(p);
+					break;
+				}
+			}
+		}
 	}
 	
 	public void serialize() throws IOException {
