@@ -10,19 +10,23 @@
     <titula>sadasd</titula>
     <zvanje>dsaasd</zvanje>
     <datumRodjenja>11.11.1223.</datumRodjenja>
-    <predmeti/>
-  </profesor>
-  <profesor>
-    <ime>aa</ime>
-    <prezime>dsadas</prezime>
-    <brojLicne>adsasd</brojLicne>
-    <adresa>qqdas</adresa>
-    <kontaktTelefon>adsasd</kontaktTelefon>
-    <eMail>dsaasds</eMail>
-    <adresaKancelarije>asdas</adresaKancelarije>
-    <titula>qssad</titula>
-    <zvanje>qadssa</zvanje>
-    <datumRodjenja>11.12.1698.</datumRodjenja>
-    <predmeti/>
+    <predmeti>
+      <ssluzba.app.Predmet>
+        <sifra>aa</sifra>
+        <naziv>aaa</naziv>
+        <semestar>Zimski</semestar>
+        <godinaPredmeta>1</godinaPredmeta>
+        <profesor reference="../../.."/>
+        <studenti/>
+      </ssluzba.app.Predmet>
+      <ssluzba.app.Predmet>
+        <sifra>daasd</sifra>
+        <naziv>aadsdsa</naziv>
+        <semestar>Zimski</semestar>
+        <godinaPredmeta>1</godinaPredmeta>
+        <profesor reference="../../.."/>
+        <studenti/>
+      </ssluzba.app.Predmet>
+    </predmeti>
   </profesor>
 </list>

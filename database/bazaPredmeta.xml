@@ -1,1 +1,16 @@
-<list/>
+<list>
+  <predmet>
+    <sifra>aa</sifra>
+    <naziv>aaa</naziv>
+    <semestar>Zimski</semestar>
+    <godinaPredmeta>1</godinaPredmeta>
+    <studenti/>
+  </predmet>
+  <predmet>
+    <sifra>daasd</sifra>
+    <naziv>aadsdsa</naziv>
+    <semestar>Zimski</semestar>
+    <godinaPredmeta>1</godinaPredmeta>
+    <studenti/>
+  </predmet>
+</list>

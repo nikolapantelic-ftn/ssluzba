@@ -107,6 +107,12 @@ public class Profesor {
 	public void setPredmeti(ArrayList<Predmet> predmeti) {
 		this.predmeti = predmeti;
 	}
+	public void addPredmet(Predmet p) {
+		this.predmeti.add(p);
+	}
+	public void delPredmet(Predmet p) {
+		this.predmeti.remove(p);
+	}
 
 	
 

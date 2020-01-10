@@ -12,7 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import ssluzba.app.BazaPredmeta;
+import ssluzba.app.Predmet;
 import ssluzba.app.Profesor;
+import ssluzba.app.controllers.PredmetiController;
+import ssluzba.app.controllers.ProfesoriController;
 
 
 
@@ -129,7 +132,11 @@ public class ProfesorNaPredmetuDialog extends JDialog {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow()).removeProfesor();
+				
+				Predmet pr=BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow());
+				Profesor p=pr.getProfesor();
+				pr.removeProfesor();
+				ProfesoriController.getInstance().removePredmet(pr,p);
 				ProfesorNaPredmetuDialog.super.dispose();
 			}
 		});

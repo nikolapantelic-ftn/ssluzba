@@ -20,6 +20,9 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import ssluzba.app.BazaPredmeta;
+import ssluzba.app.BazaProfesora;
+import ssluzba.app.Predmet;
+import ssluzba.app.Profesor;
 import ssluzba.app.controllers.PredmetiController;
 import ssluzba.app.controllers.ProfesoriController;
 import ssluzba.app.controllers.StringController;
@@ -185,6 +188,10 @@ public class GlavniToolbar extends JToolBar {
 		findProfesorListener();
 		findStudentListener();
 		dodajProfesoraListener();
+		dodajProfesoraListener();	
+		editProfesorListener();
+		editStudentListener();	
+		delStudentListener();
 	}
 	public boolean getAktivirajPretraguPredmeta() {
 		return aktivirajPretraguPredmeta;
@@ -321,6 +328,63 @@ public class GlavniToolbar extends JToolBar {
 		});
 	}
 	
+	private void editProfesorListener() {	
+		editP.addActionListener(new ActionListener() {	
+
+			@Override	
+			public void actionPerformed(ActionEvent e) {	
+				int row = ProfesorJTable.getInstance().getSelectedRow();	
+				if (row < 0) {	
+					JOptionPane.showMessageDialog(null, "Niste izabrali profesora.");	
+					return;	
+				}	
+				JDialog dialog = new ProfesorEditDialog();	
+				dialog.setVisible(true);	
+
+			}	
+		});	
+
+	}	
+	private void delStudentListener() {	
+		delS.addActionListener(new ActionListener() {	
+
+			@Override	
+			public void actionPerformed(ActionEvent e) {	
+				int row = StudentJTable.getInstance().getSelectedRow();	
+				if (row < 0) {	
+					JOptionPane.showMessageDialog(null, "Niste izabrali studenta.");	
+					return;	
+				}	
+				int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete studenta?");	
+				if (choice == JOptionPane.YES_OPTION) {	
+					StudentiController.getInstance().izbrisi(row);	
+					JOptionPane.showMessageDialog(null, "Student obrisan!");	
+				} else {	
+					JOptionPane.showMessageDialog(null, "Otkazano");	
+				}	
+			}	
+
+		});	
+
+	}	
+	private void editStudentListener() {	
+		editS.addActionListener(new ActionListener() {	
+
+			@Override	
+			public void actionPerformed(ActionEvent e) {	
+				int row = StudentJTable.getInstance().getSelectedRow();	
+				if (row < 0) {	
+					JOptionPane.showMessageDialog(null, "Niste izabrali studenta.");	
+					return;	
+				}	
+				JDialog dialog = new StudentEditDialog();	
+				dialog.setVisible(true);	
+
+			}	
+		});	
+
+	}	
+
 	public void editPredmetListener() {
 		
 		editPr.addActionListener(new ActionListener() {
@@ -347,7 +411,11 @@ public class GlavniToolbar extends JToolBar {
 					if(brLicne==null)
 						return;
 					if(ProfesoriController.getInstance().pretraziPoLicnoj(brLicne)!=null) {
-						ProfesoriController.getInstance().setProfesorNaTrenutniPredmet(ProfesoriController.getInstance().pretraziPoLicnoj(brLicne));
+						Profesor p=ProfesoriController.getInstance().pretraziPoLicnoj(brLicne);
+						Predmet pr=PredmetiController.getInstance().getPredmet(tabelaPredmeta.getSelectedRow());
+						PredmetiController.getInstance().setProfesorNaTrenutniPredmet(p,pr);
+						ProfesoriController.getInstance().addPredmet(pr, p);
+						System.out.println(p.getPredmeti().size());
 						PredmetJTable.getInstance().azurirajPrikaz();
 					}
 					else {

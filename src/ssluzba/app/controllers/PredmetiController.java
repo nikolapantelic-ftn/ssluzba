@@ -161,5 +161,8 @@ public class PredmetiController {
 		PredmetJTable.getInstance().azurirajPrikaz();
 		
 	}
+	public void setProfesorNaTrenutniPredmet(Profesor p,Predmet pr) {
+		pr.setProfesor(p);
+	}
 
 }

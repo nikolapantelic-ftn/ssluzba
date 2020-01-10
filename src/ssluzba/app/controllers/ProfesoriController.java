@@ -285,9 +285,12 @@ public class ProfesoriController {
 		}
 		return null;
 	}
-	public void setProfesorNaTrenutniPredmet(Profesor p) {
-		Predmet pr=BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow());
-		pr.setProfesor(p);
+	
+	public void addPredmet(Predmet pr,Profesor p) {
+		p.addPredmet(pr);
+	}
+	public void removePredmet(Predmet pr,Profesor p) {
+		p.delPredmet(pr);
 	}
 	
 }
