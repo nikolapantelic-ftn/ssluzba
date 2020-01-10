@@ -6,7 +6,7 @@ public class Predmet {
 	private String sifra,naziv,semestar;
 	private int godinaPredmeta;
 	private Profesor profesor;
-	private ArrayList<String> studenti;
+	private ArrayList<Student> studenti;
 	
 	public Predmet(String sifra, String naziv, String semestar, int godinaPredmeta, Profesor profesor,ArrayList<Predmet> p) {
 		super();
@@ -15,7 +15,7 @@ public class Predmet {
 		this.semestar = semestar;
 		this.godinaPredmeta = godinaPredmeta;
 		this.profesor = profesor;
-		this.studenti=new ArrayList<String>();
+		this.studenti=new ArrayList<Student>();
 		
 	}
 
@@ -59,17 +59,25 @@ public class Predmet {
 		this.profesor = profesor;
 	}
 
-	public ArrayList<String> getStudenti() {
+	public ArrayList<Student> getStudenti() {
 		return studenti;
 	}
 
-	public void setStudenti(ArrayList<String> studenti) {
+	public void setStudenti(ArrayList<Student> studenti) {
 		this.studenti = studenti;
 	}
 	
 
 	public void removeProfesor() {
 		this.profesor=null;
+	}
+	
+	@Override
+	public boolean equals(Object predmet) {
+		if(this.sifra.equals(((Predmet)predmet).getSifra())) {
+			return true;
+		}
+		return false;
 	}
 	
 	

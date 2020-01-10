@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import ssluzba.app.BazaStudenata;
 import ssluzba.app.controllers.StudentiController;
 
 public class StudentDialog extends JDialog {
@@ -33,6 +30,7 @@ public class StudentDialog extends JDialog {
 	protected JTextField brojTelefonaText;
 	protected JTextField brojIndeksaText;
 	protected JTextField emailText;
+	protected JTextField prosecnaOcenaText;
 	protected JComboBox<String> godinaStudijaCombo;
 
 	public StudentDialog() {
@@ -84,6 +82,11 @@ public class StudentDialog extends JDialog {
 		brojIndeksaPane.add(new JLabel("Broj Indeksa "));
 		brojIndeksaText = new JTextField(20);
 		brojIndeksaPane.add(brojIndeksaText);
+		
+		JPanel prosecnaOcenaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+		prosecnaOcenaPane.add(new JLabel("Prosecna Ocena"));
+		prosecnaOcenaText = new JTextField(20);
+		prosecnaOcenaPane.add(prosecnaOcenaText);
 
 		JPanel godinaStudijaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		godinaStudijaPane.add(new JLabel("Trenutna Godina Studija "));
@@ -122,6 +125,7 @@ public class StudentDialog extends JDialog {
 		panel.add(emailPane);
 		panel.add(adresaStanovanjaPane);
 		panel.add(brojIndeksaPane);
+		panel.add(prosecnaOcenaPane);
 		panel.add(godinaStudijaPane);
 		panel.add(finansiranjePane);
 		panel.add(buttonPane);
@@ -156,6 +160,10 @@ public class StudentDialog extends JDialog {
 	protected String getEmailText() {
 		return emailText.getText();
 	}
+	
+	protected String getProsecnaOcenaText() {
+		return prosecnaOcenaText.getText();
+	}
 
 	protected String getBrojIndeksaText() {
 		return brojIndeksaText.getText();
@@ -178,24 +186,14 @@ public class StudentDialog extends JDialog {
 				String kontaktTelefon = StudentDialog.this.getBrojTelefonaText();
 				String email = StudentDialog.this.getEmailText();
 				String brIndeksa = StudentDialog.this.getBrojIndeksaText();
-				if (!brIndeksa.matches("[a-z0-9]{2,3}-[0-9]{1,3}-[0-9]{4}")) {
-					JOptionPane.showMessageDialog(null,
-							"Broj indeksa mora biti u formatu 'xx-zz-yyyy' gde je 'xx' oznaka smera, 'zz' broj upisa i yyyy godina upisa");
-					return;
-				}
+				String prosecnaOcena = StudentDialog.this.getProsecnaOcenaText();
 				String datumRodjenja = StudentDialog.this.getDatumRodjenjaText();
-				try {
-					LocalDate.parse(datumRodjenja, BazaStudenata.getInstance().getDateFormatter());
-				} catch (DateTimeParseException pe) {
-					JOptionPane.showMessageDialog(null, "Datumi moraju biti u formatu 'dd.mm.yyyy.'");
-					return;
-				}
 				int godinaStudija = StudentDialog.this.getGodinaStudija();
 				boolean samofinansiranje = StudentDialog.this.getSamofinansiranjeText();
 				boolean budzet = StudentDialog.this.getBudzetText();
 				try {
 					StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-							datumRodjenja, godinaStudija, samofinansiranje, budzet);
+							datumRodjenja, prosecnaOcena, godinaStudija , samofinansiranje, budzet);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 					return;

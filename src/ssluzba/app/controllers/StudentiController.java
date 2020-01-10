@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.List;
 
+import ssluzba.app.BazaPredmeta;
 import ssluzba.app.BazaStudenata;
 import ssluzba.app.Predmet;
 import ssluzba.app.Status;
@@ -28,9 +28,9 @@ public class StudentiController {
 	}
 
 	public void dodaj(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
 		try {
-			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, godinaStudija, samofinansiranje, budzet);
+			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, prosecnaOcena, godinaStudija, samofinansiranje, budzet);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -39,8 +39,9 @@ public class StudentiController {
 		}
 		Status status = samofinansiranje ? Status.S : Status.B;
 		LocalDate datumRodj = LocalDate.parse(datumRodjenja, BazaStudenata.getInstance().getDateFormatter());
+		Double prosek = Double.parseDouble(prosecnaOcena);
 		Student student = new Student(ime, prezime, adresaStanovanja, kontaktTelefon, email,
-				brIndeksa, datumRodj, godinaStudija, status);
+				brIndeksa, datumRodj, prosek, godinaStudija, status);
 		
 		BazaStudenata.getInstance().dodajStudenta(student);
 		StudentJTable.getInstance().azurirajPrikaz();
@@ -50,34 +51,30 @@ public class StudentiController {
 		if (row < 0)
 			return;
 		String brIndeksa = (String) StudentJTable.getInstance().getValueAt(row, 0);
-		List<Student> studenti = BazaStudenata.getInstance().getStudenti();
-		for (Student s: studenti) {
-			if (s.getBrIndeksa().equals(brIndeksa)) {
-				studenti.remove(s);
-				break;
+		Student s = nadji(brIndeksa);
+		if(s != null) {
+			for (Predmet p: BazaPredmeta.getInstance().getPredmeti()) {
+				p.getStudenti().remove(s);
 			}
 		}
+		BazaStudenata.getInstance().getStudenti().remove(s);
+		
 		if (GlavniToolbar.getInstance().isPretragaStudenata()) {
-			List<Student> pretraga = BazaStudenata.getInstance().getPretraga();
-			for(Student s: pretraga) {
-				if (s.getBrIndeksa().equals(brIndeksa)) {
-					pretraga.remove(s);
-					break;
-				}
-			}
+			s = nadjiPretraga(brIndeksa);
+			BazaStudenata.getInstance().getPretraga().remove(s);
 		}
 		StudentJTable.getInstance().azurirajPrikaz();
 
 	}
 
 	public void izmeni(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
 		try {
-			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, godinaStudija, samofinansiranje, budzet);
+			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, prosecnaOcena, godinaStudija, samofinansiranje, budzet);
 		} catch (Exception e) {
 			throw e;
 		}
-		Student student = BazaStudenata.getInstance().getRow(StudentJTable.getInstance().getSelectedRow());
+		Student student = nadjiIzabranog();
 		if(!student.getBrIndeksa().equals(brIndeksa)) {
 			for(Student s: BazaStudenata.getInstance().getStudenti()) {
 				if(s.getBrIndeksa().equals(brIndeksa))
@@ -91,6 +88,7 @@ public class StudentiController {
 		student.setEmail(email);
 		student.setBrIndeksa(brIndeksa);
 		student.setDatumRodjenja(LocalDate.parse(datumRodjenja, BazaStudenata.getInstance().getDateFormatter()));
+		student.setProsecnaOcena(Double.parseDouble(prosecnaOcena));
 		student.setGodinaStudija(godinaStudija);
 		Status status = samofinansiranje ? Status.S : Status.B;
 		student.setStatus(status);
@@ -99,13 +97,13 @@ public class StudentiController {
 	}
 	
 	public void proveraUnosa(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, String datumRodjenja, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
 		if (ime.isEmpty())
 			throw new Exception("Ime ne sme biti prazno!");
 		if (prezime.isEmpty())
 			throw new Exception("Prezime ne sme biti prazno!");
 		if (datumRodjenja.isEmpty())
-			throw new Exception("Datum rodjenja ne sme biti prazan!");
+			throw new Exception("Datum Rodjenja ne sme biti prazan!");
 		try {
 			DateTimeFormatter formatter = BazaStudenata.getInstance().getDateFormatter();
 			LocalDate.parse(datumRodjenja, formatter);
@@ -113,15 +111,20 @@ public class StudentiController {
 			throw new Exception("Datum mora biti u formatu dd.mm.yyyy.");
 		}
 		if (kontaktTelefon.isEmpty())
-			throw new Exception("Broj telefona ne sme biti prazan!");
+			throw new Exception("Broj Telefona ne sme biti prazan!");
 		if (email.isEmpty())
 			throw new Exception("E-mail ne sme biti prazan!");
 		if (adresaStanovanja.isEmpty())
-			throw new Exception("Adresa stanovanja ne sme biti prazana!");
+			throw new Exception("Adresa Stanovanja ne sme biti prazana!");
 		if(brIndeksa.isEmpty())
 			throw new Exception("Broj Indeksa ne sme biti prazan!");
 		if(!brIndeksa.matches("[a-z0-9]{2,3}-[0-9]{1,3}-[0-9]{4}"))
 			throw new Exception("Broj indeksa mora biti u formatu 'xx-zz-yyyy' gde je 'xx' oznaka smera, 'zz' broj upisa i 'yyyy' godina upisa");
+		try {
+			Double.parseDouble(prosecnaOcena);
+		} catch (NumberFormatException e) {
+			throw new Exception("Prosecna Ocena mora biti decimalan broj!");
+		}
 		if(!(samofinansiranje || budzet))
 			throw new Exception("Izaberite nacin finansiranja!");
 		
@@ -135,18 +138,32 @@ public class StudentiController {
 		}
 		return null;
 	}
+	
+	public Student nadjiPretraga(String brojIndeksa) {
+		for (Student s : BazaStudenata.getInstance().getPretraga()) {
+			if (s.getBrIndeksa().equals(brojIndeksa))
+				return s;
+		}
+		return null;
+	}
+	
+	public Student nadjiIzabranog() {
+		int row = StudentJTable.getInstance().getSelectedRow();
+		String brIndeksa = (String) StudentJTable.getInstance().getValueAt(row, 0);
+		return nadji(brIndeksa);
+	}
 
 	public int dodajStudentaNaPredmet(String brojIndeksa, Predmet predmet) {
 		int errorCode = 3;
 		for (Student s : BazaStudenata.getInstance().getStudenti()) {
 			if (s.getBrIndeksa().equals(brojIndeksa)) {
-				if (predmet.getStudenti().contains(brojIndeksa))
+				if (predmet.getStudenti().contains(s))
 					errorCode = 1;
 				else if (predmet.getGodinaPredmeta() != s.getGodinaStudija())
 					errorCode = 2;
 				else {
-					predmet.getStudenti().add(brojIndeksa);
-					s.getPredmeti().add(predmet.getSifra());
+					predmet.getStudenti().add(s);
+					s.getPredmeti().add(predmet);
 					errorCode = 0;
 				}
 			}
@@ -154,27 +171,27 @@ public class StudentiController {
 		return errorCode;
 	}
 
-	public String[] getIndeksi(ArrayList<String> arrayList) {
+	public String[] getIndeksi(ArrayList<Student> arrayList) {
 		ArrayList<String> indeksi = new ArrayList<String>();
-		for (String s : arrayList) {
-			indeksi.add(s);
+		for (Student s : arrayList) {
+			indeksi.add(s.getBrIndeksa());
 		}
 		String[] indeksiArray = indeksi.toArray(new String[indeksi.size()]);
 		return indeksiArray;
 	}
 
 	public void izbrisiStudenta(Predmet p, String brIndeksa) {
-
-		if (p.getStudenti().contains(brIndeksa)) {
-			if(p.getStudenti().remove(brIndeksa)) System.out.println("obrisan student");
-		}
-		for (Student s : BazaStudenata.getInstance().getStudenti()) {
-			if (brIndeksa.equals(s.getBrIndeksa())) {
-				s.getPredmeti().remove(p.getSifra());
+		for(Student s: p.getStudenti()) {
+			if(s.getBrIndeksa().equals(brIndeksa)) {
+				p.getStudenti().remove(s);
 				break;
 			}
 		}
+		Student s = nadji(brIndeksa);
+		if(s != null)
+			s.getPredmeti().remove(p);
 	}
+	
 
 	public int pretraziStudente(String pretragaString) {
 		if (!pretragaString.matches("([a-zA-Z0-9 ]+:[a-zA-Z0-9]+;?)+"))

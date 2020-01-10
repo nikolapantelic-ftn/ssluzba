@@ -10,12 +10,12 @@ public class Student {
 	private int godinaStudija;
 	private double prosecnaOcena;
 	private Status status;
-	private ArrayList<String> predmeti;
+	private ArrayList<Predmet> predmeti;
 	
 	public Student() {}
 
 	public Student(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, LocalDate datumRodjenja, int godinaStudija, Status status) {
+			String brIndeksa, LocalDate datumRodjenja, Double prosek, int godinaStudija, Status status) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
@@ -27,8 +27,8 @@ public class Student {
 		this.status = status;
 		this.datumUpisa = LocalDate.now();
 		this.godinaStudija = godinaStudija;
-		this.prosecnaOcena = 0;
-		this.predmeti = new ArrayList<String>();
+		this.prosecnaOcena = prosek;
+		this.predmeti = new ArrayList<Predmet>();
 	}
 
 	public String getIme() {
@@ -119,13 +119,19 @@ public class Student {
 		this.godinaStudija = godinaStudija;
 	}
 
-	public ArrayList<String> getPredmeti() {
+	public ArrayList<Predmet> getPredmeti() {
 		return this.predmeti;
 	}
 	
-	public void setPremeti(ArrayList<String> predmeti) {
+	public void setPremeti(ArrayList<Predmet> predmeti) {
 		this.predmeti = predmeti;
 	}
 	
+	public boolean equals(Object student) {
+		if(this.brIndeksa.equals(((Student) student).getBrIndeksa())) {
+			return true;
+		}
+		return false;
+	}
 	
 }

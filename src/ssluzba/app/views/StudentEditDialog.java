@@ -17,7 +17,7 @@ public class StudentEditDialog extends StudentDialog{
 
 	public StudentEditDialog() {
 		super();
-		Student student = BazaStudenata.getInstance().getRow(StudentJTable.getInstance().getSelectedRow());
+		Student student = StudentiController.getInstance().nadjiIzabranog();
 		imeText.setText(student.getIme());
 		prezimeText.setText(student.getPrezime());
 		datumRodjenjaText.setText(student.getDatumRodjenja().format(BazaStudenata.getInstance().getDateFormatter()).toString());
@@ -25,6 +25,7 @@ public class StudentEditDialog extends StudentDialog{
 		brojTelefonaText.setText(student.getKontaktTelefon());
 		brojIndeksaText.setText(student.getBrIndeksa());
 		emailText.setText(student.getEmail());
+		prosecnaOcenaText.setText(Double.toString(student.getProsecnaOcena()));
 		godinaStudijaCombo.setSelectedIndex(student.getGodinaStudija()-1);
 		samofinansiranjeButton.setSelected(student.getStatus()==Status.S ? true : false);
 		budzetButton.setSelected(student.getStatus()==Status.B ? true : false);
@@ -41,12 +42,13 @@ public class StudentEditDialog extends StudentDialog{
 				String email = StudentEditDialog.this.getEmailText();
 				String brIndeksa = StudentEditDialog.this.getBrojIndeksaText();
 				String datumRodjenja = StudentEditDialog.this.getDatumRodjenjaText();
+				String prosecnaOcena = StudentEditDialog.this.getProsecnaOcenaText();
 				int godinaStudija = StudentEditDialog.this.getGodinaStudija();
 				boolean samofinansiranje = StudentEditDialog.this.getSamofinansiranjeText();
 				boolean budzet = StudentEditDialog.this.getBudzetText();
 				try {
 					StudentiController.getInstance().izmeni(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-							datumRodjenja, godinaStudija, samofinansiranje, budzet);
+							datumRodjenja, prosecnaOcena, godinaStudija, samofinansiranje, budzet);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 					return;
