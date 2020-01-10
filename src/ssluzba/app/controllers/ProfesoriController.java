@@ -8,7 +8,6 @@ import ssluzba.app.BazaPredmeta;
 import ssluzba.app.BazaProfesora;
 import ssluzba.app.Predmet;
 import ssluzba.app.Profesor;
-import ssluzba.app.views.PredmetJTable;
 import ssluzba.app.views.ProfesorJTable;
 
 public class ProfesoriController {
@@ -29,6 +28,11 @@ public class ProfesoriController {
 	public Profesor getProfesor(int row) {
 		return BazaProfesora.getInstance().getRow(row);
 	}
+	
+	/**
+	 * Dodaje novog profesora u bazu profesora
+	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
+	 */
 	public void dodaj(String ime, String prezime, String brojLicne, String adresa, String kontaktTelefon, String eMail,
 			String adresaKancelarije, String titula, String zvanje, String datumRodjenja) throws Exception {
 		try {
@@ -47,20 +51,41 @@ public class ProfesoriController {
 		ProfesorJTable.getInstance().azurirajPrikaz();
 	}
 	
+	/**
+	 * Menja trenutno oznacenog profesora u tabeli.
+	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
+	 */
 	public void izmeni(String ime, String prezime, String brojLicne, String adresa, String kontaktTelefon,
 			String eMail, String adresaKancelarije, String titula, String zvanje, String datumRodjenja) throws Exception {
 		try {
 			proveraUnosa(ime, prezime, brojLicne, adresa, kontaktTelefon, eMail, adresaKancelarije, titula, zvanje, datumRodjenja);
 		} catch (Exception e) {
+			System.out.println("bacio ovde");
 			throw e;
 		}
-		Profesor profesor = BazaProfesora.getInstance().getRow(ProfesorJTable.getInstance().getSelectedRow());
+		
+		//Ako je profesoru promenjen broj licne, proveri da li novoupisani broj licne vec postoji
+		Profesor profesor = nadjiIzabranog();
 		if(!profesor.getBrojLicne().equals(brojLicne)) {
 			for (Profesor p : BazaProfesora.getInstance().getProfesori()) {
-				if (p.getBrojLicne().equals(brojLicne))
+				if (p.getBrojLicne().equals(brojLicne)) {
 					throw new Exception("Profesor vec postoji!");
+				}
 			}
+			
+			//Ako je profesoru promenjen broj licne, obrisi ga sa predmeta i obrisi njegove predmete
+			for(Predmet pr: BazaPredmeta.getInstance().getPredmeti()) {
+				if(pr.getProfesor() != null) {
+					if(pr.getProfesor().getBrojLicne().equals(profesor.getBrojLicne())) {
+						pr.removeProfesor();
+					}
+				}
+			}
+			
+			profesor.getPredmeti().clear();
 		}
+		
+
 		profesor.setIme(ime);
 		profesor.setPrezime(prezime);
 		profesor.setBrojLicne(brojLicne);
@@ -74,6 +99,10 @@ public class ProfesoriController {
 		ProfesorJTable.getInstance().azurirajPrikaz();
 	}
 	
+	/**
+	 * Proverava tacnosti unetih parametara za profesora
+	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
+	 */
 	public void proveraUnosa(String ime, String prezime, String brojLicne, String adresa, String kontaktTelefon,
 			String eMail, String adresaKancelarije, String titula, String zvanje, String datumRodjenja) throws Exception {
 		if (ime.isEmpty())
@@ -82,6 +111,11 @@ public class ProfesoriController {
 			throw new Exception("Prezime ne sme biti prazno!");
 		if (brojLicne.isEmpty())
 			throw new Exception("Broj licne karte ne sme biti prazan!");
+		try {
+			Integer.parseInt(brojLicne);
+		} catch (NumberFormatException e) {
+			throw new Exception("Broj licne karte moze sadrzati samo cifre!");
+		}
 		if (datumRodjenja.isEmpty())
 			throw new Exception("Datum rodjenja ne sme biti prazan!");
 		try {
@@ -98,6 +132,25 @@ public class ProfesoriController {
 			throw new Exception("Adresa stanovanja ne sme biti prazana!");
 		if (zvanje.isEmpty())
 			throw new Exception("Zvanje ne sme biti prazno!");
+	}
+	
+	public Profesor nadji(String brojLicne) {
+		for (Profesor p : BazaProfesora.getInstance().getProfesori()) {
+			if (p.getBrojLicne().equals(brojLicne))
+				return p;
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Trazi profesora koji je trenutno oznacen u tabeli
+	 * @return Objekat profesora iz baze profesora
+	 */
+	public Profesor nadjiIzabranog() {
+		int row = ProfesorJTable.getInstance().getSelectedRow();
+		String brojLicne = (String) ProfesorJTable.getInstance().getValueAt(row, 2);
+		return nadji(brojLicne);
 	}
 
 	public void deleteProfesor(String licna) {
