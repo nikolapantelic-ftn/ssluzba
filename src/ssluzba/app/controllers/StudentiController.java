@@ -27,6 +27,10 @@ public class StudentiController {
 	private StudentiController() {
 	}
 
+	/**
+	 * Dodaje novog studenta u bazu studenata
+	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
+	 */
 	public void dodaj(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
 			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
 		try {
@@ -47,6 +51,10 @@ public class StudentiController {
 		StudentJTable.getInstance().azurirajPrikaz();
 	}
 
+	/**
+	 * Brise trenutno oznacenog studenta u tabeli
+	 * @param row
+	 */
 	public void izbrisi(int row) {
 		if (row < 0)
 			return;
@@ -67,6 +75,10 @@ public class StudentiController {
 
 	}
 
+	/**
+	 * Menja trenutno oznacenog studenta u tabeli.
+	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
+	 */
 	public void izmeni(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
 			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
 		try {
@@ -74,6 +86,8 @@ public class StudentiController {
 		} catch (Exception e) {
 			throw e;
 		}
+		
+		//Ako je studentu promenjen indeks, proveri da li novoupisani indeks vec postoji
 		Student student = nadjiIzabranog();
 		if(!student.getBrIndeksa().equals(brIndeksa)) {
 			for(Student s: BazaStudenata.getInstance().getStudenti()) {
@@ -81,6 +95,15 @@ public class StudentiController {
 					throw new Exception("Student vec postoji");
 			}
 		}
+		
+		//Ako je studentu promenjen indeks ili godina studija, obrisi ga sa predmeta i obrisi njegove predmete
+		if(!student.getBrIndeksa().equals(brIndeksa) || student.getGodinaStudija() != godinaStudija) {
+			for (Predmet p: BazaPredmeta.getInstance().getPredmeti()) {
+				p.getStudenti().remove(student);
+			}
+			student.getPredmeti().clear();
+		}
+		
 		student.setIme(ime);
 		student.setPrezime(prezime);
 		student.setAdresaStanovanja(adresaStanovanja);
@@ -96,6 +119,10 @@ public class StudentiController {
 
 	}
 	
+	/**
+	 * Proverava tacnosti unetih parametara za studenta
+	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
+	 */
 	public void proveraUnosa(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
 			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
 		if (ime.isEmpty())
@@ -121,7 +148,12 @@ public class StudentiController {
 		if(!brIndeksa.matches("[a-z0-9]{2,3}-[0-9]{1,3}-[0-9]{4}"))
 			throw new Exception("Broj indeksa mora biti u formatu 'xx-zz-yyyy' gde je 'xx' oznaka smera, 'zz' broj upisa i 'yyyy' godina upisa");
 		try {
-			Double.parseDouble(prosecnaOcena);
+			double prosek = Double.parseDouble(prosecnaOcena);
+			if((prosek <6 || prosek > 10) && godinaStudija != 1) {
+				throw new Exception("Prosecna Ocena mora biti izmedju 6 i 10!");
+			} else if(godinaStudija == 1 && prosek != 0) {
+				throw new Exception("Prosecna Ocena mora biti 0 za studente prve godine!");
+			}
 		} catch (NumberFormatException e) {
 			throw new Exception("Prosecna Ocena mora biti decimalan broj!");
 		}
@@ -130,7 +162,11 @@ public class StudentiController {
 		
 		
 	}
-
+	/**
+	 * Trazi studenta u bazi studenata
+	 * @param brojIndeksa Trazeni indeks
+	 * @return Objekat studenta iz baze studenata ukoliko je nadjen
+	 */
 	public Student nadji(String brojIndeksa) {
 		for (Student s : BazaStudenata.getInstance().getStudenti()) {
 			if (s.getBrIndeksa().equals(brojIndeksa))
@@ -139,6 +175,11 @@ public class StudentiController {
 		return null;
 	}
 	
+	/**
+	 * Trazi studenta u trenutnoj pretrazi studenata
+	 * @param brojIndeksa Trazeni indeks
+	 * @return Objekat studenta iz pretrage
+	 */
 	public Student nadjiPretraga(String brojIndeksa) {
 		for (Student s : BazaStudenata.getInstance().getPretraga()) {
 			if (s.getBrIndeksa().equals(brojIndeksa))
@@ -147,12 +188,23 @@ public class StudentiController {
 		return null;
 	}
 	
+	/**
+	 * Trazi studenta koji je trenutno oznacen u tabeli
+	 * @return Objekat studenta iz baze studenata
+	 */
 	public Student nadjiIzabranog() {
 		int row = StudentJTable.getInstance().getSelectedRow();
 		String brIndeksa = (String) StudentJTable.getInstance().getValueAt(row, 0);
 		return nadji(brIndeksa);
 	}
 
+	/**
+	 * Dodaje studenta u listu studenata nekog predmeta
+	 * @param brojIndeksa Indeks studenta koji se dodaje
+	 * @param predmet Objekat predmeta na koji se dodaje student
+	 * @return Kod greske : 0 - nema greske, 1 - student je vec u listi, 2 - student nije odgovarajuca godina,
+	 * 3 - student sa datim indeksom ne postoji
+	 */
 	public int dodajStudentaNaPredmet(String brojIndeksa, Predmet predmet) {
 		int errorCode = 3;
 		for (Student s : BazaStudenata.getInstance().getStudenti()) {
@@ -171,6 +223,11 @@ public class StudentiController {
 		return errorCode;
 	}
 
+	/**
+	 * Pretvara listu studenata u niz njihovih indeksa
+	 * @param arrayList Lista studenata
+	 * @return Niz indeksa studenata
+	 */
 	public String[] getIndeksi(ArrayList<Student> arrayList) {
 		ArrayList<String> indeksi = new ArrayList<String>();
 		for (Student s : arrayList) {
@@ -180,6 +237,12 @@ public class StudentiController {
 		return indeksiArray;
 	}
 
+	/**
+	 * Brise studenta sa odgovarajucim indeksom sa predmeta i 
+	 * brise taj predmet iz liste predmeta koje student pohadja
+	 * @param p
+	 * @param brIndeksa
+	 */
 	public void izbrisiStudenta(Predmet p, String brIndeksa) {
 		for(Student s: p.getStudenti()) {
 			if(s.getBrIndeksa().equals(brIndeksa)) {
@@ -192,7 +255,12 @@ public class StudentiController {
 			s.getPredmeti().remove(p);
 	}
 	
-
+	/**
+	 * Trazi studente za uneti string pretrage i ubacuje ih u listu pretrage
+	 * @param pretragaString Kriterijum pretrage
+	 * @return Kod greske : 0 - nema greske, 1 - string pretrage je neispravan, 
+	 * 2 - kolona iz stringa pretrage ne postoji
+	 */
 	public int pretraziStudente(String pretragaString) {
 		if (!pretragaString.matches("([a-zA-Z0-9 ]+:[a-zA-Z0-9]+;?)+"))
 			return 1; // Ne poklapa se string

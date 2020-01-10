@@ -42,8 +42,13 @@ public class StudentEditDialog extends StudentDialog{
 				String email = StudentEditDialog.this.getEmailText();
 				String brIndeksa = StudentEditDialog.this.getBrojIndeksaText();
 				String datumRodjenja = StudentEditDialog.this.getDatumRodjenjaText();
-				String prosecnaOcena = StudentEditDialog.this.getProsecnaOcenaText();
 				int godinaStudija = StudentEditDialog.this.getGodinaStudija();
+				String prosecnaOcena;
+				if(godinaStudija == 1) {
+					prosecnaOcena = "0";
+				} else {
+					prosecnaOcena = StudentEditDialog.this.getProsecnaOcenaText();
+				}
 				boolean samofinansiranje = StudentEditDialog.this.getSamofinansiranjeText();
 				boolean budzet = StudentEditDialog.this.getBudzetText();
 				try {

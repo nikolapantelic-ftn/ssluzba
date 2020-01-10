@@ -186,9 +186,14 @@ public class StudentDialog extends JDialog {
 				String kontaktTelefon = StudentDialog.this.getBrojTelefonaText();
 				String email = StudentDialog.this.getEmailText();
 				String brIndeksa = StudentDialog.this.getBrojIndeksaText();
-				String prosecnaOcena = StudentDialog.this.getProsecnaOcenaText();
 				String datumRodjenja = StudentDialog.this.getDatumRodjenjaText();
 				int godinaStudija = StudentDialog.this.getGodinaStudija();
+				String prosecnaOcena;
+				if(godinaStudija == 1) {
+					prosecnaOcena = "0";
+				} else {
+					prosecnaOcena = StudentDialog.this.getProsecnaOcenaText();
+				}
 				boolean samofinansiranje = StudentDialog.this.getSamofinansiranjeText();
 				boolean budzet = StudentDialog.this.getBudzetText();
 				try {

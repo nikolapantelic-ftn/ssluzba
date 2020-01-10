@@ -20,7 +20,6 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import ssluzba.app.BazaPredmeta;
-import ssluzba.app.BazaProfesora;
 import ssluzba.app.Predmet;
 import ssluzba.app.Profesor;
 import ssluzba.app.controllers.PredmetiController;
@@ -187,7 +186,6 @@ public class GlavniToolbar extends JToolBar {
 		findPredmetListener();
 		findProfesorListener();
 		findStudentListener();
-		dodajProfesoraListener();
 		dodajProfesoraListener();	
 		editProfesorListener();
 		editStudentListener();	
