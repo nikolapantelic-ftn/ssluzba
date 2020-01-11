@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -54,6 +55,12 @@ public class MenuBar extends JMenuBar {
 		});
 		JMenuItem menuItemClose = new JMenuItem("Close", createImageIcon("close.png"));
 		menuItemClose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
+		menuItemClose.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame.getInstance().dispose();
+			}
+		});
 		JMenuItem menuItemEdit = new JMenuItem("Edit", createImageIcon("edit.png"));
 		menuItemEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
 		menuItemEdit.addActionListener(new ActionListener() {
@@ -149,8 +156,22 @@ public class MenuBar extends JMenuBar {
 		});
 		JMenuItem menuItemHelp = new JMenuItem("Help", createImageIcon("help.png"));
 		menuItemHelp.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.ALT_MASK));
+		menuItemHelp.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame frame = new HelpFrame();
+				frame.setVisible(true);
+			}
+		});
 		JMenuItem menuItemAbout = new JMenuItem("About", createImageIcon("about.png"));
 		menuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
+		menuItemAbout.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JDialog dialog = new AboutDialog();
+				dialog.setVisible(true);
+			}
+		});
 		menuNew.add(menuItemNew);
 		menuNew.add(menuItemClose);
 		menuEdit.add(menuItemEdit);
