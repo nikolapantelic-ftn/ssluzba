@@ -36,7 +36,7 @@ public class ProfesorNaPredmetuDialog extends JDialog {
 		this.setTitle("Profesor na predmetu");
 		this.setLayout(new GridLayout(10,2));
 		this.setModal(true);
-		this.setSize(400,400);
+		this.setSize(450,450);
 		this.setLocationRelativeTo(MainFrame.getInstance());
 		addComponents();
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

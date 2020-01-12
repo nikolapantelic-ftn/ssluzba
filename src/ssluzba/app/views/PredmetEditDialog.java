@@ -104,6 +104,7 @@ public class PredmetEditDialog extends JDialog {
 	
 	public void savePredmetListener() {
 		String sifraPre=sifraText.getText();
+		int godinaPre=godinaPrCombo.getSelectedIndex()+1;
 		
 		potvrdaButton.addActionListener(new ActionListener() {
 			
@@ -114,11 +115,27 @@ public class PredmetEditDialog extends JDialog {
 				String naziv=nazivText.getText();
 				String semestar=(String) semestarPrCombo.getSelectedItem();
 				int godina=godinaPrCombo.getSelectedIndex()+1;
+				if(sifra.isEmpty() || naziv.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Polja ne smeju biti prazna!");
+					return;
+				}
+				if(!sifra.matches("[a-zA-Z0-9]*")) {
+					JOptionPane.showMessageDialog(null, "Sifra nije u dobrom formatu!");
+					return;
+				}
+				if(!sifra.matches("[a-zA-Z0-9_]*")) {
+					JOptionPane.showMessageDialog(null, "Naziv nije u dobrom formatu!");
+					return;
+				}
 				if(sifraPre.equals(sifra)) {
 					
 				}else if(PredmetiController.getInstance().postojiSifra(sifra)) {
 					JOptionPane.showMessageDialog(null, "Vec postoji predmet sa datom sifrom");
 					return;
+				}
+				if(godinaPre!=godina) {
+					PredmetiController.getInstance().ocistiStudenteSaPredmeta(sifraPre);
+					
 				}
 				PredmetiController.getInstance().izmeni(sifra,naziv,semestar,godina);
 				PredmetEditDialog.super.dispose();

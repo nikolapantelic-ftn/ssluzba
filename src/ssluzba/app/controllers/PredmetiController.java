@@ -164,5 +164,11 @@ public class PredmetiController {
 	public void setProfesorNaTrenutniPredmet(Profesor p,Predmet pr) {
 		pr.setProfesor(p);
 	}
+	public void ocistiStudenteSaPredmeta(String sifra) {
+		for(Predmet pr:BazaPredmeta.getInstance().getPredmeti()) {
+			if(pr.getSifra().equals(sifra))
+				pr.getStudenti().clear();
+		}
+	}
 
 }
