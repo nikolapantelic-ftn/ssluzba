@@ -63,7 +63,6 @@ public class ProfesoriController {
 			System.out.println("bacio ovde");
 			throw e;
 		}
-		
 		//Ako je profesoru promenjen broj licne, proveri da li novoupisani broj licne vec postoji
 		Profesor profesor = nadjiIzabranog();
 		if(!profesor.getBrojLicne().equals(brojLicne)) {
@@ -77,13 +76,14 @@ public class ProfesoriController {
 			for(Predmet pr: BazaPredmeta.getInstance().getPredmeti()) {
 				if(pr.getProfesor() != null) {
 					if(pr.getProfesor().getBrojLicne().equals(profesor.getBrojLicne())) {
-						pr.removeProfesor();
+						pr.removeProfesor();;
 					}
 				}
 			}
 			
 			profesor.getPredmeti().clear();
 		}
+		
 		
 
 		profesor.setIme(ime);
@@ -96,6 +96,15 @@ public class ProfesoriController {
 		profesor.setTitula(titula);
 		profesor.setZvanje(zvanje);
 		profesor.setDatumRodjenja(datumRodjenja);
+		
+		for(Predmet pr: BazaPredmeta.getInstance().getPredmeti()) {
+			if(pr.getProfesor() != null) {
+				if(pr.getProfesor().getBrojLicne().equals(profesor.getBrojLicne())) {
+					pr.setProfesor(profesor);
+				}
+			}
+		}
+		
 		ProfesorJTable.getInstance().azurirajPrikaz();
 	}
 	
