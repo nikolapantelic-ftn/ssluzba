@@ -7,6 +7,7 @@ import java.io.IOException;
 import ssluzba.app.BazaPredmeta;
 import ssluzba.app.BazaProfesora;
 import ssluzba.app.BazaStudenata;
+import ssluzba.app.controllers.ProfesoriController;
 import ssluzba.app.views.MainFrame;
 
 public class MainApp {

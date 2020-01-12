@@ -342,8 +342,27 @@ public class ProfesoriController {
 	public void addPredmet(Predmet pr,Profesor p) {
 		p.addPredmet(pr);
 	}
-	public void removePredmet(Predmet pr,Profesor p) {
-		p.delPredmet(pr);
+	public void removePredmet(Predmet pr,String brLicne) {
+		for(Profesor p:BazaProfesora.getInstance().getProfesori()) {
+			if(p.getBrojLicne().equals(brLicne)) {
+				p.getPredmeti().remove(pr);
+				break;
+			}
+		}
+	}
+	public String[] getSpisakPredmeta(Profesor p) {
+		String [] ret = new String[p.getPredmeti().size()];
+		int i=0;
+		for(Predmet pr:p.getPredmeti()) {
+			ret[i++]=pr.getSifra();
+		}
+		return ret;
+	}
+	
+	public void ocistiPredmete() {
+		for(Profesor p: BazaProfesora.getInstance().getProfesori()) {
+			p.getPredmeti().clear();
+		}
 	}
 	
 }

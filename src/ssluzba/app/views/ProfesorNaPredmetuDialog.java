@@ -136,7 +136,8 @@ public class ProfesorNaPredmetuDialog extends JDialog {
 				Predmet pr=BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().getSelectedRow());
 				Profesor p=pr.getProfesor();
 				pr.removeProfesor();
-				ProfesoriController.getInstance().removePredmet(pr,p);
+				ProfesoriController.getInstance().removePredmet(pr,p.getBrojLicne());
+				PredmetiProfesoraDialog.getInstance().osveziTabelu();
 				ProfesorNaPredmetuDialog.super.dispose();
 			}
 		});

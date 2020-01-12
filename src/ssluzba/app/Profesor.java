@@ -110,9 +110,7 @@ public class Profesor {
 	public void addPredmet(Predmet p) {
 		this.predmeti.add(p);
 	}
-	public void delPredmet(Predmet p) {
-		this.predmeti.remove(p);
-	}
+	
 
 	
 
