@@ -1,16 +1,357 @@
 <list>
   <predmet>
-    <sifra>aa</sifra>
-    <naziv>aaa</naziv>
+    <sifra>OP301</sifra>
+    <naziv>Osnove programiranja</naziv>
     <semestar>Zimski</semestar>
     <godinaPredmeta>1</godinaPredmeta>
-    <studenti/>
+    <profesor>
+      <ime>Aleksa</ime>
+      <prezime>Petkovic</prezime>
+      <brojLicne>007198721</brojLicne>
+      <adresa>Temerinska 15, Novi Sad</adresa>
+      <kontaktTelefon>021/334-990</kontaktTelefon>
+      <eMail>021/334-990</eMail>
+      <adresaKancelarije>Dositeja Obradovica 6, Novi Sad, MI 105</adresaKancelarije>
+      <titula>Prof. dr</titula>
+      <zvanje>Redovni profesor</zvanje>
+      <datumRodjenja>15.01.1965.</datumRodjenja>
+      <predmeti>
+        <predmet reference="../../.."/>
+      </predmeti>
+    </profesor>
+    <studenti>
+      <ssluzba.app.Student>
+        <ime>Luka</ime>
+        <prezime>Jovanovic</prezime>
+        <adresaStanovanja>Karadjordjeva 83, Novi Sad</adresaStanovanja>
+        <kontaktTelefon>021/333-555</kontaktTelefon>
+        <email>luka.jovanovic@mailinator.com</email>
+        <brIndeksa>ra-1-2019</brIndeksa>
+        <datumRodjenja>2000-01-01</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>1</godinaStudija>
+        <prosecnaOcena>0.0</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Sofija</ime>
+        <prezime>Petrovic</prezime>
+        <adresaStanovanja>Milosa Pocerca 55, Sabac</adresaStanovanja>
+        <kontaktTelefon>015/343-356</kontaktTelefon>
+        <email>sofija.petrovic@mailinator.com</email>
+        <brIndeksa>ra-5-2019</brIndeksa>
+        <datumRodjenja>2000-05-16</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>1</godinaStudija>
+        <prosecnaOcena>0.0</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Stefan</ime>
+        <prezime>Nikolic</prezime>
+        <adresaStanovanja>Knez Mihajlova 16, Beograd</adresaStanovanja>
+        <kontaktTelefon>011/9234-857</kontaktTelefon>
+        <email>stefan.nikolic@mailinator.com</email>
+        <brIndeksa>ra-3-2019</brIndeksa>
+        <datumRodjenja>2000-03-18</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>1</godinaStudija>
+        <prosecnaOcena>0.0</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Dunja</ime>
+        <prezime>Ilic</prezime>
+        <adresaStanovanja>Petefi Sandora 15, Novi Sad</adresaStanovanja>
+        <kontaktTelefon>021/433-958</kontaktTelefon>
+        <email>dunja.ilic@mailinator.com</email>
+        <brIndeksa>ra-2-2019</brIndeksa>
+        <datumRodjenja>2000-11-11</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>1</godinaStudija>
+        <prosecnaOcena>0.0</prosecnaOcena>
+        <status>S</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+    </studenti>
   </predmet>
   <predmet>
-    <sifra>daasd</sifra>
-    <naziv>aadsdsa</naziv>
+    <sifra>DM881</sifra>
+    <naziv>Diskretna matematika</naziv>
     <semestar>Zimski</semestar>
-    <godinaPredmeta>1</godinaPredmeta>
+    <godinaPredmeta>2</godinaPredmeta>
+    <profesor>
+      <ime>Jana</ime>
+      <prezime>Lazarevic</prezime>
+      <brojLicne>008431903</brojLicne>
+      <adresa>Jovana Cvijica 26, Novi Sad</adresa>
+      <kontaktTelefon>021/435-891</kontaktTelefon>
+      <eMail>021/435-891</eMail>
+      <adresaKancelarije>Dositeja Obradovica 6, Novi Sad, Nastavni blok 206</adresaKancelarije>
+      <titula>Prof. dr</titula>
+      <zvanje>Redovni profesor</zvanje>
+      <datumRodjenja>25.02.1963.</datumRodjenja>
+      <predmeti>
+        <predmet reference="../../.."/>
+      </predmeti>
+    </profesor>
+    <studenti>
+      <ssluzba.app.Student>
+        <ime>Sara</ime>
+        <prezime>Pavlovic</prezime>
+        <adresaStanovanja>Vojvode Misica 23, Sabac</adresaStanovanja>
+        <kontaktTelefon>015/313-061</kontaktTelefon>
+        <email>sara.pavlovic@mailinator.com</email>
+        <brIndeksa>ra-3-2018</brIndeksa>
+        <datumRodjenja>1999-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>2</godinaStudija>
+        <prosecnaOcena>8.6</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Vuk</ime>
+        <prezime>Markovic</prezime>
+        <adresaStanovanja>Temerinska 133, Novi Sad</adresaStanovanja>
+        <kontaktTelefon>021/351-091</kontaktTelefon>
+        <email>vuk.markovic@mailinator.com</email>
+        <brIndeksa>ra-15-2018</brIndeksa>
+        <datumRodjenja>1999-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>2</godinaStudija>
+        <prosecnaOcena>8.25</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Teodora</ime>
+        <prezime>Popovic</prezime>
+        <adresaStanovanja>Surepova 15, Sabac</adresaStanovanja>
+        <kontaktTelefon>015/324-500</kontaktTelefon>
+        <email>teodora.popovic@mailinator.com</email>
+        <brIndeksa>ra-133-2017</brIndeksa>
+        <datumRodjenja>1998-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>2</godinaStudija>
+        <prosecnaOcena>7.2</prosecnaOcena>
+        <status>S</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Filip</ime>
+        <prezime>Stojanovic</prezime>
+        <adresaStanovanja>Francuska 113, Beograd</adresaStanovanja>
+        <kontaktTelefon>011/2333-900</kontaktTelefon>
+        <email>filip.stojanovic@mailinator.com</email>
+        <brIndeksa>ra-122-2017</brIndeksa>
+        <datumRodjenja>1998-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>2</godinaStudija>
+        <prosecnaOcena>7.23</prosecnaOcena>
+        <status>S</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+    </studenti>
+  </predmet>
+  <predmet>
+    <sifra>PP007</sifra>
+    <naziv>Paralelno programiranje</naziv>
+    <semestar>Zimski</semestar>
+    <godinaPredmeta>3</godinaPredmeta>
+    <profesor>
+      <ime>Nadja</ime>
+      <prezime>Aleksic</prezime>
+      <brojLicne>005671007</brojLicne>
+      <adresa>Gunduliceva 75, Novi Sad</adresa>
+      <kontaktTelefon>021/730-172</kontaktTelefon>
+      <eMail>021/730-172</eMail>
+      <adresaKancelarije>Dositeja Obradovica 6, Novi Sad, NTP 307</adresaKancelarije>
+      <titula>Dr</titula>
+      <zvanje>Vanredni profesor</zvanje>
+      <datumRodjenja>23.03.1973.</datumRodjenja>
+      <predmeti>
+        <predmet reference="../../.."/>
+      </predmeti>
+    </profesor>
+    <studenti>
+      <ssluzba.app.Student>
+        <ime>Viktor</ime>
+        <prezime>Jankovic</prezime>
+        <adresaStanovanja>Gogoljeva 3, Novi Sad</adresaStanovanja>
+        <kontaktTelefon>021/135-463</kontaktTelefon>
+        <email>viktor.jankovic@mailinator.com</email>
+        <brIndeksa>ra-1-2017</brIndeksa>
+        <datumRodjenja>1998-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>3</godinaStudija>
+        <prosecnaOcena>9.6</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Petra</ime>
+        <prezime>Todorovic</prezime>
+        <adresaStanovanja>Njegoseva 2, Novi Sad</adresaStanovanja>
+        <kontaktTelefon>021/903-463</kontaktTelefon>
+        <email>petra.todorovic@mailinator.com</email>
+        <brIndeksa>ra-5-2017</brIndeksa>
+        <datumRodjenja>1998-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>3</godinaStudija>
+        <prosecnaOcena>9.22</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Andrej</ime>
+        <prezime>Stankovic</prezime>
+        <adresaStanovanja>Radoja Domanovica 5, Novi Sad</adresaStanovanja>
+        <kontaktTelefon>021/731-067</kontaktTelefon>
+        <email>andrej.stankovic@mailinator.com</email>
+        <brIndeksa>ra-33-2017</brIndeksa>
+        <datumRodjenja>1998-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>3</godinaStudija>
+        <prosecnaOcena>8.85</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Mila</ime>
+        <prezime>Ristic</prezime>
+        <adresaStanovanja>Vojvode Stepe 183, Beograd</adresaStanovanja>
+        <kontaktTelefon>011/4333-800</kontaktTelefon>
+        <email>mila.ristic@mailinator.com</email>
+        <brIndeksa>ra-152-2016</brIndeksa>
+        <datumRodjenja>1997-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>3</godinaStudija>
+        <prosecnaOcena>7.4</prosecnaOcena>
+        <status>S</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+    </studenti>
+  </predmet>
+  <predmet>
+    <sifra>RVP33</sifra>
+    <naziv>Ra?unarstvo visokih performansi</naziv>
+    <semestar>Zimski</semestar>
+    <godinaPredmeta>4</godinaPredmeta>
+    <profesor>
+      <ime>Djordje</ime>
+      <prezime>Spasojevic</prezime>
+      <brojLicne>009999331</brojLicne>
+      <adresa>Sekspirova 44, Novi Sad</adresa>
+      <kontaktTelefon>021/514-893</kontaktTelefon>
+      <eMail>021/514-893</eMail>
+      <adresaKancelarije>Dositeja Obradovica 6, Novi Sad, MI 118</adresaKancelarije>
+      <titula>Dr</titula>
+      <zvanje>Vanredni profesor</zvanje>
+      <datumRodjenja>24.08.1978.</datumRodjenja>
+      <predmeti>
+        <predmet reference="../../.."/>
+      </predmeti>
+    </profesor>
+    <studenti>
+      <ssluzba.app.Student>
+        <ime>Lena</ime>
+        <prezime>Kovacevic</prezime>
+        <adresaStanovanja>Bulevar Oslobodjenja 143, Novi Sad</adresaStanovanja>
+        <kontaktTelefon>021/5333-801</kontaktTelefon>
+        <email>lena.kovacevic@mailinator.com</email>
+        <brIndeksa>ra-1-2016</brIndeksa>
+        <datumRodjenja>1997-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>4</godinaStudija>
+        <prosecnaOcena>10.0</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Filip</ime>
+        <prezime>Zivkovic</prezime>
+        <adresaStanovanja>1300 Kaplara, Sabac</adresaStanovanja>
+        <kontaktTelefon>015/333-500</kontaktTelefon>
+        <email>filip.zivkovic@mailinator.com</email>
+        <brIndeksa>ra-5-2016</brIndeksa>
+        <datumRodjenja>1997-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>4</godinaStudija>
+        <prosecnaOcena>8.8</prosecnaOcena>
+        <status>B</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Tara</ime>
+        <prezime>Dmiitrijevic</prezime>
+        <adresaStanovanja>Milovana Glisica, Valjevo</adresaStanovanja>
+        <kontaktTelefon>014/303-007</kontaktTelefon>
+        <email>tara.dimitrijevic@mailinator.com</email>
+        <brIndeksa>ra-33-2015</brIndeksa>
+        <datumRodjenja>1996-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>4</godinaStudija>
+        <prosecnaOcena>7.9</prosecnaOcena>
+        <status>S</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+      <ssluzba.app.Student>
+        <ime>Vasilije</ime>
+        <prezime>Micic</prezime>
+        <adresaStanovanja>Vuka Karadzica, Loznica</adresaStanovanja>
+        <kontaktTelefon>015/101-909</kontaktTelefon>
+        <email>vasilije.micic@mailinator.com</email>
+        <brIndeksa>ra-102-2015</brIndeksa>
+        <datumRodjenja>1996-12-03</datumRodjenja>
+        <datumUpisa>2020-01-12</datumUpisa>
+        <godinaStudija>4</godinaStudija>
+        <prosecnaOcena>6.8</prosecnaOcena>
+        <status>S</status>
+        <predmeti>
+          <predmet reference="../../../.."/>
+        </predmeti>
+      </ssluzba.app.Student>
+    </studenti>
+  </predmet>
+  <predmet>
+    <sifra>JSD91</sifra>
+    <naziv>Jezici specifi?ni za domen</naziv>
+    <semestar>Letnji</semestar>
+    <godinaPredmeta>4</godinaPredmeta>
     <studenti/>
   </predmet>
 </list>
