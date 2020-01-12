@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 import ssluzba.app.BazaPredmeta;
 import ssluzba.app.Predmet;
 import ssluzba.app.Profesor;
-import ssluzba.app.controllers.PredmetiController;
 import ssluzba.app.controllers.ProfesoriController;
 
 

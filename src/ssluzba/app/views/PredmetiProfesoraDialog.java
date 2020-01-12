@@ -1,16 +1,12 @@
 package ssluzba.app.views;
 
-import java.awt.FlowLayout;
-
 import javax.swing.AbstractListModel;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
-import ssluzba.app.Predmet;
 import ssluzba.app.Profesor;
 import ssluzba.app.controllers.ProfesoriController;
-import ssluzba.app.controllers.StudentiController;
 
 public class PredmetiProfesoraDialog extends JDialog {
 	
