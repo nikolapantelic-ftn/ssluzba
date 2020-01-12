@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import ssluzba.app.BazaProfesora;
 import ssluzba.app.Profesor;
 import ssluzba.app.controllers.ProfesoriController;
 
@@ -16,7 +15,7 @@ public class ProfesorEditDialog extends ProfesorDialog {
 	
 	public ProfesorEditDialog() {
 		super();
-		Profesor profesor = BazaProfesora.getInstance().getRow(ProfesorJTable.getInstance().convertRowIndexToModel(ProfesorJTable.getInstance().getSelectedRow()));
+		Profesor profesor = ProfesoriController.getInstance().nadjiIzabranog();
 		imeText.setText(profesor.getIme());
 		prezimeText.setText(profesor.getPrezime());
 		brojLicneText.setText(profesor.getBrojLicne());
