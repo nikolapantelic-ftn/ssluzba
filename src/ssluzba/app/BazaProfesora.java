@@ -164,10 +164,11 @@ public class BazaProfesora {
 		try {
 			XStream xs = new XStream();
 			XStream.setupDefaultSecurity(xs);
-			xs.allowTypes(new Class[] {Profesor.class, Predmet.class});
+			xs.allowTypes(new Class[] {Profesor.class, Predmet.class, Student.class});
 			xs.alias("profesor", Profesor.class);
 			this.profesori = (List<Profesor>) xs.fromXML(f);
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Baza profesora ne postoji. Bice napravljena nova baza po zatvaranju aplikacije");
 		}
 	}

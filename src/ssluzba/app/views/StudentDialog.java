@@ -31,13 +31,14 @@ public class StudentDialog extends JDialog {
 	protected JTextField brojIndeksaText;
 	protected JTextField emailText;
 	protected JTextField prosecnaOcenaText;
+	protected JTextField datumUpisaText;
 	protected JComboBox<String> godinaStudijaCombo;
 
 	public StudentDialog() {
 		this.setTitle("Dodavanje studenta");
 		this.setLayout(new FlowLayout());
 		this.setModal(true);
-		this.setSize(400, 450);
+		this.setSize(400, 460);
 		this.setLocationRelativeTo(MainFrame.getInstance());
 		initComponents();
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -46,7 +47,7 @@ public class StudentDialog extends JDialog {
 	private void initComponents() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.setPreferredSize(new Dimension(380, 400));
+		panel.setPreferredSize(new Dimension(380, 420));
 
 		JPanel imePane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		imePane.add(new JLabel("Ime "));
@@ -84,9 +85,15 @@ public class StudentDialog extends JDialog {
 		brojIndeksaPane.add(brojIndeksaText);
 		
 		JPanel prosecnaOcenaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-		prosecnaOcenaPane.add(new JLabel("Prosecna Ocena"));
+		prosecnaOcenaPane.add(new JLabel("Prosecna Ocena "));
 		prosecnaOcenaText = new JTextField(20);
 		prosecnaOcenaPane.add(prosecnaOcenaText);
+		
+		JPanel datumUpisaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+		datumUpisaPane.add(new JLabel("Datum Upisa "));
+		datumUpisaText = new JTextField(20);
+		datumUpisaPane.add(datumUpisaText);
+		
 
 		JPanel godinaStudijaPane = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		godinaStudijaPane.add(new JLabel("Trenutna Godina Studija "));
@@ -126,6 +133,7 @@ public class StudentDialog extends JDialog {
 		panel.add(adresaStanovanjaPane);
 		panel.add(brojIndeksaPane);
 		panel.add(prosecnaOcenaPane);
+		panel.add(datumUpisaPane);
 		panel.add(godinaStudijaPane);
 		panel.add(finansiranjePane);
 		panel.add(buttonPane);
@@ -135,6 +143,10 @@ public class StudentDialog extends JDialog {
 
 	protected int getGodinaStudija() {
 		return godinaStudijaCombo.getSelectedIndex() + 1;
+	}
+	
+	protected String getDatumUpisaText() {
+		return datumUpisaText.getText();
 	}
 
 	protected String getImeText() {
@@ -187,6 +199,7 @@ public class StudentDialog extends JDialog {
 				String email = StudentDialog.this.getEmailText();
 				String brIndeksa = StudentDialog.this.getBrojIndeksaText();
 				String datumRodjenja = StudentDialog.this.getDatumRodjenjaText();
+				String datumUpisa = StudentDialog.this.getDatumUpisaText();
 				int godinaStudija = StudentDialog.this.getGodinaStudija();
 				String prosecnaOcena;
 				if(godinaStudija == 1) {
@@ -198,7 +211,7 @@ public class StudentDialog extends JDialog {
 				boolean budzet = StudentDialog.this.getBudzetText();
 				try {
 					StudentiController.getInstance().dodaj(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-							datumRodjenja, prosecnaOcena, godinaStudija , samofinansiranje, budzet);
+							datumRodjenja, prosecnaOcena, godinaStudija, datumUpisa, samofinansiranje, budzet);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 					return;

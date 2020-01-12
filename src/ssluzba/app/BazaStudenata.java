@@ -145,7 +145,7 @@ public class BazaStudenata {
 			XStream xs = new XStream();
 			xs.setMode(XStream.XPATH_ABSOLUTE_REFERENCES);
 			XStream.setupDefaultSecurity(xs);
-			xs.allowTypes(new Class[] {Student.class, Predmet.class});
+			xs.allowTypes(new Class[] {Student.class, Profesor.class, Predmet.class});
 			xs.alias("student", Student.class);
 			this.studenti = (List<Student>) xs.fromXML(f);
 		} catch (Exception e) {

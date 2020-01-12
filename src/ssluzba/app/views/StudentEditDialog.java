@@ -26,6 +26,7 @@ public class StudentEditDialog extends StudentDialog{
 		brojIndeksaText.setText(student.getBrIndeksa());
 		emailText.setText(student.getEmail());
 		prosecnaOcenaText.setText(Double.toString(student.getProsecnaOcena()));
+		datumUpisaText.setText(student.getDatumUpisa().format(BazaStudenata.getInstance().getDateFormatter()).toString());
 		godinaStudijaCombo.setSelectedIndex(student.getGodinaStudija()-1);
 		samofinansiranjeButton.setSelected(student.getStatus()==Status.S ? true : false);
 		budzetButton.setSelected(student.getStatus()==Status.B ? true : false);
@@ -42,6 +43,7 @@ public class StudentEditDialog extends StudentDialog{
 				String email = StudentEditDialog.this.getEmailText();
 				String brIndeksa = StudentEditDialog.this.getBrojIndeksaText();
 				String datumRodjenja = StudentEditDialog.this.getDatumRodjenjaText();
+				String datumUpisa = StudentEditDialog.this.getDatumUpisaText();
 				int godinaStudija = StudentEditDialog.this.getGodinaStudija();
 				String prosecnaOcena;
 				if(godinaStudija == 1) {
@@ -53,7 +55,7 @@ public class StudentEditDialog extends StudentDialog{
 				boolean budzet = StudentEditDialog.this.getBudzetText();
 				try {
 					StudentiController.getInstance().izmeni(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa,
-							datumRodjenja, prosecnaOcena, godinaStudija, samofinansiranje, budzet);
+							datumRodjenja, prosecnaOcena, godinaStudija, datumUpisa, samofinansiranje, budzet);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 					return;

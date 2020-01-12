@@ -32,9 +32,9 @@ public class StudentiController {
 	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
 	 */
 	public void dodaj(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, String datumUpisa, boolean samofinansiranje, boolean budzet) throws Exception {
 		try {
-			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, prosecnaOcena, godinaStudija, samofinansiranje, budzet);
+			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, prosecnaOcena, godinaStudija, datumUpisa, samofinansiranje, budzet);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -80,9 +80,9 @@ public class StudentiController {
 	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
 	 */
 	public void izmeni(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, String datumUpisa, boolean samofinansiranje, boolean budzet) throws Exception {
 		try {
-			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, prosecnaOcena, godinaStudija, samofinansiranje, budzet);
+			proveraUnosa(ime, prezime, adresaStanovanja, kontaktTelefon, email, brIndeksa, datumRodjenja, prosecnaOcena, godinaStudija, datumUpisa, samofinansiranje, budzet);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -124,7 +124,7 @@ public class StudentiController {
 	 * @throws Exception Sadrzi poruku o pogresno unetom parametru
 	 */
 	public void proveraUnosa(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, boolean samofinansiranje, boolean budzet) throws Exception {
+			String brIndeksa, String datumRodjenja, String prosecnaOcena, int godinaStudija, String datumUpisa, boolean samofinansiranje, boolean budzet) throws Exception {
 		if (ime.isEmpty())
 			throw new Exception("Ime ne sme biti prazno!");
 		if (prezime.isEmpty())
@@ -157,6 +157,13 @@ public class StudentiController {
 		} catch (NumberFormatException e) {
 			throw new Exception("Prosecna Ocena mora biti decimalan broj!");
 		}
+		try {
+			DateTimeFormatter formatter = BazaStudenata.getInstance().getDateFormatter();
+			LocalDate.parse(datumUpisa, formatter);
+		} catch (DateTimeParseException pe) {
+			throw new Exception("Datum mora biti u formatu dd.mm.yyyy.");
+		}
+		
 		if(!(samofinansiranje || budzet))
 			throw new Exception("Izaberite nacin finansiranja!");
 		
