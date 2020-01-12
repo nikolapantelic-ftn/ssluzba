@@ -22,7 +22,7 @@ public class PredmetJTable extends JTable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8251893327400624728L;
-	
+
 	private static PredmetJTable instance=null;
 	public static PredmetJTable getInstance() {
 		if(instance==null) {
@@ -30,7 +30,7 @@ public class PredmetJTable extends JTable {
 	}
 	return instance;
 }
-
+	private int row;
 	
 	
 	public PredmetJTable() {
@@ -43,11 +43,14 @@ public class PredmetJTable extends JTable {
 		sort.setSortable(4, false);
 		sort.setSortable(5, false);
 		this.setRowSorter(sort);
+		
 	}
 	
 	
 
-
+public int selectedRow() {
+	return row;
+}
 
 	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 		Component c = super.prepareRenderer(renderer, row, column);

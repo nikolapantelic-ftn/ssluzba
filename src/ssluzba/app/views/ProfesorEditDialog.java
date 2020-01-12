@@ -16,7 +16,7 @@ public class ProfesorEditDialog extends ProfesorDialog {
 	
 	public ProfesorEditDialog() {
 		super();
-		Profesor profesor = BazaProfesora.getInstance().getRow(ProfesorJTable.getInstance().getSelectedRow());
+		Profesor profesor = BazaProfesora.getInstance().getRow(ProfesorJTable.getInstance().convertRowIndexToModel(ProfesorJTable.getInstance().getSelectedRow()));
 		imeText.setText(profesor.getIme());
 		prezimeText.setText(profesor.getPrezime());
 		brojLicneText.setText(profesor.getBrojLicne());

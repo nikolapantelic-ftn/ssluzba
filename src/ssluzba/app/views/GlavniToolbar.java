@@ -49,8 +49,7 @@ public class GlavniToolbar extends JToolBar {
 	private JTextField pretragaPR;
 	private JButton findP;
 	private JButton findPr;
-	private JTable tabelaPredmeta;
-	private JTable tabelaProfesora;
+	
 	private boolean aktivirajPretraguPredmeta;
 	private boolean pretragaStudenata;
 	
@@ -62,12 +61,7 @@ public class GlavniToolbar extends JToolBar {
 			instance=new GlavniToolbar();
 		return instance;
 	}
-	public void setTabelaPredmeta(JTable tabela) {
-		this.tabelaPredmeta=tabela;
-	}
-	public void setTabelaProfesora(JTable tabela) {
-		this.tabelaProfesora=tabela;
-	}
+
 	
 	public JButton getAddStud() {
 		return addStud;
@@ -175,7 +169,7 @@ public class GlavniToolbar extends JToolBar {
 		addSP=new JButton();
 		findPr=new JButton();
 		pretragaPR=new JTextField();
-		tabelaPredmeta=new PredmetJTable();
+		
 		pretragaP=new JTextField();
 		
 		editPredmetListener();
@@ -311,11 +305,11 @@ public class GlavniToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(tabelaPredmeta.getSelectedRow()==-1)
+				if(PredmetJTable.getInstance().getSelectedRow()==-1)
 					return;
 				int choice=JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete predmet?");
 				if (choice == JOptionPane.YES_OPTION) {
-					PredmetiController.getInstance().izbrisi(PredmetiController.getInstance().getPredmet(tabelaPredmeta.getSelectedRow()).getSifra());
+					PredmetiController.getInstance().izbrisi(PredmetiController.getInstance().getPredmet(PredmetJTable.getInstance().convertRowIndexToModel(PredmetJTable.getInstance().getSelectedRow())).getSifra());
 					JOptionPane.showMessageDialog(null, "Predmet obrisan!");
 				} else {
 					JOptionPane.showMessageDialog(null, "Otkazano");
@@ -389,9 +383,9 @@ public class GlavniToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(tabelaPredmeta.getSelectedRow()==-1)
+				if(PredmetJTable.getInstance().selectedRow()==-1)
 					return;
-				JDialog jp=new PredmetEditDialog(BazaPredmeta.getInstance().getRow(tabelaPredmeta.getSelectedRow()));
+				JDialog jp=new PredmetEditDialog(BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().convertRowIndexToModel(PredmetJTable.getInstance().getSelectedRow())));
 				jp.setVisible(true);
 				
 			}
@@ -403,14 +397,14 @@ public class GlavniToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(tabelaPredmeta.getSelectedRow()==-1)
+				if(PredmetJTable.getInstance().getSelectedRow()==-1)
 					return;
 				String brLicne=JOptionPane.showInputDialog("Broj licne karte profesora");
 					if(brLicne==null)
 						return;
 					if(ProfesoriController.getInstance().pretraziPoLicnoj(brLicne)!=null) {
 						Profesor p=ProfesoriController.getInstance().pretraziPoLicnoj(brLicne);
-						Predmet pr=PredmetiController.getInstance().getPredmet(tabelaPredmeta.getSelectedRow());
+						Predmet pr=PredmetiController.getInstance().getPredmet(PredmetJTable.getInstance().convertRowIndexToModel(PredmetJTable.getInstance().getSelectedRow()));
 						PredmetiController.getInstance().setProfesorNaTrenutniPredmet(p,pr);
 						ProfesoriController.getInstance().addPredmet(pr, p);
 						System.out.println(p.getPredmeti().size());
@@ -438,12 +432,12 @@ public class GlavniToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(tabelaProfesora.getSelectedRow()==-1)
+				if(PredmetJTable.getInstance().selectedRow()==-1)
 					return;
 				int choice=JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete profesora?");
 				if (choice == JOptionPane.YES_OPTION) {
-					System.out.println(tabelaPredmeta.getSelectedRow());
-					ProfesoriController.getInstance().deleteProfesor(ProfesoriController.getInstance().getProfesor(tabelaProfesora.getSelectedRow()).getBrojLicne());
+					System.out.println(PredmetJTable.getInstance().convertRowIndexToModel(PredmetJTable.getInstance().getSelectedRow()));
+					ProfesoriController.getInstance().deleteProfesor(ProfesoriController.getInstance().getProfesor(ProfesorJTable.getInstance().getSelectedRow()).getBrojLicne());
 					JOptionPane.showMessageDialog(null, "Profesor obrisan!");
 				} else {
 					JOptionPane.showMessageDialog(null, "Otkazano");
@@ -551,9 +545,9 @@ public class GlavniToolbar extends JToolBar {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(tabelaPredmeta.getSelectedRow()==-1)
+				if(PredmetJTable.getInstance().getSelectedRow()==-1)
 					return;
-				JDialog jp=new DodajStudentaNaPredmetDialog(BazaPredmeta.getInstance().getRow(tabelaPredmeta.getSelectedRow()));
+				JDialog jp=new DodajStudentaNaPredmetDialog(BazaPredmeta.getInstance().getRow(PredmetJTable.getInstance().convertRowIndexToModel(PredmetJTable.getInstance().getSelectedRow())));
 				jp.setVisible(true);
 				
 			}

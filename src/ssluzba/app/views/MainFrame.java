@@ -38,6 +38,11 @@ public class MainFrame extends JFrame {
 		setLocationRelativeTo(null);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		JTable tabelaPredmeta=PredmetJTable.getInstance();
+		
+		JTable tabelaProfesora=ProfesorJTable.getInstance();
+	
+		JTable tabelaStudenata = StudentJTable.getInstance();
 		GlavniToolbar toolbar=new GlavniToolbar();
 		add(toolbar,BorderLayout.NORTH);
 		
@@ -45,11 +50,7 @@ public class MainFrame extends JFrame {
 		this.setJMenuBar(new MenuBar());
 		this.add(new StatusBar(), BorderLayout.SOUTH);
 		
-		JTable tabelaPredmeta=PredmetJTable.getInstance();
-		toolbar.setTabelaPredmeta(tabelaPredmeta);
-		JTable tabelaProfesora=ProfesorJTable.getInstance();
-		toolbar.setTabelaProfesora(tabelaProfesora);
-		JTable tabelaStudenata = StudentJTable.getInstance();
+		
 		
 		
 		tabbedpane=new TabbedPane(tabelaStudenata, tabelaProfesora, tabelaPredmeta);
