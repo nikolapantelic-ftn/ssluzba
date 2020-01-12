@@ -43,9 +43,10 @@ public class StudentiController {
 		}
 		Status status = samofinansiranje ? Status.S : Status.B;
 		LocalDate datumRodj = LocalDate.parse(datumRodjenja, BazaStudenata.getInstance().getDateFormatter());
+		LocalDate datumUp = LocalDate.parse((datumUpisa), BazaStudenata.getInstance().getDateFormatter());
 		Double prosek = Double.parseDouble(prosecnaOcena);
 		Student student = new Student(ime, prezime, adresaStanovanja, kontaktTelefon, email,
-				brIndeksa, datumRodj, prosek, godinaStudija, status);
+				brIndeksa, datumRodj, prosek, godinaStudija, datumUp, status);
 		
 		BazaStudenata.getInstance().dodajStudenta(student);
 		StudentJTable.getInstance().azurirajPrikaz();
@@ -113,6 +114,7 @@ public class StudentiController {
 		student.setDatumRodjenja(LocalDate.parse(datumRodjenja, BazaStudenata.getInstance().getDateFormatter()));
 		student.setProsecnaOcena(Double.parseDouble(prosecnaOcena));
 		student.setGodinaStudija(godinaStudija);
+		student.setDatumUpisa(LocalDate.parse((datumUpisa), BazaStudenata.getInstance().getDateFormatter()));
 		Status status = samofinansiranje ? Status.S : Status.B;
 		student.setStatus(status);
 		StudentJTable.getInstance().azurirajPrikaz();

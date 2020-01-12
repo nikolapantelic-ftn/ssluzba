@@ -15,7 +15,7 @@ public class Student {
 	public Student() {}
 
 	public Student(String ime, String prezime, String adresaStanovanja, String kontaktTelefon, String email,
-			String brIndeksa, LocalDate datumRodjenja, Double prosek, int godinaStudija, Status status) {
+			String brIndeksa, LocalDate datumRodjenja, Double prosek, int godinaStudija, LocalDate datumUpisa, Status status) {
 		super();
 		this.ime = ime;
 		this.prezime = prezime;
@@ -25,7 +25,7 @@ public class Student {
 		this.brIndeksa = brIndeksa;
 		this.datumRodjenja = datumRodjenja;
 		this.status = status;
-		this.datumUpisa = LocalDate.now();
+		this.datumUpisa = datumUpisa;
 		this.godinaStudija = godinaStudija;
 		this.prosecnaOcena = prosek;
 		this.predmeti = new ArrayList<Predmet>();

@@ -2,6 +2,7 @@ package ssluzba.app.views;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.time.LocalDate;
 import java.util.Comparator;
 
 import javax.swing.JTable;
@@ -9,6 +10,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+
+import ssluzba.app.BazaStudenata;
 
 public class StudentJTable extends JTable {
 
@@ -28,6 +31,7 @@ public class StudentJTable extends JTable {
 		this.setColumnSelectionAllowed(true);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.setModel(new AbstractTableModelStudent());
+		this.getTableHeader().setReorderingAllowed(false);
 
 		TableRowSorter<TableModel> sorter = new TableRowSorter<>(this.getModel());
 		sorter.setComparator(0, new Comparator<String>() {
@@ -43,6 +47,29 @@ public class StudentJTable extends JTable {
 					return result;
 				else
 					return Integer.parseInt(substring1[1]) - Integer.parseInt(substring2[1]);
+			}
+		});
+		Comparator<String> dateComparator = new Comparator<String>() {
+
+			@Override
+			public int compare(String s1, String s2) {
+				LocalDate date1 = LocalDate.parse(s1, BazaStudenata.getInstance().getDateFormatter());
+				LocalDate date2 = LocalDate.parse(s2, BazaStudenata.getInstance().getDateFormatter());
+				return date1.compareTo(date2);
+			}
+			
+		};
+		sorter.setComparator(3, dateComparator);
+		sorter.setComparator(4, dateComparator);
+		sorter.setComparator(7, new Comparator<String>() {
+			@Override
+			public int compare(String s1, String s2) {
+				if(Double.parseDouble(s1) > Double.parseDouble(s2))
+					return 1;
+				else if(Double.parseDouble(s1) < Double.parseDouble(s2))
+					return -1;
+				else
+					return 0;
 			}
 		});
 		// U specifikaciji je nejasno da li treba omoguciti sortiranje po godini studija
