@@ -113,6 +113,14 @@ public class PredmetDialog extends JDialog {
 					JOptionPane.showMessageDialog(null, "Polja ne smeju biti prazna!");
 					return;
 				}
+				if(!sifra.matches("[a-zA-Z0-9]*")) {
+					JOptionPane.showMessageDialog(null, "Sifra nije u dobrom formatu!");
+					return;
+				}
+				if(!sifra.matches("[a-zA-Z0-9_]*")) {
+					JOptionPane.showMessageDialog(null, "Naziv nije u dobrom formatu!");
+					return;
+				}
 				if(PredmetiController.getInstance().postojiSifra(sifra)) {
 					JOptionPane.showMessageDialog(null, "Vec postoji predmet sa datom sifrom");
 					return;
