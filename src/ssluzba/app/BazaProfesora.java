@@ -136,6 +136,9 @@ public class BazaProfesora {
 			return profesor.getZvanje();
 		case 9:
 			return profesor.getDatumRodjenja();
+		case 10:
+			if(!profesor.getPredmeti().isEmpty())
+				return "Predmeti";
 		default:
 			return null;
 		}
